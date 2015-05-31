@@ -1,6 +1,6 @@
 # Project 4 - *Travel Journal*
 
-**Travel Journal** is an android app that allows a user to create a public journal of their travels. Each post is a picture with location with optional caption. Users are browse posts grouped by location or users. 
+**Travel Journal** is an android app that allows a user to create a public journal of their travels. Each post is a picture with location with optional caption. Users can browse posts grouped by location or users. 
 
 Time spent: **X** hours spent in total
 
