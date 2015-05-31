@@ -8,15 +8,15 @@ Time spent: **X** hours spent in total
 
 Login
 * [ ] Users can login via Facebook
-* [ ] (Optional) Users can login via email with a custom username and password
+* [ ] Users can login via email with a custom username and password (Optional) 
 
-* Profile page includes 
+Profile page includes 
 * [ ] Profile picture
 * [ ] Number of posts
 * [ ] All posts published by the user in list format
 * [ ] All posts published by the user in map format
-* [ ] (Optional) Can follow other users from their profile page
-* [ ] (Optional) Number of followers and following count
+* [ ] Can follow other users from their profile page (Optional) 
+* [ ] Number of followers and following count (Optional) 
 
 Search
   * [ ] Can search for posts based upon location
@@ -36,9 +36,9 @@ Timeline Map
 
 Post Detail view
 * [ ] Contains photo, caption, profile photo
-* [ ] (Optional) Desription
+* [ ] Desription (Optional) 
 * [ ] Number of likes, button to like
-* [ ] (Optional) Share post
+* [ ] Share post (Optional) 
 * [ ] Map with pin showing post location
 * [ ] Map is clickable and can be expanded to full screen
 * [ ] Image is clickable and can be expanded to full screen
@@ -48,7 +48,7 @@ Post Creation
 * [ ] Contains caption(Optional)
 * [ ] Location from gps or photo info
 * [ ] Photo from camera
-* [ ] (Optional) Photo from gallery
+* [ ] Photo from gallery (Optional) 
 
 **Optional**
 * [ ] Nice video/intro when logging in for first time  
