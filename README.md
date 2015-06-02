@@ -53,6 +53,9 @@ Post Creation
 **Optional**
 * [ ] Nice video/intro when logging in for first time  
 * [ ] See random(or popular) posts on timeline
+* [ ] Push notification
+* [ ] Invite friends and contacts
+* [ ] Share posts with friends and contacts
 * [ ] Posts are organized in trips
   * [ ] Can add posts to trips
   * [ ] Browse trips on timeline
