@@ -27,7 +27,6 @@ Timeline list
 * [ ] Optional Caption
 * [ ] Profile picture of creator
 * [ ] Like button
-* [ ] Number of likes?
 * [ ] Can dive into post detail view
 
 Timeline Map
@@ -59,8 +58,11 @@ Post Creation
 * [ ] Posts are organized in trips
   * [ ] Can add posts to trips
   * [ ] Browse trips on timeline
-  * [ ] Browser trips on map
+  * [ ] Browse trips on map
 
+## WireFrames
+
+Wireframes can be found [here](https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/wireframesTravelJournal.pdf).
 
 ## License
 
