@@ -56,6 +56,7 @@ Post Creation
 * [ ] Invite friends and contacts
 * [ ] Share posts with friends and contacts
 * [ ] Add Posts/Trips to your Wish list
+* [ ] Update your journey while offline and sync it when you have the Internet connection.
 * [ ] Posts are organized in trips
   * [ ] Can add posts to trips
   * [ ] Browse trips on timeline
