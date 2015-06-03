@@ -68,7 +68,7 @@ Wireframes can be found [here](https://github.com/TeamTravelJournal/AndroidTrave
 
 ## License
 
-    Copyright [2015] [Srivars Jayram, Esra Kucukoguz, Richard Pon]
+    Copyright [2015] [Srivats Jayaram, Esra Kucukoguz, Richard Pon]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
