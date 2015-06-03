@@ -56,6 +56,7 @@ Post Creation
 * [ ] Invite friends and contacts
 * [ ] Share posts with friends and contacts
 * [ ] Posts are organized in trips
+* [ ] Add Posts/Trips to your Wish list
   * [ ] Can add posts to trips
   * [ ] Browse trips on timeline
   * [ ] Browse trips on map
