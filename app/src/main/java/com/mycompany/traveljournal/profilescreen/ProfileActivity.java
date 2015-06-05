@@ -1,24 +1,41 @@
-package com.mycompany.traveljournal;
+package com.mycompany.traveljournal.profilescreen;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mycompany.traveljournal.R;
+import com.mycompany.traveljournal.mainscreen.MainPostFragment;
 
-public class MainActivity extends ActionBarActivity {
+public class ProfileActivity extends ActionBarActivity {
+
+    UserPostsFragment userPostsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_profile);
+
+        if(savedInstanceState == null)
+            setUpFragment();
     }
 
+
+    public void setUpFragment() {
+
+        userPostsFragment =  new UserPostsFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.flContainer, userPostsFragment);
+        ft.commit();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
     }
 
@@ -30,10 +47,6 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 }
