@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.EndlessScrollListener;
 import com.mycompany.traveljournal.common.PostListenerObj;
+import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.profilescreen.ProfileActivity;
 import com.mycompany.traveljournal.wishlistscreen.WishListActivity;
@@ -147,7 +148,9 @@ public abstract class PostsListFragment extends Fragment {
         lvPosts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                  //Call detail page from here
+                //Call detail page from here
+                Intent i = new Intent(getActivity(), DetailActivity.class);
+                startActivity(i);
             }
         });
 

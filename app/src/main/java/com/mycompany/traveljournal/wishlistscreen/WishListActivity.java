@@ -16,6 +16,8 @@ public class WishListActivity extends PostsListActivity {
     @Override
     public void setUpFragment() {
 
+        getSupportActionBar().hide();
+
         Toast.makeText(this, "Inside", Toast.LENGTH_SHORT).show();
 
         wishListPostsFragment =  new WishListPostsFragment();

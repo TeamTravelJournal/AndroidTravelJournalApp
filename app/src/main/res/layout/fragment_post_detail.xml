@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="300dp" android:id="@+id/rlHeader">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/ivProfile"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivPost"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvCaption"
+            android:layout_marginRight="35dp"
+            android:layout_centerInParent="true"
+            android:textColor="#A6A6A6"
+            android:gravity="center"
+            />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivShare"
+        android:layout_below="@+id/rlHeader"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivFollow"
+        android:layout_below="@+id/rlHeader"
+        android:layout_toLeftOf="@+id/ivShare"
+        android:layout_marginRight="15dp"
+        android:layout_alignBottom="@+id/ivShare"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivStar"
+        android:layout_below="@+id/rlHeader"
+        android:layout_toLeftOf="@+id/ivFollow"
+        android:layout_marginRight="15dp"
+        android:layout_alignBottom="@+id/ivShare"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvLikes"
+        android:text="10 likes"
+        android:layout_below="@+id/rlHeader"
+        android:layout_toLeftOf="@+id/ivStar"
+        android:layout_marginRight="15dp"
+        android:textColor="#A6A6A6"
+        android:gravity="center"
+        android:layout_alignBottom="@+id/ivShare"
+        />
+
+
+    <!--//Add Maps here -->
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/actionBarSize"
+        android:layout_alignParentTop="true">
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:layout_gravity="start"/>
+    </android.support.v7.widget.Toolbar>
+
+</RelativeLayout>
