@@ -6,12 +6,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mycompany.traveljournal.R;
-import com.mycompany.traveljournal.datasource.ParseDatasource;
+import com.mycompany.traveljournal.datasource.ParseClient;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    ParseDatasource parseDatasource;
+    private final static String TAG = "MainActivity";
+    ParseClient parseClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +20,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // Init Parse
-        parseDatasource = new ParseDatasource();
-        parseDatasource.init(this);
+        parseClient = new ParseClient();
+        parseClient.init(this);
     }
 
 
