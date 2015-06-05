@@ -22,5 +22,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.squareup.picasso:picasso:2.4.0'
+    compile 'com.makeramen:roundedimageview:2.0.1'
     compile 'com.parse.bolts:bolts-android:1.+'
 }
