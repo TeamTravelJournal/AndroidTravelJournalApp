@@ -7,16 +7,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mycompany.traveljournal.R;
+import com.mycompany.traveljournal.datasource.ParseClient;
 import com.mycompany.traveljournal.mainscreen.MainPostFragment;
 
 public class ProfileActivity extends ActionBarActivity {
 
     UserPostsFragment userPostsFragment;
+    ParseClient parseClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        getSupportActionBar().hide();
 
         if(savedInstanceState == null)
             setUpFragment();
