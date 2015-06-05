@@ -19,7 +19,7 @@ public class Like extends ParseObject {
     }
 
     public Like() {
-        
+
     }
 
 }
