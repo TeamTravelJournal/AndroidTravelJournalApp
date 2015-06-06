@@ -1,19 +1,21 @@
 package com.mycompany.traveljournal.mainscreen;
 
 import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnListViewOnScrollListener;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListFragment;
 import com.mycompany.traveljournal.createscreen.CreatePostActivity;
-import com.mycompany.traveljournal.profilescreen.ProfileActivity;
+import android.view.MenuItem;
+
+import com.mycompany.traveljournal.mapscreen.MapActivity;
 
 /**
  * Created by sjayaram on 6/4/2015.
@@ -69,4 +71,27 @@ public class MainPostFragment extends PostsListFragment {
     public void refreshList() {
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_mapview){
+
+            executeMapIntent(m_query);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void executeMapIntent(String query){
+        Intent i = new Intent(getActivity(), MapActivity.class);
+        i.putExtra("query", query);
+        startActivity(i);
+    }
+
+    public void onSearch(String query){
+
+    }
+
 }
