@@ -30,9 +30,6 @@ public class User extends ParseObject {
     public User() {
     }
 
-    /**
-     * Haven't gotten this working yet
-     */
     public static void getUserWithId(String userId, FindCallback callback) {
         ParseQuery<User> query = ParseQuery.getQuery(User.class);
         query.whereEqualTo("user_id", userId);

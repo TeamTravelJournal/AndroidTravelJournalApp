@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
 import com.mycompany.traveljournal.datasource.ParseClient;
-import com.mycompany.traveljournal.examples.ExampleGetUserFromParse;
 
 
 public class MainActivity extends PostsListActivity {
@@ -37,7 +36,9 @@ public class MainActivity extends PostsListActivity {
         super.onCreate(savedInstanceState);
 
         // Uncomment to run example of fetching record from Parse
-        ExampleGetUserFromParse.run();
+        //ExampleGetUserFromParse.run();
+
+        //ExampleGetPostsFromParse.getPostWithId("6KGn7knDWJ");
     }
 
 }
