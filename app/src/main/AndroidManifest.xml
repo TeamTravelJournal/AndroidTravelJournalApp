@@ -36,6 +36,11 @@
             android:label="@string/title_activity_profile" >
         </activity>
         <activity
+            android:name=".createscreen.CreatePostActivity"
+            android:label="@string/title_activity_create" >
+        </activity>
+
+        <activity
             android:name=".mapscreen.MapActivity"
             android:label="@string/title_activity_map" >
         </activity>

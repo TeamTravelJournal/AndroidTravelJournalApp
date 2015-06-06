@@ -5,7 +5,6 @@ import android.widget.Toast;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
-import com.mycompany.traveljournal.wishlistscreen.WishListPostsFragment;
 
 /**
  * Created by sjayaram on 6/5/2015.
