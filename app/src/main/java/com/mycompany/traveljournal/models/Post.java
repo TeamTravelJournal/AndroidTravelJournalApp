@@ -1,31 +1,35 @@
 package com.mycompany.traveljournal.models;
 
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 
 @ParseClassName("Post")
 public class Post extends ParseObject{
 
-    private int postID;
+    private String postID; //Parse ids are strings
 
 // Photo will be a parse file - uncomment out line below
     //private ParseFile photoUrl;
 
     private String caption;
     private String description;
-    private String latitude;
-    private String longitude;
+    private ParseGeoPoint location;
     private String userID;
     private int likes;
-    private int tripID;
+    private String tripID; //Parse Ids are strings
 
     //We will not need timeStamp
     //as Parse object has built-in createdAt field
 
-    public int getPostID() {
-        return getInt("post_id");
+
+    // The post id is the Parse object id and will be auto generated
+    public String getPostID() {
+        return getObjectId();
     }
 
     public String getCaption() {
@@ -36,12 +40,14 @@ public class Post extends ParseObject{
         return getString("description");
     }
 
-    public String getLatitude() {
-        return getString("latitude");
+    public double getLatitude() {
+        ParseGeoPoint location = (ParseGeoPoint) get("location");
+        return location.getLatitude();
     }
 
-    public String getLongitude() {
-        return getString("longitude");
+    public double getLongitude() {
+        ParseGeoPoint location = (ParseGeoPoint) get("location");
+        return location.getLongitude();
     }
 
     public String getUserID() {
@@ -52,8 +58,8 @@ public class Post extends ParseObject{
         return getInt("likes");
     }
 
-    public long getTripID() {
-        return getInt("trip_id");
+    public String getTripID() {
+        return getString("trip_id");
     }
 
     public Post() {
@@ -62,28 +68,43 @@ public class Post extends ParseObject{
 
     public static ArrayList<Post> getFakePosts() {
         ArrayList<Post> posts = new ArrayList<>();
+
         Post post1 = new Post();
-        post1.put("post_id", 1);
         post1.put("caption", "The Church in San Francisco");
         post1.put("description", "");
-        post1.put("latitude", "37.764830");
-        post1.put("longitude", "-122.432080");
+
+        ParseGeoPoint location = new ParseGeoPoint();
+        location.setLatitude(37.764830);
+        location.setLongitude(-122.432080);
+        post1.put("location", location);
+
         post1.put("user_id", "101");
         post1.put("likes", "18");
         post1.put("trip_id", 0);
         posts.add(post1);
 
+
         Post post2 = new Post();
-        post2.put("post_id", 2);
         post2.put("caption", "An Awesome cafe I found!");
         post2.put("description", "");
-        post2.put("latitude", "37.764579");
-        post2.put("longitude", "-122.433104");
+
+        ParseGeoPoint location2 = new ParseGeoPoint();
+        location2.setLatitude(37.764579);
+        location2.setLongitude(-122.433104);
+        post1.put("location", location2);
+
         post2.put("user_id", "101");
         post2.put("likes", "3");
         post2.put("trip_id", 0);
         posts.add(post2);
 
         return posts;
+    }
+
+    public static void getPostWithId(String postId, FindCallback callback) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.whereEqualTo("objectId", postId);
+        query.setLimit(1);
+        query.findInBackground(callback);
     }
 }
