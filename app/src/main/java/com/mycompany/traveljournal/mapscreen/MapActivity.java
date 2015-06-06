@@ -6,6 +6,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -20,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.ErrorDialogFragment;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -42,6 +45,8 @@ import com.mycompany.traveljournal.base.PostsListActivity;
 import com.mycompany.traveljournal.mainscreen.MainPostFragment;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -67,6 +72,8 @@ public class MapActivity extends ActionBarActivity implements
     private ArrayList<Marker> markers = null;
     private int markerIndex =0;
     private ArrayList<Boolean> shown= null;
+    private String m_query;
+    private LatLng m_location;
 
     /*
      * Define a request code to send to Google Play services This code is
@@ -80,6 +87,8 @@ public class MapActivity extends ActionBarActivity implements
         setContentView(R.layout.map_activity);
 
         markers = new ArrayList<Marker>();
+        m_query = getIntent().getStringExtra("query");
+        m_location = getLocationFromQuery(m_query);
 
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         if (mapFragment != null) {
@@ -114,7 +123,7 @@ public class MapActivity extends ActionBarActivity implements
                     .addOnConnectionFailedListener(this).build();
 
             //make sure map camera goes to target location
-            setTargetLocation();
+            setTargetLocation(m_location);
 
             connectClient();
 
@@ -123,18 +132,24 @@ public class MapActivity extends ActionBarActivity implements
         }
     }
 
-    private void setTargetLocation() {
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(fixAddress, 17);
-        map.animateCamera(cameraUpdate);
-        ready = true;
+    private void setTargetLocation(LatLng location) {
+
+        if(location!=null){
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 10/*17*/);
+            map.animateCamera(cameraUpdate);
+            ready = true;
+        }
     }
 
     @Override
     public void onCameraChange(CameraPosition cameraPosition) {
 
+        Log.d("DEBUG", "on camera change");
+
         if(points==null && ready) {
             //map.clear();
 
+            Log.d("DEBUG", "camera change - location is set/ready");
             // Create random points within the boundaries of the map
             points = createRandomPointsOnVisibleMap();//this method will be replaces by querying parse
             // Put a pin for each.
@@ -290,9 +305,22 @@ public class MapActivity extends ActionBarActivity implements
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location != null) {
             Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
-            //LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
-            //map.animateCamera(cameraUpdate);
+            if(m_location==null) {// if query location is null, use current location
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 10);
+                /*map.animateCamera(cameraUpdate, new GoogleMap.CancelableCallback() {
+                    @Override
+                    public void onFinish() {
+                        ready=true;
+                    }
+
+                    @Override
+                    public void onCancel() {
+                    }
+                });*/
+                map.moveCamera(cameraUpdate);
+                ready = true;
+            }
             startLocationUpdates();
         } else {
             Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
@@ -445,6 +473,35 @@ public class MapActivity extends ActionBarActivity implements
             }
         });
     }
+
+    public LatLng getLocationFromQuery(String query) {
+
+        Geocoder coder = new Geocoder(this, Locale.getDefault());
+        List<Address> address;
+        LatLng p1 = null;
+
+        if(query==null || query.equals("")){
+            Log.d("DEBUG", "not a valid query");
+            return null;
+        }
+
+        try {
+            address = coder.getFromLocationName(query, 1);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
+        return p1;
+    }
+
 
     // Define a DialogFragment that displays the error dialog
     public static class ErrorDialogFragment extends DialogFragment {
