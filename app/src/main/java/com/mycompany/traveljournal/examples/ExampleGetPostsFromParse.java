@@ -46,7 +46,28 @@ public class ExampleGetPostsFromParse {
                     Log.wtf(TAG, "Failed to get posts");
                 }
             }
+        });
+    }
 
+    public static void getPostsWithinWindow() {
+        double latitudeMin = 37.403423;
+        double longitudeMin = -122.158368;
+        double latitudeMax = 37.453218;
+        double longitudeMax = -122.101029;
+        int limit = 10;
+
+        Post.getPostsWithinWindow(latitudeMin, longitudeMin, latitudeMax, longitudeMax, limit, new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e == null) {
+                    for (int i = 0 ; i < posts.size() ; i++) {
+                        Log.wtf(TAG, posts.get(i).toString());
+                    }
+
+                } else {
+                    Log.wtf(TAG, "Failed to get posts");
+                }
+            }
         });
     }
 

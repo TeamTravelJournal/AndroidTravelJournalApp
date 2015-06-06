@@ -116,6 +116,15 @@ public class Post extends ParseObject{
         query.findInBackground(callback);
     }
 
+    public static void getPostsWithinWindow(double latitudeMin, double longitudeMin, double latitudeMax, double longitudeMax, int limit, FindCallback callback) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.setLimit(limit);
+        ParseGeoPoint swPoint = new ParseGeoPoint(latitudeMin, longitudeMin);
+        ParseGeoPoint nePoint = new ParseGeoPoint(latitudeMax, longitudeMax);
+        query.whereWithinGeoBox("location", swPoint, nePoint);
+        query.findInBackground(callback);
+    }
+
     // This is just for debugging purposes
     @Override
     public String toString() {

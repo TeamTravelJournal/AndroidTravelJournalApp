@@ -40,6 +40,7 @@ public class MainActivity extends PostsListActivity {
 
         //ExampleGetPostsFromParse.getPostWithId();
         //ExampleGetPostsFromParse.getPostsNearLocation();
+        //ExampleGetPostsFromParse.getPostsWithinWindow();
 
         //ExampleSavePostToParse.savePost();
 
