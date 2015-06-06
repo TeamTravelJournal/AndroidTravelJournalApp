@@ -3,29 +3,44 @@ package com.mycompany.traveljournal.detailsscreen;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ImageView;
 
 import com.mycompany.traveljournal.R;
+import com.mycompany.traveljournal.models.Post;
+import com.parse.FindCallback;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.squareup.picasso.Picasso;
 
-/**
- * Created by sjayaram on 6/5/2015.
- */
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+
+
 public class DetailFragment extends Fragment {
+
+    private final static String TAG = "DetailFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_detail, container, false);
         setUpViews(view);
         setUpListeners();
+
+        Log.wtf(TAG, "123123");
+        //ExampleGetPostsFromParse.getPostWithImage();
+
+        loadImage();
+
         return view;
     }
 
     public void setUpViews(View v){
-
     }
 
     public void setUpListeners() {
@@ -35,6 +50,56 @@ public class DetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    private void loadImage() {
+
+
+
+        String postId = "6KGn7knDWJ";
+        Post.getPostWithId(postId, new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e == null) {
+                    Post post = posts.get(0);
+                    Log.wtf(TAG, post.toString());
+
+
+                    post.doWithPhoto(new GetDataCallback() {
+                        String postId = "6KGn7knDWJ";
+
+                        @Override
+                        public void done(byte[] bytes, ParseException e) {
+                            Log.wtf(TAG, "DonE!");
+                            ImageView ivPost = (ImageView) getActivity().findViewById(R.id.ivPost);
+
+
+                            try {
+                                //File f = new File(getActivity().getCacheDir(), "somefilename");
+                                File f = new File(getActivity().getCacheDir(), postId);
+                                f.createNewFile();
+                                FileOutputStream fos = new FileOutputStream(f);
+                                fos.write(bytes);
+                                fos.flush();
+                                fos.close();
+                                Picasso.with(getActivity()).load(f).into(ivPost);
+                                Log.wtf(TAG, "YES!!");
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                                Log.wtf(TAG, "NO="+e.toString());
+                            }
+
+                            //Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            //Picasso.with(getActivity()).load(bmp).into(ivPost);
+                        }
+                    });
+
+
+                } else {
+                    Log.wtf(TAG, "Post not found");
+                }
+            }
+        });
     }
 
 }

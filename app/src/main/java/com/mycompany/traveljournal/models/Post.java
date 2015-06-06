@@ -1,7 +1,9 @@
 package com.mycompany.traveljournal.models;
 
 import com.parse.FindCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -13,8 +15,8 @@ public class Post extends ParseObject{
 
     private String postID; //Parse ids are strings
 
-// Photo will be a parse file - uncomment out line below
-    //private ParseFile photoUrl;
+
+    private ParseFile image;
 
     private String caption;
     private String description;
@@ -61,6 +63,17 @@ public class Post extends ParseObject{
     public String getTripID() {
         return getString("trip_id");
     }
+
+    public void doWithPhoto(GetDataCallback callback) {
+        ParseFile image = (ParseFile) this.get("image");
+        image.getDataInBackground(callback);
+    }
+
+//    public void loadPhotoIntoImageView(ImageView) {
+//        ParseFile image = (ParseFile) this.get("image");
+//        image.getDataInBackground(callback);
+//    }
+
 
     public Post() {
 
@@ -135,7 +148,7 @@ public class Post extends ParseObject{
         output += getLikes() + " ";
         output += getTripID() + " ";
         output += getLatitude() + " ";
-        output += getLongitude();
+        output += getLongitude()+ " ";
         return output;
     }
 
