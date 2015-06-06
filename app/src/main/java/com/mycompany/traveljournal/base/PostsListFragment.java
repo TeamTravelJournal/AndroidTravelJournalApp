@@ -14,11 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.EndlessScrollListener;
+import com.mycompany.traveljournal.common.MultiScrollListener;
 import com.mycompany.traveljournal.common.PostListenerObj;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 import com.mycompany.traveljournal.models.Post;
@@ -36,6 +38,8 @@ public abstract class PostsListFragment extends Fragment {
     protected ListView lvPosts;
     protected SwipeRefreshLayout swipeContainer;
     protected PostsListAdapter aPosts;
+    protected MultiScrollListener scrolls;
+    protected ImageView mQuickReturnView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -113,9 +117,12 @@ public abstract class PostsListFragment extends Fragment {
     public void setUpViews(View v){
         lvPosts = (ListView)v.findViewById(R.id.lvPosts);
         swipeContainer = (SwipeRefreshLayout)v.findViewById(R.id.swipeContainer);
+        mQuickReturnView = (ImageView)v.findViewById(R.id.quick_return_iv);
     }
 
     public void setUpListeners(){
+
+        scrolls = new MultiScrollListener();
 
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -134,7 +141,7 @@ public abstract class PostsListFragment extends Fragment {
                 android.R.color.holo_red_light);
 
 
-        lvPosts.setOnScrollListener(new EndlessScrollListener() {
+        scrolls.addScrollListener(new EndlessScrollListener() {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 // Triggered only when new data needs to be appended to the list
@@ -144,6 +151,8 @@ public abstract class PostsListFragment extends Fragment {
                 populateList();
             }
         });
+
+        lvPosts.setOnScrollListener(scrolls);
 
         lvPosts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

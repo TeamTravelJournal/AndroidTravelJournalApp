@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/m_layout" android:background="#ffffff" android:padding="10dp">
+    <!-- The android:layout_weight="1" will cause the scrollview reduce its screen real estate
+         to allow the next RelativeLayout to be displayed.  -->
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:scrollbarStyle="outsideInset"
+        android:layout_weight="1"
+        android:id="@+id/m_scroll"
+        android:layout_height="fill_parent" >
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/tvClose"
+                android:layout_marginRight="10dp"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvClose"
+                android:text="New Trip" android:id="@+id/tvReplyTo"
+                android:textColor="#A6A6A6"
+                android:textAlignment="center"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/tvClose"
+                android:background="#A6A6A6"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/ivProfile"
+                android:layout_below="@+id/tvReplyTo"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="23dp"
+                android:layout_marginRight="10dp"
+                android:padding="5dp"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/etCaption"
+                android:textSize="14sp"
+                android:layout_below="@+id/tvReplyTo"
+                android:hint="Say something"
+                android:layout_toRightOf="@+id/ivProfile"
+                android:layout_marginTop="23dp"
+                android:maxLength="140"
+                android:inputType="text"
+                />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/ivCamera"
+            android:layout_alignParentLeft="true"
+            android:padding="5dp"
+            />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Post"
+            android:textColor="#FFFFFF"
+            android:id="@+id/btReply"
+            android:layout_alignParentRight="true"
+            android:background="#0084B4"
+            android:padding="5dp"
+            android:minHeight="0dp" android:minWidth="0dp"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>
