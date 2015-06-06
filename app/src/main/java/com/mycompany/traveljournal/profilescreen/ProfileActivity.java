@@ -1,14 +1,13 @@
 package com.mycompany.traveljournal.profilescreen;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.datasource.ParseClient;
-import com.mycompany.traveljournal.mainscreen.MainPostFragment;
 
 public class ProfileActivity extends ActionBarActivity {
 
@@ -21,6 +20,8 @@ public class ProfileActivity extends ActionBarActivity {
         setContentView(R.layout.activity_profile);
 
         getSupportActionBar().hide();
+
+        parseClient = ParseClient.getInstance(this);
 
         if(savedInstanceState == null)
             setUpFragment();

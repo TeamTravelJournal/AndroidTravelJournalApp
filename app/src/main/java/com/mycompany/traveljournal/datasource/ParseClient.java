@@ -11,8 +11,23 @@ import com.parse.ParseObject;
 
 public class ParseClient {
 
-    public ParseClient() {
+    private static ParseClient instance = null;
 
+    protected ParseClient() {
+
+    }
+
+    /**
+     *  Get a the singleton ParseClient instance
+     */
+    public static ParseClient getInstance(Context context) {
+        if (instance == null) {
+            instance = new ParseClient();
+
+            // Automatically initialize
+            instance.init(context);
+        }
+        return instance;
     }
 
     public void init(Context context) {
