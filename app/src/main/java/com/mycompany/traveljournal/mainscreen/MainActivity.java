@@ -1,14 +1,19 @@
 package com.mycompany.traveljournal.mainscreen;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
+import com.mycompany.traveljournal.datasource.ParseClient;
+import com.mycompany.traveljournal.examples.ExampleGetUserFromParse;
 
 
 public class MainActivity extends PostsListActivity {
 
+    private final static String TAG = "MainActivity";
     MainPostFragment mainPostFragment;
+    ParseClient parseClient;
 
     @Override
     public void setUpFragment() {
@@ -19,4 +24,20 @@ public class MainActivity extends PostsListActivity {
         ft.commit();
 
     }
+
+
+    /**
+     *
+     * Below are code examples for fetching data models from Parse
+     *
+     */
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Uncomment to run example of fetching record from Parse
+        ExampleGetUserFromParse.run();
+    }
+
 }
