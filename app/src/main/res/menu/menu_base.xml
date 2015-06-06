@@ -10,6 +10,11 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
+    <item android:id="@+id/action_mapview" android:orderInCategory="9" android:title="Map View"
+        android:icon="@drawable/abc_btn_radio_material"
+        app:showAsAction="ifRoom"
+        />
+
     <item android:id="@+id/action_wishlist" android:orderInCategory="10" android:title="Wish List"
         android:icon="@drawable/abc_btn_check_material"
         app:showAsAction="ifRoom"
