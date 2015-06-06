@@ -39,6 +39,8 @@ public class MainActivity extends PostsListActivity {
         //ExampleGetUserFromParse.run();
 
         //ExampleGetPostsFromParse.getPostWithId("6KGn7knDWJ");
+
+        //ExampleSavePostToParse.savePost();
     }
 
 }
