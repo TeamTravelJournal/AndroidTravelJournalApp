@@ -1,6 +1,8 @@
 package com.mycompany.traveljournal.mainscreen;
 
 import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.view.MenuItem;
 
 import com.mycompany.traveljournal.R;
@@ -29,14 +31,21 @@ public class MainPostFragment extends PostsListFragment {
         int id = item.getItemId();
 
         if(id == R.id.action_mapview){
-            executeMapIntent();
+
+            executeMapIntent(m_query);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void executeMapIntent(){
+    private void executeMapIntent(String query){
         Intent i = new Intent(getActivity(), MapActivity.class);
+        i.putExtra("query", query);
         startActivity(i);
     }
+
+    public void onSearch(String query){
+
+    }
+
 }

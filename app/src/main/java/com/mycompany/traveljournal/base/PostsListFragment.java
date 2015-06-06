@@ -36,6 +36,7 @@ public abstract class PostsListFragment extends Fragment {
     protected ListView lvPosts;
     protected SwipeRefreshLayout swipeContainer;
     protected PostsListAdapter aPosts;
+    protected String m_query;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,6 +73,7 @@ public abstract class PostsListFragment extends Fragment {
                 // perform query here
 
                 if(query != null && !"".equals(query)) {
+                    m_query = query;
                     Toast.makeText(getActivity(), "query " + query, Toast.LENGTH_SHORT).show();
                 }
                 return true;
