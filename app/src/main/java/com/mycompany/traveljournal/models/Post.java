@@ -107,4 +107,37 @@ public class Post extends ParseObject{
         query.setLimit(1);
         query.findInBackground(callback);
     }
+
+    public static void getPostsNearLocation(double latitude, double longitude, int limit, FindCallback callback) {
+        ParseGeoPoint userLocation = new ParseGeoPoint(latitude, longitude);
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.whereNear("location", userLocation);
+        query.setLimit(limit);
+        query.findInBackground(callback);
+    }
+
+    public static void getPostsWithinWindow(double latitudeMin, double longitudeMin, double latitudeMax, double longitudeMax, int limit, FindCallback callback) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.setLimit(limit);
+        ParseGeoPoint swPoint = new ParseGeoPoint(latitudeMin, longitudeMin);
+        ParseGeoPoint nePoint = new ParseGeoPoint(latitudeMax, longitudeMax);
+        query.whereWithinGeoBox("location", swPoint, nePoint);
+        query.findInBackground(callback);
+    }
+
+    // This is just for debugging purposes
+    @Override
+    public String toString() {
+        String output = "";
+        output += getCaption() + " ";
+        output += getDescription() + " ";
+        output += getUserID() + " ";
+        output += getLikes() + " ";
+        output += getTripID() + " ";
+        output += getLatitude() + " ";
+        output += getLongitude();
+        return output;
+    }
+
+
 }
