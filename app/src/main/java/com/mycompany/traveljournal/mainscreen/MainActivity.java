@@ -38,9 +38,12 @@ public class MainActivity extends PostsListActivity {
         // Uncomment to run example of fetching record from Parse
         //ExampleGetUserFromParse.run();
 
-        //ExampleGetPostsFromParse.getPostWithId("6KGn7knDWJ");
+        //ExampleGetPostsFromParse.getPostWithId();
+        //ExampleGetPostsFromParse.getPostsNearLocation();
 
         //ExampleSavePostToParse.savePost();
+
+
     }
 
 }
