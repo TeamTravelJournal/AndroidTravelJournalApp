@@ -104,7 +104,7 @@ public class DetailFragment extends Fragment {
         tvLikes.setText(post.getLikes()+" Likes");
     }
 
-    
+
 
 //    private void loadImage() {
 //
