@@ -42,8 +42,11 @@ public class MainActivity extends PostsListActivity {
         //ExampleGetPostsFromParse.getPostsNearLocation();
         //ExampleGetPostsFromParse.getPostsWithinWindow();
 
-        //ExampleSavePostToParse.savePost();
-        //ExampleSavePostToParse.uploadPhotoToPost(this);
+
+//        ExampleSavePostToParse savePost = new ExampleSavePostToParse();
+//        savePost.createPostExample();
+
+
 
 
 

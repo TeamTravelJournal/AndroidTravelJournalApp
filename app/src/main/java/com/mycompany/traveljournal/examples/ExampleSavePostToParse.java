@@ -1,73 +1,92 @@
 package com.mycompany.traveljournal.examples;
 
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 
-import com.mycompany.traveljournal.R;
-import com.mycompany.traveljournal.datasource.ImageUploader;
-import com.mycompany.traveljournal.models.Post;
-import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
-import com.parse.SaveCallback;
+import com.mycompany.traveljournal.datasource.PostCreator;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 
 public class ExampleSavePostToParse {
 
     private final static String TAG = "ExampleSavePostToParse";
 
-    public static void savePost() {
-        Post post = new Post();
-        post.put("caption", "Shopping @Stanford");
-        post.put("description", "");
-
-        ParseGeoPoint location = new ParseGeoPoint();
-        location.setLatitude(37.438230);
-        location.setLongitude(-122.173328);
-        post.put("location", location);
-
-        post.put("user_id", "1");
-        post.put("likes", 6);
-        post.put("trip_id", 0);
-
-
-        post.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.wtf(TAG, "Post saved");
-                } else {
-                    Log.wtf(TAG, "Failed to save post"+e.toString());
-                }
-            }
-        });
-
+    // Helper
+    private static Bitmap getBitmapFromURL(String src) {
+        try {
+            java.net.URL url = new java.net.URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public static void uploadPhotoToPost(Context context) {
-
-        // test postId
-        String postId = "oVyDQtk78T";
-        // test data
-        byte[] byteArray = ExampleSavePostToParse.getByteArray(context);
-
-        ImageUploader uploader = new ImageUploader(postId, byteArray);
-        uploader.upload();
-    }
-
-    private static byte[] getByteArray(Context context) {
-        Resources res = context.getResources();
-        Drawable drawable = res.getDrawable(R.drawable.coffee);
-        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+    // Helper
+    private static byte[] getByteArrayFromBitmap(Bitmap bmp) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] bitMapData = stream.toByteArray();
-        return bitMapData;
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    // Helper
+    private static byte[] getByteArrayFromUrl(String url) {
+        Bitmap bmp = getBitmapFromURL(url);
+        return getByteArrayFromBitmap(bmp);
+    }
+
+    // Helper
+    private class CreatePostAsync extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            createPostComplete();
+
+            //return Void;
+            return null;
+        }
+    }
+
+    /**
+     * This method can be used to create fake posts
+     */
+    public static void createPostComplete() {
+
+        // Get sample byte Array
+        // THIS REQUIRES THE ASYNC TASK
+        String imageUrl = "http://s3-media1.fl.yelpcdn.com/bphoto/kQFIQt5MeDtpxRmTel8cuA/l.jpg";
+        byte[] imageBytes = getByteArrayFromUrl(imageUrl);
+
+
+        // No Async task required
+        PostCreator creator = new PostCreator();
+        String caption = "Can you get hummus at Hummus?";
+        String description = "";
+        double latitude = 37.563872;
+        double longitude = -122.322837;
+
+        creator.createPost(imageBytes, caption, description, latitude, longitude);
+    }
+
+    /**
+     * The example only has to happen in an AsyncTask because it downloads an image
+     *
+     * This only requires an ASYNC TASK when testing
+     */
+    public void createPostExample() {
+        new CreatePostAsync().execute();
     }
 
 }
