@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
 import com.mycompany.traveljournal.datasource.ParseClient;
+import com.mycompany.traveljournal.examples.ExampleSavePostToParse;
 
 
 public class MainActivity extends PostsListActivity {
@@ -42,8 +43,9 @@ public class MainActivity extends PostsListActivity {
         //ExampleGetPostsFromParse.getPostsNearLocation();
         //ExampleGetPostsFromParse.getPostsWithinWindow();
 
-        //ExampleSavePostToParse.savePost();
+        //ExampleSavePostToParse.savePostWithoutImage();
         //ExampleSavePostToParse.uploadPhotoToPost(this);
+        ExampleSavePostToParse.createPostComplete(this);
 
 
 

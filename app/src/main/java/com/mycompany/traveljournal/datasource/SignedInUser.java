@@ -8,7 +8,7 @@ public class SignedInUser {
     /**
      * Returns the signed in User
      */
-    public User getSignedInUser() {
+    public static User getSignedInUser() {
 
         // TODO: get the actual signed in user
         return User.getFakeUser();
