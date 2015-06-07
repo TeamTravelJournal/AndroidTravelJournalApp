@@ -1,13 +1,19 @@
 package com.mycompany.traveljournal.helpers;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.model.LatLng;
+import com.mycompany.traveljournal.common.ErrorDialogFragment;
 
 import java.util.List;
 import java.util.Locale;
@@ -20,6 +26,11 @@ public class Util {
 
     public static final int LIMIT_POST = 10;
     public static final int MAX_POST_SEARCH_DISTANCE = 25;
+    /*
+     * Define a request code to send to Google Play services This code is
+     * returned in Activity.onActivityResult
+     */
+    public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
     private Boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
@@ -27,6 +38,32 @@ public class Util {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
+
+    public static boolean isGooglePlayServicesAvailable(Context context) {
+        // Check that Google Play services is available
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
+        // If Google Play services is available
+        if (ConnectionResult.SUCCESS == resultCode) {
+            // In debug mode, log the status
+            Log.d("Location Updates", "Google Play services is available.");
+            return true;
+        } else {
+            // Get the error dialog from Google Play services
+            Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, (Activity)context,
+                    CONNECTION_FAILURE_RESOLUTION_REQUEST);
+
+            // If Google Play services can provide an error dialog
+            if (errorDialog != null) {
+                // Create a new DialogFragment for the error dialog
+                ErrorDialogFragment errorFragment = new ErrorDialogFragment();
+                errorFragment.setDialog(errorDialog);
+                errorFragment.show(((FragmentActivity)context).getSupportFragmentManager(), "Location Updates");
+            }
+
+            return false;
+        }
+    }
+
 
     public static Boolean isOnline() {
         try {
