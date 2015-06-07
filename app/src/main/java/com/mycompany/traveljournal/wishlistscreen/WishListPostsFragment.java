@@ -31,6 +31,11 @@ public class WishListPostsFragment extends PostsListFragment {
     }
 
     @Override
+    public void populateListOnSearch(){
+
+    }
+
+    @Override
     public void refreshList() {
 
     }

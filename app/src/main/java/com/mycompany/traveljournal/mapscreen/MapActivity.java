@@ -42,7 +42,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
+import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mainscreen.MainPostFragment;
+import com.mycompany.traveljournal.models.Post;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +69,7 @@ public class MapActivity extends ActionBarActivity implements
     private LocationRequest mLocationRequest;
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
+    private final static String TAG = "MapActivityDebug";
 
     private ArrayList<LatLng> points=null;
     private boolean ready = false;
@@ -88,7 +93,7 @@ public class MapActivity extends ActionBarActivity implements
 
         markers = new ArrayList<Marker>();
         m_query = getIntent().getStringExtra("query");
-        m_location = getLocationFromQuery(m_query);
+        m_location = Util.getLocationFromQuery(this, m_query);
 
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         if (mapFragment != null) {
@@ -146,15 +151,71 @@ public class MapActivity extends ActionBarActivity implements
 
         Log.d("DEBUG", "on camera change");
 
-        if(points==null && ready) {
+        //if(points==null && ready) {
             //map.clear();
 
-            Log.d("DEBUG", "camera change - location is set/ready");
+            //Log.d("DEBUG", "camera change - location is set/ready");
             // Create random points within the boundaries of the map
-            points = createRandomPointsOnVisibleMap();//this method will be replaces by querying parse
+            //points = createRandomPointsOnVisibleMap();//this method will be replaces by querying parse
+            getPostsOnCurrentWindowAndPutPins();
+
             // Put a pin for each.
-            putPins(points);
-        }
+            //putPins(points);
+        //}
+    }
+
+    private void getPostsOnCurrentWindowAndPutPins(){
+
+        points = new ArrayList<>();
+
+        LatLngBounds curScreen = map.getProjection().getVisibleRegion().latLngBounds;
+
+        LatLng ne = curScreen.northeast;
+        LatLng sw = curScreen.southwest;
+
+        Log.d("DEBUG", "Screen boundaries. ne: " + ne.toString() + ", sw: " + sw.toString());
+
+        // west - x coordinate
+        double rangeMinLng = sw.longitude;
+        // east - x coordinate
+        double rangeMaxLng = ne.longitude;
+        // north - y coordinate
+        double rangeMaxLat = ne.latitude;
+        // south - y coordinate
+        double rangeMinLat = sw.latitude;
+
+        Post.getPostsWithinWindow(rangeMinLat, rangeMinLng, rangeMaxLat, rangeMaxLng, Util.LIMIT_POST, new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e == null) {
+                    //Toast.makeText(, "parse call succesful", Toast.LENGTH_SHORT).show();
+                    for (int i = 0; i < posts.size(); i++) {
+
+                        Post post = posts.get(i);
+
+                        if(post==null){
+                            Log.d(TAG, "post is null");
+                        }
+                        else {
+                            Log.d(TAG, "post is: " + post.toString());
+
+                            //LatLng point = new LatLng(37.5513928, -122.2865121);
+                            LatLng point = new LatLng(post.getLatitude(), post.getLongitude());
+
+                            Log.d("DEBUG", "Adding post point: " + point.toString());
+
+                            points.add(point);
+                        }
+                    }
+
+                    putPins(points);
+
+                } else {
+                    //Toast.makeText(this, "parse call failed", Toast.LENGTH_SHORT).show();
+                    Log.wtf(TAG, "Failed to get posts");
+                }
+            }
+        });
     }
 
     private ArrayList<LatLng> createRandomPointsOnVisibleMap(){
@@ -473,35 +534,6 @@ public class MapActivity extends ActionBarActivity implements
             }
         });
     }
-
-    public LatLng getLocationFromQuery(String query) {
-
-        Geocoder coder = new Geocoder(this, Locale.getDefault());
-        List<Address> address;
-        LatLng p1 = null;
-
-        if(query==null || query.equals("")){
-            Log.d("DEBUG", "not a valid query");
-            return null;
-        }
-
-        try {
-            address = coder.getFromLocationName(query, 1);
-            if (address == null) {
-                return null;
-            }
-            Address location = address.get(0);
-
-            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
-
-        } catch (Exception ex) {
-
-            ex.printStackTrace();
-        }
-
-        return p1;
-    }
-
 
     // Define a DialogFragment that displays the error dialog
     public static class ErrorDialogFragment extends DialogFragment {

@@ -30,6 +30,11 @@ public class UserPostsFragment extends PostsListFragment {
     }
 
     @Override
+    public void populateListOnSearch(){
+
+    }
+
+    @Override
     public void refreshList() {
 
     }
