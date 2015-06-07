@@ -11,6 +11,9 @@ import android.widget.ImageView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.models.Post;
+import com.mycompany.traveljournal.service.JournalApplication;
+import com.mycompany.traveljournal.service.JournalCallBack;
+import com.mycompany.traveljournal.service.JournalService;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.squareup.picasso.Picasso;
@@ -52,18 +55,18 @@ public class DetailFragment extends Fragment {
     private void testPostWithImage() {
 
         String postId = "SZdAAxPZKf";
-        Post.getPostWithId(postId, new FindCallback<Post>() {
+        JournalService client = JournalApplication.getClient();
+        client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e == null) {
-                    Post post = posts.get(0);
+            public void onSuccess(List<Post> posts) {
+                Post post = posts.get(0);
 
-                    ImageView ivPost = (ImageView) getActivity().findViewById(R.id.ivPost);
-                    Picasso.with(getActivity()).load(post.getImageUrl()).into(ivPost);
-
-                } else {
-                    Log.wtf(TAG, "Post not found");
-                }
+                ImageView ivPost = (ImageView) getActivity().findViewById(R.id.ivPost);
+                Picasso.with(getActivity()).load(post.getImageUrl()).into(ivPost);
+            }
+            @Override
+            public void onFailure(Exception e) {
+                Log.wtf(TAG, "Post not found");
             }
         });
 
@@ -82,10 +85,10 @@ public class DetailFragment extends Fragment {
 //
 //
 //        String postId = "6KGn7knDWJ";
-//        Post.getPostWithId(postId, new FindCallback<Post>() {
+//        JournalService client = JournalApplication.getClient();
+//        client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
 //            @Override
-//            public void done(List<Post> posts, ParseException e) {
-//                if (e == null) {
+//            public void onSuccess(List<Post> posts) {
 //                    Post post = posts.get(0);
 //                    Log.wtf(TAG, post.toString());
 //
@@ -120,10 +123,11 @@ public class DetailFragment extends Fragment {
 //                    });
 //
 //
-//                } else {
-//                    Log.wtf(TAG, "Post not found");
 //                }
-//            }
+//              @Override
+//              public void onFailure(Exception e) {
+//                  Log.wtf(TAG, "Post not found");
+//              }
 //        });
 //    }
 

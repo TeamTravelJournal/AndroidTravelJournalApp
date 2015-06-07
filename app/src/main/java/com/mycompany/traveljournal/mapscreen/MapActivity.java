@@ -45,6 +45,9 @@ import com.mycompany.traveljournal.base.PostsListActivity;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mainscreen.MainPostFragment;
 import com.mycompany.traveljournal.models.Post;
+import com.mycompany.traveljournal.service.JournalApplication;
+import com.mycompany.traveljournal.service.JournalCallBack;
+import com.mycompany.traveljournal.service.JournalService;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
@@ -79,6 +82,7 @@ public class MapActivity extends ActionBarActivity implements
     private ArrayList<Boolean> shown= null;
     private String m_query;
     private LatLng m_location;
+    private JournalService client;
 
     /*
      * Define a request code to send to Google Play services This code is
@@ -94,6 +98,7 @@ public class MapActivity extends ActionBarActivity implements
         markers = new ArrayList<Marker>();
         m_query = getIntent().getStringExtra("query");
         m_location = Util.getLocationFromQuery(this, m_query);
+        client = JournalApplication.getClient();
 
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         if (mapFragment != null) {
@@ -184,36 +189,34 @@ public class MapActivity extends ActionBarActivity implements
         // south - y coordinate
         double rangeMinLat = sw.latitude;
 
-        Post.getPostsWithinWindow(rangeMinLat, rangeMinLng, rangeMaxLat, rangeMaxLng, Util.LIMIT_POST, new FindCallback<Post>() {
+        client.getPostsWithinWindow(rangeMinLat, rangeMinLng, rangeMaxLat, rangeMaxLng, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e == null) {
-                    //Toast.makeText(, "parse call succesful", Toast.LENGTH_SHORT).show();
-                    for (int i = 0; i < posts.size(); i++) {
+            public void onSuccess(List<Post> posts) {
+                //Toast.makeText(, "parse call succesful", Toast.LENGTH_SHORT).show();
+                for (int i = 0; i < posts.size(); i++) {
 
-                        Post post = posts.get(i);
+                    Post post = posts.get(i);
 
-                        if(post==null){
-                            Log.d(TAG, "post is null");
-                        }
-                        else {
-                            Log.d(TAG, "post is: " + post.toString());
+                    if (post == null) {
+                        Log.d(TAG, "post is null");
+                    } else {
+                        Log.d(TAG, "post is: " + post.toString());
 
-                            //LatLng point = new LatLng(37.5513928, -122.2865121);
-                            LatLng point = new LatLng(post.getLatitude(), post.getLongitude());
+                        //LatLng point = new LatLng(37.5513928, -122.2865121);
+                        LatLng point = new LatLng(post.getLatitude(), post.getLongitude());
 
-                            Log.d("DEBUG", "Adding post point: " + point.toString());
+                        Log.d("DEBUG", "Adding post point: " + point.toString());
 
-                            points.add(point);
-                        }
+                        points.add(point);
                     }
-
-                    putPins(points);
-
-                } else {
-                    //Toast.makeText(this, "parse call failed", Toast.LENGTH_SHORT).show();
-                    Log.wtf(TAG, "Failed to get posts");
                 }
+
+                putPins(points);
+            }
+            @Override
+            public void onFailure(Exception e) {
+                //Toast.makeText(this, "parse call failed", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Failed to get posts");
             }
         });
     }

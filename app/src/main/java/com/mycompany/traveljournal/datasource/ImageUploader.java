@@ -4,6 +4,9 @@ package com.mycompany.traveljournal.datasource;
 import android.util.Log;
 
 import com.mycompany.traveljournal.models.Post;
+import com.mycompany.traveljournal.service.JournalApplication;
+import com.mycompany.traveljournal.service.JournalCallBack;
+import com.mycompany.traveljournal.service.JournalService;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -18,10 +21,12 @@ public class ImageUploader {
     private byte[] imageBytes;
     ParseFile file;
     String imageUrl;
+    private JournalService client;
 
     public ImageUploader(String postId, byte[] imageBytes) {
         this.postId = postId;
         this.imageBytes = imageBytes;
+        this.client = JournalApplication.getClient();
     }
 
     /**
@@ -53,18 +58,17 @@ public class ImageUploader {
      */
     private void setImageUrlOnPost() {
 
-        Post.getPostWithId(postId, new FindCallback<Post>() {
+        client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e == null) {
-                    Post post = posts.get(0);
-                    post.put("image_url", imageUrl);
-                    post.saveInBackground();
-                } else {
-                    Log.wtf(TAG, "Post not found");
-                }
+            public void onSuccess(List<Post> posts) {
+                Post post = posts.get(0);
+                post.put("image_url", imageUrl);
+                post.saveInBackground();
+            }
+            @Override
+            public void onFailure(Exception e) {
+                Log.wtf(TAG, "Post not found");
             }
         });
-
     }
 }
