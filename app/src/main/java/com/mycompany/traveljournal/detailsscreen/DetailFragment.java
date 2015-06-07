@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.models.Post;
@@ -24,6 +25,26 @@ import java.util.List;
 public class DetailFragment extends Fragment {
 
     private final static String TAG = "DetailFragment";
+    private String postId;
+
+    private ImageView ivProfile;
+    private ImageView ivPost;
+    private TextView tvCaption;
+
+    private ImageView ivShare;
+    private ImageView ivFollow;
+    private ImageView ivStar;
+    private TextView tvLikes;
+
+
+
+    public static DetailFragment newInstance(String postId) {
+        DetailFragment detailFragment = new DetailFragment();
+        Bundle args = new Bundle();
+        args.putString("post_id", postId);
+        detailFragment.setArguments(args);
+        return detailFragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,7 +53,8 @@ public class DetailFragment extends Fragment {
         setUpListeners();
 
 
-        testPostWithImage();
+        //testPostWithImage();
+        fetchPostAndPopulateViews();
 
 
         return view;
@@ -40,7 +62,17 @@ public class DetailFragment extends Fragment {
 
 
 
+
+
     public void setUpViews(View v){
+        ivProfile = (ImageView) v.findViewById(R.id.ivProfile);
+        ivPost = (ImageView) v.findViewById(R.id.ivPost);
+        tvCaption = (TextView) v.findViewById(R.id.tvCaption);
+
+        ivShare = (ImageView) v.findViewById(R.id.ivShare);
+        ivFollow = (ImageView) v.findViewById(R.id.ivFollow);
+        ivStar = (ImageView) v.findViewById(R.id.ivStar);
+        tvLikes = (TextView) v.findViewById(R.id.tvLikes);
     }
 
     public void setUpListeners() {
@@ -50,6 +82,31 @@ public class DetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        postId = getArguments().getString("post_id", "");
+
+        Log.wtf(TAG, "--postid is " + postId);
+    }
+
+    private void fetchPostAndPopulateViews() {
+        Post.getPostWithId(postId, new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e == null) {
+                    Post post = posts.get(0);
+
+                    populateViews(post);
+                } else {
+                    Log.wtf(TAG, "Post not found with id "+postId);
+                }
+            }
+        });
+    }
+
+    private void populateViews(Post post) {
+        Picasso.with(getActivity()).load(post.getImageUrl()).into(ivPost);
+        tvCaption.setText(post.getCaption());
+        tvLikes.setText(post.getLikes()+" Likes");
     }
 
     private void testPostWithImage() {
