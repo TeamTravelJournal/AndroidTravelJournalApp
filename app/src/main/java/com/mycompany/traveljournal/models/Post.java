@@ -7,6 +7,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 @ParseClassName("Post")
 public class Post extends ParseObject{
@@ -42,12 +43,18 @@ public class Post extends ParseObject{
 
     public double getLatitude() {
         ParseGeoPoint location = (ParseGeoPoint) get("location");
-        return location.getLatitude();
+        if(location!=null){
+            return location.getLatitude();
+        }
+        return 0.0d;
     }
 
     public double getLongitude() {
         ParseGeoPoint location = (ParseGeoPoint) get("location");
-        return location.getLongitude();
+        if(location!=null) {
+            return location.getLongitude();
+        }
+        return 0.0d;
     }
 
     public String getUserID() {
@@ -126,6 +133,47 @@ public class Post extends ParseObject{
         ParseGeoPoint swPoint = new ParseGeoPoint(latitudeMin, longitudeMin);
         ParseGeoPoint nePoint = new ParseGeoPoint(latitudeMax, longitudeMax);
         query.whereWithinGeoBox("location", swPoint, nePoint);
+        query.findInBackground(callback);
+    }
+
+    public static void getRecentPosts(Date createdAt, int limit, FindCallback callback) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+
+        if(createdAt!=null){
+            //if we pass a timestamp, query the posts older than timestamp
+            //otherwise query everything sorted by timestamp
+            query.whereLessThan("createdAt", createdAt);
+        }
+        query.orderByDescending("createdAt");
+        query.setLimit(limit);
+        query.findInBackground(callback);
+    }
+
+    public static void getPostsNearLocationOrderByDate(Date createdAt, double latitude, double longitude, int limit, FindCallback callback) {
+        ParseGeoPoint userLocation = new ParseGeoPoint(latitude, longitude);
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.whereNear("location", userLocation);
+        if(createdAt!=null){
+            //if we pass a timestamp, query the posts older than timestamp
+            //otherwise query everything sorted by timestamp
+            query.whereLessThan("createdAt", createdAt);
+        }
+        query.orderByDescending("createdAt");
+        query.setLimit(limit);
+        query.findInBackground(callback);
+    }
+
+    public static void getPostsWithinMilesOrderByDate(Date createdAt, int maxDistance, double latitude, double longitude, int limit, FindCallback callback) {
+        ParseGeoPoint userLocation = new ParseGeoPoint(latitude, longitude);
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.whereWithinMiles("location", userLocation, maxDistance);
+        if(createdAt!=null){
+            //if we pass a timestamp, query the posts older than timestamp
+            //otherwise query everything sorted by timestamp
+            query.whereLessThan("createdAt", createdAt);
+        }
+        query.orderByDescending("createdAt");
+        query.setLimit(limit);
         query.findInBackground(callback);
     }
 
