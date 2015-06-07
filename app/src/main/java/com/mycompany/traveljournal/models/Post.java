@@ -15,8 +15,8 @@ public class Post extends ParseObject{
 
     private String postID; //Parse ids are strings
 
-
-    private ParseFile image;
+    private String imageId;
+    //private ParseFile image;
 
     private String caption;
     private String description;
@@ -62,6 +62,10 @@ public class Post extends ParseObject{
 
     public String getTripID() {
         return getString("trip_id");
+    }
+
+    public String getImageId() {
+        return getString("image_id");
     }
 
     public void doWithPhoto(GetDataCallback callback) {
@@ -151,6 +155,7 @@ public class Post extends ParseObject{
         output += getLongitude()+ " ";
         return output;
     }
+
 
 
 }
