@@ -27,6 +27,8 @@ import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.profilescreen.ProfileActivity;
+import com.mycompany.traveljournal.service.JournalApplication;
+import com.mycompany.traveljournal.service.JournalService;
 import com.mycompany.traveljournal.wishlistscreen.WishListActivity;
 
 import java.util.ArrayList;
@@ -44,6 +46,7 @@ public abstract class PostsListFragment extends Fragment {
     protected ImageView mQuickReturnView;
     protected String m_query;
     protected LatLng m_location;
+    protected JournalService client;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,6 +63,7 @@ public abstract class PostsListFragment extends Fragment {
         posts = new ArrayList<>();
         aPosts = new PostsListAdapter(getActivity(), posts);
         setUpHasOptionsMenu();
+        client = JournalApplication.getClient();
     }
 
     @Override

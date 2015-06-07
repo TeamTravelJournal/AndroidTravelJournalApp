@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mapscreen.MapActivity;
 import com.mycompany.traveljournal.models.Post;
+import com.mycompany.traveljournal.models.User;
+import com.mycompany.traveljournal.service.JournalCallBack;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
@@ -85,46 +87,47 @@ public class MainPostFragment extends PostsListFragment {
         if(m_location==null){
 
             Log.d(TAG, "no location");
-            Post.getRecentPosts(earliestTimeStamp, Util.LIMIT_POST, new FindCallback<Post>() {
+            client.getRecentPosts(earliestTimeStamp, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
                 @Override
-                public void done(List<Post> resultPosts, ParseException e) {
-                    if (e == null) {
-                        Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "success getting posts: " + resultPosts.toString());
+                public void onSuccess(List<Post> resultPosts){
+                    Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
-                        posts.addAll(resultPosts);
-                        if (posts.size() > 0) {
-                            earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
-                        }
-                        aPosts.notifyDataSetChanged();
-
-                    } else {
-                        Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "Failed to get posts");
+                    posts.addAll(resultPosts);
+                    if (posts.size() > 0) {
+                        earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
                     }
+                    aPosts.notifyDataSetChanged();
                 }
+
+                @Override
+                public void onFailure(Exception e){
+                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Failed to get posts");
+                }
+
             });
 
         }else{
             Log.d(TAG, "location");
-            Post.getPostsWithinMilesOrderByDate(earliestTimeStamp, Util.MAX_POST_SEARCH_DISTANCE,
-                    m_location.latitude, m_location.longitude, Util.LIMIT_POST, new FindCallback<Post>() {
+            client.getPostsWithinMilesOrderByDate(earliestTimeStamp, Util.MAX_POST_SEARCH_DISTANCE, m_location.latitude, m_location.longitude, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
                 @Override
-                public void done(List<Post> resultPosts, ParseException e) {
-                    if (e == null) {
-                        Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "success getting posts: " + resultPosts.toString());
+                public void onSuccess(List<Post> resultPosts) {
+                    Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
-                        posts.addAll(resultPosts);
-                        if (posts.size() > 0) {
-                            earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
-                        }
-                        aPosts.notifyDataSetChanged();
-
-                    } else {
-                        Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "Failed to get posts");
+                    posts.addAll(resultPosts);
+                    if (posts.size() > 0) {
+                        earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
                     }
+                    aPosts.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Failed to get posts");
+
                 }
             });
         }
@@ -136,24 +139,27 @@ public class MainPostFragment extends PostsListFragment {
         if(m_location==null){
 
             Log.d(TAG, "no location");
-            Post.getRecentPosts(null, Util.LIMIT_POST, new FindCallback<Post>() {
+            client.getRecentPosts(null, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
                 @Override
-                public void done(List<Post> resultPosts, ParseException e) {
-                    if (e == null) {
-                        Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "success getting posts: " + resultPosts.toString());
+                public void onSuccess(List<Post> resultPosts) {
+                    Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
-                        aPosts.clear();
-                        posts.addAll(resultPosts);
-                        if (posts.size() > 0) {
-                            earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
-                        }
-                        aPosts.notifyDataSetChanged();
-
-                    } else {
-                        Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "Failed to get posts");
+                    aPosts.clear();
+                    posts.addAll(resultPosts);
+                    if (posts.size() > 0) {
+                        earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
                     }
+                    aPosts.notifyDataSetChanged();
+                    if(swipeContainer!=null){
+                        swipeContainer.setRefreshing(false);
+                    }
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Failed to get posts");
                     if(swipeContainer!=null){
                         swipeContainer.setRefreshing(false);
                     }
@@ -162,26 +168,29 @@ public class MainPostFragment extends PostsListFragment {
 
         }else{
             Log.d(TAG, "location");
-            Post.getPostsWithinMilesOrderByDate(null, Util.MAX_POST_SEARCH_DISTANCE,
-                    m_location.latitude, m_location.longitude, Util.LIMIT_POST, new FindCallback<Post>() {
+            client.getPostsWithinMilesOrderByDate(null, Util.MAX_POST_SEARCH_DISTANCE,m_location.latitude, m_location.longitude, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
                 @Override
-                public void done(List<Post> resultPosts, ParseException e) {
-                    if (e == null) {
-                        Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "success getting posts: " + resultPosts.toString());
+                public void onSuccess(List<Post> resultPosts) {
 
-                        aPosts.clear();
-                        posts.addAll(resultPosts);
-                        if (posts.size() > 0) {
-                            earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
-                        }
-                        aPosts.notifyDataSetChanged();
+                    Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
-                    } else {
-                        Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "Failed to get posts");
+                    aPosts.clear();
+                    posts.addAll(resultPosts);
+                    if (posts.size() > 0) {
+                        earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
                     }
+                    aPosts.notifyDataSetChanged();
                     if (swipeContainer != null) {
+                        swipeContainer.setRefreshing(false);
+                    }
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Failed to get posts");
+                    if(swipeContainer!=null){
                         swipeContainer.setRefreshing(false);
                     }
                 }
@@ -195,50 +204,49 @@ public class MainPostFragment extends PostsListFragment {
         if(m_location==null){
 
             Log.d(TAG, "no location");
-            Post.getRecentPosts(null, Util.LIMIT_POST, new FindCallback<Post>() {
+            client.getRecentPosts(null, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
                 @Override
-                public void done(List<Post> resultPosts, ParseException e) {
-                    if (e == null) {
-                        Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "success getting posts: " + resultPosts.toString());
+                public void onSuccess(List<Post> resultPosts) {
+                    Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
-                        aPosts.clear();
-                        posts.addAll(resultPosts);
-                        earliestTimeStamp = null;
-                        if (posts.size() > 0) {
-                            earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
-                        }
-                        aPosts.notifyDataSetChanged();
-
-                    } else {
-                        Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "Failed to get posts");
+                    aPosts.clear();
+                    posts.addAll(resultPosts);
+                    earliestTimeStamp = null;
+                    if (posts.size() > 0) {
+                        earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
                     }
+                    aPosts.notifyDataSetChanged();
+                }
+                @Override
+                public void onFailure(Exception e) {
+                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Failed to get posts");
                 }
             });
 
         }else{
             Log.d(TAG, "location");
-            Post.getPostsWithinMilesOrderByDate(null, Util.MAX_POST_SEARCH_DISTANCE,
-                    m_location.latitude, m_location.longitude, Util.LIMIT_POST, new FindCallback<Post>() {
+            client.getPostsWithinMilesOrderByDate(null, Util.MAX_POST_SEARCH_DISTANCE, m_location.latitude, m_location.longitude, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
                 @Override
-                public void done(List<Post> resultPosts, ParseException e) {
-                    if (e == null) {
-                        Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "success getting posts: " + resultPosts.toString());
+                public void onSuccess(List<Post> resultPosts){
 
-                        aPosts.clear();
-                        posts.addAll(resultPosts);
-                        earliestTimeStamp = null;
-                        if (posts.size() > 0) {
-                            earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
-                        }
-                        aPosts.notifyDataSetChanged();
+                    Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
-                    } else {
-                        Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "Failed to get posts");
+                    aPosts.clear();
+                    posts.addAll(resultPosts);
+                    earliestTimeStamp = null;
+                    if (posts.size() > 0) {
+                        earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
                     }
+                    aPosts.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Failed to get posts");
                 }
             });
         }
