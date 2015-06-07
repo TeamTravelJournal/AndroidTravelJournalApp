@@ -43,7 +43,7 @@ public class MainActivity extends PostsListActivity {
         //ExampleGetPostsFromParse.getPostsWithinWindow();
 
         //ExampleSavePostToParse.savePost();
-
+        //ExampleSavePostToParse.uploadPhotoToPost(this);
 
 
 
