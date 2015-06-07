@@ -15,8 +15,6 @@ import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -52,11 +50,7 @@ public class DetailFragment extends Fragment {
         setUpViews(view);
         setUpListeners();
 
-
-        //testPostWithImage();
         fetchPostAndPopulateViews();
-
-
         return view;
     }
 
@@ -89,17 +83,18 @@ public class DetailFragment extends Fragment {
     }
 
     private void fetchPostAndPopulateViews() {
-        Post.getPostWithId(postId, new FindCallback<Post>() {
+        JournalService client = JournalApplication.getClient();
+        client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e == null) {
-                    Post post = posts.get(0);
-
-                    populateViews(post);
-                } else {
-                    Log.wtf(TAG, "Post not found with id "+postId);
-                }
+            public void onSuccess(List<Post> posts) {
+                Post post = posts.get(0);
+                populateViews(post);
             }
+            @Override
+            public void onFailure(Exception e) {
+                Log.wtf(TAG, "Post not found with id "+postId);
+            }
+
         });
     }
 
@@ -109,33 +104,7 @@ public class DetailFragment extends Fragment {
         tvLikes.setText(post.getLikes()+" Likes");
     }
 
-    private void testPostWithImage() {
-
-        String postId = "SZdAAxPZKf";
-        JournalService client = JournalApplication.getClient();
-        client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
-            @Override
-            public void onSuccess(List<Post> posts) {
-                Post post = posts.get(0);
-
-                ImageView ivPost = (ImageView) getActivity().findViewById(R.id.ivPost);
-                Picasso.with(getActivity()).load(post.getImageUrl()).into(ivPost);
-            }
-            @Override
-            public void onFailure(Exception e) {
-                Log.wtf(TAG, "Post not found");
-            }
-        });
-
-
-
-
-
-
-    }
-
-
-
+    
 
 //    private void loadImage() {
 //
