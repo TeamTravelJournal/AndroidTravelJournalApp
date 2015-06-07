@@ -24,6 +24,9 @@ public class ImageUploader {
         this.imageBytes = imageBytes;
     }
 
+    /**
+     * This uploads a photo in the background and then updates the post's image_url
+     */
     public void upload() {
 
         Log.wtf(TAG, "uploading");
@@ -45,6 +48,9 @@ public class ImageUploader {
         });
     }
 
+    /**
+     * This updates the image_url field on a post in the background
+     */
     private void setImageUrlOnPost() {
 
         Post.getPostWithId(postId, new FindCallback<Post>() {

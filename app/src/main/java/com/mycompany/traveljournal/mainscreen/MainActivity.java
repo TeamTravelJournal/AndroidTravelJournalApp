@@ -1,14 +1,11 @@
 package com.mycompany.traveljournal.mainscreen;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
 import com.mycompany.traveljournal.datasource.ParseClient;
-import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 
 
 public class MainActivity extends PostsListActivity {
@@ -47,10 +44,16 @@ public class MainActivity extends PostsListActivity {
 
         //ExampleSavePostToParse.savePost();
 
-        Log.wtf(TAG, "starting detail");
-        Intent i = new Intent(this, DetailActivity.class);
-        startActivity(i);
 
+
+
+
+
+
+
+        // Richard - please keep, for my debugging
+        //Intent i = new Intent(this, DetailActivity.class);
+        //startActivity(i);
     }
 
 }

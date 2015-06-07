@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.mycompany.traveljournal.models.Post;
 import com.parse.FindCallback;
-import com.parse.GetDataCallback;
 import com.parse.ParseException;
 
 import java.util.List;
@@ -67,33 +66,6 @@ public class ExampleGetPostsFromParse {
 
                 } else {
                     Log.wtf(TAG, "Failed to get posts");
-                }
-            }
-        });
-    }
-
-
-    public static void getPostWithImage() {
-
-        String postId = "6KGn7knDWJ";
-        Post.getPostWithId(postId, new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e == null) {
-                    Post post = posts.get(0);
-                    Log.wtf(TAG, post.toString());
-
-
-                    post.doWithPhoto(new GetDataCallback() {
-                        @Override
-                        public void done(byte[] bytes, ParseException e) {
-                            Log.wtf(TAG, "DonE!");
-                        }
-                    });
-
-
-                } else {
-                    Log.wtf(TAG, "Post not found");
                 }
             }
         });
