@@ -14,8 +14,8 @@ public class Post extends ParseObject{
 
     private String postID; //Parse ids are strings
 
-// Photo will be a parse file - uncomment out line below
-    //private ParseFile photoUrl;
+    private String imageUrl;
+    //private ParseFile image;
 
     private String caption;
     private String description;
@@ -67,6 +67,10 @@ public class Post extends ParseObject{
 
     public String getTripID() {
         return getString("trip_id");
+    }
+
+    public String getImageUrl() {
+        return getString("image_url");
     }
 
     public Post() {
@@ -183,9 +187,11 @@ public class Post extends ParseObject{
         output += getLikes() + " ";
         output += getTripID() + " ";
         output += getLatitude() + " ";
-        output += getLongitude();
+        output += getLongitude()+ " ";
+        output += getImageUrl() + " ";
         return output;
     }
+
 
 
 }

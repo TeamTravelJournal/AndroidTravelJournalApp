@@ -11,6 +11,7 @@ import com.parse.ParseObject;
 
 public class ParseClient {
 
+    private static final String TAG = "ParseClient";
     private static ParseClient instance = null;
 
     protected ParseClient() {
@@ -42,7 +43,5 @@ public class ParseClient {
 
         Parse.initialize(context, "ZFoSsZ6iQBe1CvJaNqio6V0nmlN4V7U4VzboX4J4", "0GDxAZahVe7ibC6pqiMNK6n91fYoh7HRfxXLo5TK");
     }
-
-
 
 }

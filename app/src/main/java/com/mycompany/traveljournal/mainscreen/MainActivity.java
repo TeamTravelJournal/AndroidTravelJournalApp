@@ -43,8 +43,17 @@ public class MainActivity extends PostsListActivity {
         //ExampleGetPostsFromParse.getPostsWithinWindow();
 
         //ExampleSavePostToParse.savePost();
+        //ExampleSavePostToParse.uploadPhotoToPost(this);
 
 
+
+
+
+
+
+        // Richard - please keep, for my debugging
+        //Intent i = new Intent(this, DetailActivity.class);
+        //startActivity(i);
     }
 
 }
