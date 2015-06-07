@@ -7,4 +7,6 @@
     <color name="transparent_grey">#80BDBDBD</color>
     <color name="dark_grey">#424242</color>
 
+    <color name="common_background">#505050</color>
+
 </resources>
