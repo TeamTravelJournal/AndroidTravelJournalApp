@@ -12,6 +12,7 @@ import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnListViewOnScrollListener;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListFragment;
+import com.mycompany.traveljournal.createscreen.CameraActivity;
 import com.mycompany.traveljournal.createscreen.CreatePostActivity;
 import android.view.MenuItem;
 
@@ -36,7 +37,7 @@ public class MainPostFragment extends PostsListFragment {
         mQuickReturnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), CreatePostActivity.class);
+                Intent i = new Intent(getActivity(), CameraActivity.class);
                 startActivity(i);
             }
         });

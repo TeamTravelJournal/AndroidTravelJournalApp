@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mycompany.traveljournal.createscreen.CameraActivity">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:id="@+id/ivPreview"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ivPreview"
+        tools:context="com.mycompany.traveljournal.createscreen.CameraActivity">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Camera"
+            android:textColor="#FFFFFF"
+            android:id="@+id/btCamera"
+            android:layout_toLeftOf="@+id/btOk"
+            android:background="#0084B4"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="105dp"
+            android:minHeight="0dp" android:minWidth="0dp"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ok"
+            android:textColor="#FFFFFF"
+            android:id="@+id/btOk"
+            android:layout_alignParentRight="true"
+            android:background="#0084B4"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:minHeight="0dp" android:minWidth="0dp"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

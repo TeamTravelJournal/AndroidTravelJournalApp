@@ -2,13 +2,14 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:id="@+id/m_layout" android:background="#ffffff" android:padding="10dp">
     <!-- The android:layout_weight="1" will cause the scrollview reduce its screen real estate
          to allow the next RelativeLayout to be displayed.  -->
+
     <ScrollView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:scrollbarStyle="outsideInset"
         android:layout_weight="1"
         android:id="@+id/m_scroll"
@@ -60,6 +61,15 @@
                 android:layout_marginTop="23dp"
                 android:maxLength="140"
                 android:inputType="text"
+                />
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:id="@+id/ivPreview"
+                android:layout_below="@+id/etCaption"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="23dp"
                 />
 
 
