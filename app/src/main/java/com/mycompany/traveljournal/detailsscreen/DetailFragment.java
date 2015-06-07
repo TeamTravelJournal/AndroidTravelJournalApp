@@ -9,11 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.datasource.ImageUploader;
-import com.squareup.picasso.Picasso;
+import com.mycompany.traveljournal.examples.ExampleSavePostToParse;
 
 import java.io.ByteArrayOutputStream;
 
@@ -32,21 +31,14 @@ public class DetailFragment extends Fragment {
         //ExampleGetPostsFromParse.getPostWithImage();
 
 
-        //testImage();
+//        //testImage();
+//
+//        ImageView ivPost = (ImageView) view.findViewById(R.id.ivPost);
+//        String url = "http://files.parsetfss.com/0ac0f4de-204e-49bb-8e25-e6937c3c11ae/tfss-0f0fdd9a-585b-47c4-94f9-9a9528be464e-file";
+//        Picasso.with(getActivity()).load(url).into(ivPost);
 
-        ImageView ivPost = (ImageView) view.findViewById(R.id.ivPost);
+        ExampleSavePostToParse.uploadPhotoToPost(getActivity());
 
-        if (ivPost == null) {
-            Log.wtf(TAG, "NULL ");
-        }
-
-        Log.wtf(TAG,"2");
-
-        String url = "http://files.parsetfss.com/0ac0f4de-204e-49bb-8e25-e6937c3c11ae/tfss-0f0fdd9a-585b-47c4-94f9-9a9528be464e-file";
-        //String url = "http://square.github.io/picasso/static/sample.png";
-
-        //Picasso.with(getActivity()).load(url).into(ivPost);
-        Picasso.with(getActivity()).load(url).into(ivPost);
 
         return view;
     }

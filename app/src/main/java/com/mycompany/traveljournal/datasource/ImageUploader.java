@@ -26,6 +26,8 @@ public class ImageUploader {
 
     public void upload() {
 
+        Log.wtf(TAG, "uploading");
+
         file = new ParseFile(imageBytes);
 
         file.saveInBackground(new SaveCallback() {
@@ -51,8 +53,7 @@ public class ImageUploader {
                 if (e == null) {
                     Post post = posts.get(0);
                     post.put("image_url", imageUrl);
-
-
+                    post.saveInBackground();
                 } else {
                     Log.wtf(TAG, "Post not found");
                 }
