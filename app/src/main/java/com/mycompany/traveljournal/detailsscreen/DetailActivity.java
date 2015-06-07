@@ -1,27 +1,39 @@
 package com.mycompany.traveljournal.detailsscreen;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
 
-/**
- * Created by sjayaram on 6/5/2015.
- */
 public class DetailActivity extends PostsListActivity {
 
-    DetailFragment detailFragment;
+    private static final String TAG = "DetailActivity";
+    String postId;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        // Get Post ID
+        postId = getIntent().getStringExtra("post_id");
+
+        if (postId == null) {
+            Log.wtf(TAG, "Using default post id");
+            postId = "8nxq1SkIUo";
+        }
+
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void setUpFragment() {
 
         getSupportActionBar().hide();
-        Toast.makeText(this, "Inside Detail", Toast.LENGTH_SHORT).show();
-        detailFragment =  new DetailFragment();
+
+        DetailFragment detailFragment =  DetailFragment.newInstance(postId);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flContainer, detailFragment);
         ft.commit();
-
     }
 }
