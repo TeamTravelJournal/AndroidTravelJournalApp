@@ -1,7 +1,6 @@
 package com.mycompany.traveljournal.examples;
 
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -50,15 +49,11 @@ public class ExampleSavePostToParse {
 
     // Helper
     private class CreatePostAsync extends AsyncTask<Void, Void, Void> {
-        private Context context;
-
-        public CreatePostAsync(Context context) {
-            this.context = context;
-        }
 
         @Override
         protected Void doInBackground(Void... params) {
-            createPostComplete(context);
+            createPostComplete();
+
             //return Void;
             return null;
         }
@@ -67,23 +62,31 @@ public class ExampleSavePostToParse {
     /**
      * This method can be used to create fake posts
      */
-    public static void createPostComplete(Context context) {
+    public static void createPostComplete() {
 
         // Get sample byte Array
-        String imageUrl = "http://www.digitaljournal.com/img/8/7/3/i/4/1/3/o/StarbucksCafe.jpg";
+        // THIS REQUIRES THE ASYNC TASK
+        String imageUrl = "http://s3-media1.fl.yelpcdn.com/bphoto/kQFIQt5MeDtpxRmTel8cuA/l.jpg";
         byte[] imageBytes = getByteArrayFromUrl(imageUrl);
 
+
+        // No Async task required
         PostCreator creator = new PostCreator();
-        String caption = "I love my coffee in the morning";
-        String description = "This was in a Starbucks";
-        double latitude = 37.544783;
-        double longitude = -122.292885;
+        String caption = "Can you get hummus at Hummus?";
+        String description = "";
+        double latitude = 37.563872;
+        double longitude = -122.322837;
 
         creator.createPost(imageBytes, caption, description, latitude, longitude);
     }
 
-    public void createPostExample(Context context) {
-        new CreatePostAsync(context).execute();
+    /**
+     * The example only has to happen in an AsyncTask because it downloads an image
+     *
+     * This only requires an ASYNC TASK when testing
+     */
+    public void createPostExample() {
+        new CreatePostAsync().execute();
     }
 
 }
