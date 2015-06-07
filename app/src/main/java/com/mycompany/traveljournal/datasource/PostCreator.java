@@ -2,7 +2,6 @@ package com.mycompany.traveljournal.datasource;
 
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.mycompany.traveljournal.models.Post;
 import com.parse.ParseException;
@@ -31,8 +30,8 @@ public class PostCreator {
      */
     private void createPostWithoutImage(String caption, String description, double latitude, double longitude) {
         post = new Post();
-        post.put('caption', caption);
-        post.put('description', description);
+        post.put("caption", caption);
+        post.put("description", description);
 
         ParseGeoPoint location = new ParseGeoPoint();
         location.setLatitude(latitude);

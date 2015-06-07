@@ -45,7 +45,9 @@ public class MainActivity extends PostsListActivity {
 
         //ExampleSavePostToParse.savePostWithoutImage();
         //ExampleSavePostToParse.uploadPhotoToPost(this);
-        ExampleSavePostToParse.createPostComplete(this);
+
+        ExampleSavePostToParse savePost = new ExampleSavePostToParse();
+        savePost.createPostExample(this);
 
 
 
