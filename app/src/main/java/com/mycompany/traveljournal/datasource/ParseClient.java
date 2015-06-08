@@ -2,6 +2,7 @@ package com.mycompany.traveljournal.datasource;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.mycompany.traveljournal.models.Like;
 import com.mycompany.traveljournal.models.Post;
@@ -15,6 +16,7 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.Date;
 import java.util.List;
@@ -53,6 +55,13 @@ public class ParseClient implements JournalService {
         ParseObject.registerSubclass(Like.class);
 
         Parse.initialize(context, "ZFoSsZ6iQBe1CvJaNqio6V0nmlN4V7U4VzboX4J4", "0GDxAZahVe7ibC6pqiMNK6n91fYoh7HRfxXLo5TK");
+    }
+
+    //TODO
+    public void createPost(byte[] imageBytes, String caption, String description, double latitude, double longitude, final JournalCallBack<List<Post>> journalCallBack) {
+        //PostCreator postCreator = new PostCreator();
+        //postCreator.createPost();
+
     }
 
     public void getPostWithId(String postId, final JournalCallBack<List<Post>> journalCallBack) {
