@@ -39,6 +39,7 @@ public class PostCreator {
         post.put("location", location);
 
         post.put("user_id", SignedInUser.getSignedInUser().getUserId());
+        post.put("created_by", SignedInUser.getSignedInUser());
         post.put("likes", 0);
         post.put("trip_id", 0);
 

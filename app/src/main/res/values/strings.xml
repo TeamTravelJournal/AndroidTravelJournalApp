@@ -9,6 +9,8 @@
 
     <string name="title_activity_wishlist">WishList</string>
     <string name="title_activity_map">MapActivity</string>
+
+    <string name="title_activity_camera">CameraActivity</string>
     <string name="title_activity_detail">DetailActivity</string>
 
     <!-- Detail -->

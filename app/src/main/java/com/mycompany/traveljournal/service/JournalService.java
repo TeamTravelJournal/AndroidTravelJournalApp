@@ -22,4 +22,6 @@ public interface JournalService {
     public void getPostsWithinMilesOrderByDate(Date createdAt, int maxDistance, double latitude, double longitude, int limit, JournalCallBack<List<Post>> journalCallBack);
 
     public void getUserWithId(String userId, final JournalCallBack<List<User>> journalCallBack);
+
+    public void getCreatedByUserFromPost(User user, final JournalCallBack<User> journalCallBack);
 }

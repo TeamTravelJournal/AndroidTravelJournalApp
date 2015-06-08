@@ -43,12 +43,8 @@ public class MainActivity extends PostsListActivity {
         //ExampleGetPostsFromParse.getPostsWithinWindow();
 
 
-//        ExampleSavePostToParse savePost = new ExampleSavePostToParse();
-//        savePost.createPostExample();
-
-
-
-
+        //ExampleSavePostToParse savePost = new ExampleSavePostToParse();
+        //savePost.createPostExample();
 
 
 
