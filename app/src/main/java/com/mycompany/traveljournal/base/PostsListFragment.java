@@ -170,6 +170,8 @@ public abstract class PostsListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Call detail page from here
                 Intent i = new Intent(getActivity(), DetailActivity.class);
+                Post post = (Post)parent.getItemAtPosition(position);
+                i.putExtra("post_id", post.getPostID());
                 startActivity(i);
             }
         });

@@ -73,7 +73,7 @@ public class MapActivity extends ActionBarActivity implements
                 @Override
                 public void onMapReady(GoogleMap map) {
                     loadMap(map);
-                    map.setInfoWindowAdapter(new CustomWindowAdapter(getLayoutInflater()));
+                    map.setInfoWindowAdapter(new CustomWindowAdapter(MapActivity.this, getLayoutInflater()));
                 }
             });
         } else {
@@ -81,7 +81,7 @@ public class MapActivity extends ActionBarActivity implements
         }
     }
 
-    protected void loadMap(GoogleMap googleMap) {
+    public void loadMap(GoogleMap googleMap) {
         map = googleMap;
         if (map != null) {
             // Attach long click listener to the map here
@@ -93,7 +93,7 @@ public class MapActivity extends ActionBarActivity implements
             map.setMyLocationEnabled(true);
 
             //get current location
-            locationService = LocationService.getInstance(this, new LocationOnConnectListener() {
+            locationService = new LocationService(this, new LocationOnConnectListener() {
                 @Override
                 public void onLocationAvailable(Location location) {
                     if (m_location == null) {// if query location is null, use current location
@@ -239,6 +239,28 @@ public class MapActivity extends ActionBarActivity implements
             points.add(point);
         }
         return points;
+    }
+
+    private void putSinglePin(Post post){
+
+        Log.d("DEBUG", "Will put pin for post: " + post.toString());
+
+        // Define color of marker icon
+        BitmapDescriptor defaultMarker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+
+        LatLng point = new LatLng(post.getLatitude(), post.getLongitude());
+        String imageUrl = post.getImageUrl();
+        String caption = post.getCaption();
+
+        // Creates and adds marker to the map
+        Marker marker = map.addMarker(new MarkerOptions()
+                .position(point)
+                .title(caption)
+                .snippet(imageUrl)
+                .icon(defaultMarker));
+
+        markers.add(marker);
+        Log.d("DEBUG", "Marked pin at point: " + point.toString());
     }
 
     private void putPins(ArrayList<LatLng> points){
