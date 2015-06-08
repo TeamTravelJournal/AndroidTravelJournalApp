@@ -30,18 +30,18 @@ public class LocationService implements
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     private LocationOnConnectListener locationOnConnectListener;
-    private static LocationService s_instance = null;
+    //private static LocationService s_instance = null;
 
-    public static LocationService getInstance(Context context, LocationOnConnectListener locationOnConnectListener){
+    /*public static LocationService getInstance(Context context, LocationOnConnectListener locationOnConnectListener){
         if(s_instance==null){
             s_instance = new LocationService(context,locationOnConnectListener);
         }
         return s_instance;
-    }
+    }*/
 
-    private LocationService(Context context, LocationOnConnectListener locationOnConnectListener){
+    public LocationService(Context context, LocationOnConnectListener locationOnConnectListener){
 
-        if(mGoogleApiClient == null) {
+        //if(mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(context)
                     .addApi(LocationServices.API)
                     .addConnectionCallbacks(LocationService.this)
@@ -49,7 +49,7 @@ public class LocationService implements
                     .build();
             this.context =  context;
             this.locationOnConnectListener = locationOnConnectListener;
-        }
+        //}
     }
 
     public void connectClient() {
