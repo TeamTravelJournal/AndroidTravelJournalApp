@@ -1,5 +1,6 @@
 package com.mycompany.traveljournal.mapscreen;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 import com.mycompany.traveljournal.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by ekucukog on 6/5/2015.
@@ -15,9 +17,11 @@ import com.mycompany.traveljournal.R;
 
 class CustomWindowAdapter implements GoogleMap.InfoWindowAdapter {
     LayoutInflater mInflater;
+    Context context;
 
-    public CustomWindowAdapter(LayoutInflater i){
+    public CustomWindowAdapter(Context context, LayoutInflater i){
         mInflater = i;
+        this.context = context;
     }
 
     // This defines the contents within the info window based on the marker
@@ -34,6 +38,14 @@ class CustomWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         ImageView ivThumbnail = (ImageView) v.findViewById(R.id.ivThumbnail);
         ivThumbnail.setImageResource(R.mipmap.ic_launcher);
+        Picasso.with(context)
+                //.load("http://files.parsetfss.com/0ac0f4de-204e-49bb-8e25-e6937c3c11ae/tfss-f7d9ac05-09eb-4d01-adcc-3f63c3ee991f-coffee.jpg")
+                .load(marker.getSnippet())
+                .centerInside()
+                .resize(50, 50)
+                .placeholder(R.drawable.placeholderthumbnail)
+                .into(ivThumbnail);
+
 
         // Return info window contents
         return v;
