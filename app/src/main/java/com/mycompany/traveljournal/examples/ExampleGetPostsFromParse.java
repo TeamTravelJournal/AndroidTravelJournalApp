@@ -4,8 +4,9 @@ package com.mycompany.traveljournal.examples;
 import android.util.Log;
 
 import com.mycompany.traveljournal.models.Post;
-import com.parse.FindCallback;
-import com.parse.ParseException;
+import com.mycompany.traveljournal.service.JournalApplication;
+import com.mycompany.traveljournal.service.JournalCallBack;
+import com.mycompany.traveljournal.service.JournalService;
 
 import java.util.List;
 
@@ -16,15 +17,16 @@ public class ExampleGetPostsFromParse {
     public static void getPostWithId() {
 
         String postId = "6KGn7knDWJ";
-        Post.getPostWithId(postId, new FindCallback<Post>() {
+        JournalService client = JournalApplication.getClient();
+        client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e == null) {
-                    Post post = posts.get(0);
-                    Log.wtf(TAG, post.toString());
-                } else {
-                    Log.wtf(TAG, "Post not found");
-                }
+            public void onSuccess(List<Post> posts) {
+                Post post = posts.get(0);
+                Log.wtf(TAG, post.toString());
+            }
+            @Override
+            public void onFailure(Exception e) {
+                Log.wtf(TAG, "Post not found");
             }
         });
     }
@@ -34,17 +36,17 @@ public class ExampleGetPostsFromParse {
         double longitude = -122.128192;
         int limit = 10;
 
-        Post.getPostsNearLocation(latitude, longitude, limit, new FindCallback<Post>() {
+        JournalService client = JournalApplication.getClient();
+        client.getPostsNearLocation(latitude, longitude, limit, new JournalCallBack<List<Post>>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e == null) {
-                    for (int i = 0 ; i < posts.size() ; i++) {
-                        Log.wtf(TAG, posts.get(i).toString());
-                    }
-
-                } else {
-                    Log.wtf(TAG, "Failed to get posts");
+            public void onSuccess(List<Post> posts) {
+                for (int i = 0; i < posts.size(); i++) {
+                    Log.wtf(TAG, posts.get(i).toString());
                 }
+            }
+            @Override
+            public void onFailure(Exception e) {
+                Log.wtf(TAG, "Failed to get posts");
             }
         });
     }
@@ -56,17 +58,17 @@ public class ExampleGetPostsFromParse {
         double longitudeMax = -122.101029;
         int limit = 10;
 
-        Post.getPostsWithinWindow(latitudeMin, longitudeMin, latitudeMax, longitudeMax, limit, new FindCallback<Post>() {
+        JournalService client = JournalApplication.getClient();
+        client.getPostsWithinWindow(latitudeMin, longitudeMin, latitudeMax, longitudeMax, limit, new JournalCallBack<List<Post>>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e == null) {
-                    for (int i = 0 ; i < posts.size() ; i++) {
-                        Log.wtf(TAG, posts.get(i).toString());
-                    }
-
-                } else {
-                    Log.wtf(TAG, "Failed to get posts");
+            public void onSuccess(List<Post> posts) {
+                for (int i = 0; i < posts.size(); i++) {
+                    Log.wtf(TAG, posts.get(i).toString());
                 }
+            }
+            @Override
+            public void onFailure(Exception e) {
+                Log.wtf(TAG, "Failed to get posts");
             }
         });
     }

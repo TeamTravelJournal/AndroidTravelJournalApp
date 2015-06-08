@@ -30,13 +30,6 @@ public class User extends ParseObject {
     public User() {
     }
 
-    public static void getUserWithId(String userId, FindCallback callback) {
-        ParseQuery<User> query = ParseQuery.getQuery(User.class);
-        query.whereEqualTo("user_id", userId);
-        query.setLimit(1);
-        query.findInBackground(callback);
-    }
-
     public static User getFakeUser() {
         User user = new User();
         user.put("name", "Nathan Esquenazi");

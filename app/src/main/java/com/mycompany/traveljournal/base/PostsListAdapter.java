@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.PostListenerObj;
 import com.mycompany.traveljournal.models.Post;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -58,6 +59,8 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
 
         viewHolder.ivProfile.setImageResource(android.R.color.transparent);
         viewHolder.ivPost.setImageResource(android.R.color.transparent);
+
+        viewHolder.tvCaption.setText(post.getCaption());
 
         setUpListeners(post);
 

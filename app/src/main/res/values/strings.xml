@@ -9,5 +9,16 @@
 
     <string name="title_activity_wishlist">WishList</string>
     <string name="title_activity_map">MapActivity</string>
+
     <string name="title_activity_camera">CameraActivity</string>
+    <string name="title_activity_detail">DetailActivity</string>
+
+    <!-- Detail -->
+    <string name="detail_profile_description">User\'s profile picture</string>
+    <string name="detail_post_description">Post picture</string>
+    <string name="detail_share_description">Share this post</string>
+    <string name="detail_follow_description">Follow the post\'s author</string>
+    <string name="detail_star_description">Add this post to your wishlist</string>
+
+
 </resources>

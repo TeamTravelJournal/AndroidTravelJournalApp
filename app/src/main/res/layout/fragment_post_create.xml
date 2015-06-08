@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:text="Post"
             android:textColor="#FFFFFF"
-            android:id="@+id/btReply"
+            android:id="@+id/btPost"
             android:layout_alignParentRight="true"
             android:background="#0084B4"
             android:padding="5dp"

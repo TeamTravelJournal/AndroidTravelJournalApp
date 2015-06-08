@@ -18,13 +18,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.EndlessScrollListener;
 import com.mycompany.traveljournal.common.MultiScrollListener;
 import com.mycompany.traveljournal.common.PostListenerObj;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
+import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.profilescreen.ProfileActivity;
+import com.mycompany.traveljournal.service.JournalApplication;
+import com.mycompany.traveljournal.service.JournalService;
 import com.mycompany.traveljournal.wishlistscreen.WishListActivity;
 
 import java.util.ArrayList;
@@ -41,6 +45,8 @@ public abstract class PostsListFragment extends Fragment {
     protected MultiScrollListener scrolls;
     protected ImageView mQuickReturnView;
     protected String m_query;
+    protected LatLng m_location;
+    protected JournalService client;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public abstract class PostsListFragment extends Fragment {
         posts = new ArrayList<>();
         aPosts = new PostsListAdapter(getActivity(), posts);
         setUpHasOptionsMenu();
+        client = JournalApplication.getClient();
     }
 
     @Override
@@ -78,7 +85,9 @@ public abstract class PostsListFragment extends Fragment {
 
                 if(query != null && !"".equals(query)) {
                     m_query = query;
+                    m_location = Util.getLocationFromQuery(getActivity(), m_query);
                     Toast.makeText(getActivity(), "query " + query, Toast.LENGTH_SHORT).show();
+                    populateListOnSearch();
                 }
                 return true;
             }
@@ -189,5 +198,8 @@ public abstract class PostsListFragment extends Fragment {
 
     //override in subclass
     public abstract void refreshList();
+
+    //override in subclass
+    public abstract void populateListOnSearch();
 
 }

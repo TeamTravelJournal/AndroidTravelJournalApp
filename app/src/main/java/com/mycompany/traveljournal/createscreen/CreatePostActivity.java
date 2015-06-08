@@ -1,11 +1,20 @@
 package com.mycompany.traveljournal.createscreen;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.Toast;
+
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
+import com.mycompany.traveljournal.helpers.BitmapScaler;
+import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
+import com.mycompany.traveljournal.helpers.Util;
+import com.mycompany.traveljournal.profilescreen.ProfileActivity;
 
 /**
  * Created by sjayaram on 6/5/2015.
@@ -13,7 +22,8 @@ import com.mycompany.traveljournal.base.PostsListActivity;
 public class CreatePostActivity extends PostsListActivity {
 
     CreatePostFragment createPostFragment;
-    String photoPath;
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    public String photoFileName = "photo.jpg";
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -22,12 +32,35 @@ public class CreatePostActivity extends PostsListActivity {
 
     @Override
     public void setUpFragment() {
-        photoPath = getIntent().getStringExtra(MediaStore.EXTRA_OUTPUT);
-        createPostFragment =  CreatePostFragment.newInstance(photoPath);
+        setUpCameraIntent();
+        createPostFragment =  CreatePostFragment.newInstance();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flContainer, createPostFragment);
         ft.commit();
+    }
 
+    public void setUpCameraIntent(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Util.getPhotoFileUri(photoFileName)); // set the image file name
+        // Start the image capture intent to take photo
+        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Uri takenPhotoUri = Util.getPhotoFileUri(photoFileName);
+                Bitmap takenImage = Util.rotateBitmapOrientation(takenPhotoUri.getPath());
+                int screenWidth = DeviceDimensionsHelper.getDisplayWidth(this);
+                // Resize a Bitmap maintaining aspect ratio based on screen width
+                BitmapScaler.scaleToFitWidth(takenImage, screenWidth);
+                createPostFragment.setPhotoPath(takenPhotoUri);
+
+            } else { // Result was a failure
+                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 }

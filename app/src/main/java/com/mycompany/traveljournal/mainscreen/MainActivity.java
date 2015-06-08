@@ -42,9 +42,23 @@ public class MainActivity extends PostsListActivity {
         //ExampleGetPostsFromParse.getPostsNearLocation();
         //ExampleGetPostsFromParse.getPostsWithinWindow();
 
-        //ExampleSavePostToParse.savePost();
+
+//        ExampleSavePostToParse savePost = new ExampleSavePostToParse();
+//        savePost.createPostExample();
 
 
+
+
+
+
+
+
+        // Richard - please keep, for my debugging
+//        Intent i = new Intent(this, DetailActivity.class);
+//        String postId = "8nxq1SkIUo";
+//        Log.wtf(TAG, "adding post id "+postId);
+//        i.putExtra("post_id", postId);
+//        startActivity(i);
     }
 
 }
