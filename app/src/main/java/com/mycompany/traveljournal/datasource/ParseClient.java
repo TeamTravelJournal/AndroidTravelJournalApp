@@ -10,6 +10,7 @@ import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -198,4 +199,18 @@ public class ParseClient implements JournalService {
             }
         });
     }
+
+    public void getCreatedByUserFromPost(User user, final JournalCallBack<User> journalCallBack) {
+        user.fetchIfNeededInBackground(new GetCallback<User>() {
+            @Override
+            public void done(User user, ParseException e) {
+                if (e == null) {
+                    journalCallBack.onSuccess(user);
+                } else {
+                    journalCallBack.onFailure(e);
+                }
+            }
+        });
+    }
+
 }

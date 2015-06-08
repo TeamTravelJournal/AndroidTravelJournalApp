@@ -4,6 +4,7 @@ package com.mycompany.traveljournal.examples;
 import android.util.Log;
 
 import com.mycompany.traveljournal.models.Post;
+import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
@@ -16,13 +17,26 @@ public class ExampleGetPostsFromParse {
 
     public static void getPostWithId() {
 
-        String postId = "6KGn7knDWJ";
+        String postId = "pD7HdQPTSg";
         JournalService client = JournalApplication.getClient();
         client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
             @Override
             public void onSuccess(List<Post> posts) {
                 Post post = posts.get(0);
                 Log.wtf(TAG, post.toString());
+
+                post.getUser(new JournalCallBack<User>() {
+                    @Override
+                    public void onSuccess(User user) {
+                        Log.wtf(TAG, user.toString());
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.wtf(TAG, "Failed to get user");
+                    }
+                });
+
             }
             @Override
             public void onFailure(Exception e) {
