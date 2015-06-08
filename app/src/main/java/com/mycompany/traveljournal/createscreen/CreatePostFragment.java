@@ -144,7 +144,7 @@ public class CreatePostFragment extends Fragment {
     }
 
     public void initLocationService(){
-        locationService = LocationService.getInstance(getActivity(), new LocationOnConnectListener() {
+        locationService = new LocationService(getActivity(), new LocationOnConnectListener() {
             @Override
             public void onLocationAvailable(Location location) {
                 latLng = new LatLng(location.getLatitude(), location.getLongitude());

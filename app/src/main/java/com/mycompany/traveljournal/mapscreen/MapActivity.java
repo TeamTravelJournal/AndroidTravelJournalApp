@@ -93,7 +93,7 @@ public class MapActivity extends ActionBarActivity implements
             map.setMyLocationEnabled(true);
 
             //get current location
-            locationService = LocationService.getInstance(this, new LocationOnConnectListener() {
+            locationService = new LocationService(this, new LocationOnConnectListener() {
                 @Override
                 public void onLocationAvailable(Location location) {
                     if (m_location == null) {// if query location is null, use current location
