@@ -1,9 +1,7 @@
 package com.mycompany.traveljournal.models;
 
-import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 @ParseClassName("User")
 public class User extends ParseObject {
@@ -36,6 +34,16 @@ public class User extends ParseObject {
         user.put("user_id", "101");
         user.put("profile_image_url", "https://plus.google.com/u/0/_/focus/photos/public/AIbEiAIAAABECM3zs7-msvWn8QEiC3ZjYXJkX3Bob3RvKihkMzczZjRmZTk3OWVlYTA5M2QzNzFjYWJhMGMzYWZhMGM1OTk1YjNkMAGa9EYBpMonkZGqWdV_0y7vUILd4A?sz=128");
         return user;
+    }
+
+    // This is just for debugging purposes
+    @Override
+    public String toString() {
+        String output = "";
+        output += getUserId() + " ";
+        output += getName() + " ";
+        output += getProfileImageUrl() + " ";
+        return output;
     }
 
 }
