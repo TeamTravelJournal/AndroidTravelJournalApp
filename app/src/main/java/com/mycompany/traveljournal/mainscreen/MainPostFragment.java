@@ -11,17 +11,28 @@ import android.view.ViewGroup;
 
 import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnListViewOnScrollListener;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListFragment;
 import com.mycompany.traveljournal.createscreen.CreatePostActivity;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mapscreen.MapActivity;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalCallBack;
+import com.parse.Parse;
+import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +52,6 @@ public class MainPostFragment extends PostsListFragment {
         return view;
     }
 
-
     @Override
     public void setUpListeners() {
         super.setUpListeners();
@@ -50,6 +60,7 @@ public class MainPostFragment extends PostsListFragment {
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), CreatePostActivity.class);
                 startActivity(i);
+
             }
         });
     }
@@ -69,8 +80,6 @@ public class MainPostFragment extends PostsListFragment {
 
         scrolls.addScrollListener(scrollListener);
         lvPosts.setOnScrollListener(scrolls);
-
-
     }
 
 

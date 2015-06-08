@@ -20,10 +20,19 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.model.LatLng;
 import com.mycompany.traveljournal.common.ErrorDialogFragment;
+import com.parse.ParseUser;
+import com.squareup.picasso.Downloader;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Locale;
@@ -41,6 +50,74 @@ public class Util {
      * returned in Activity.onActivityResult
      */
     public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+
+    public static void makeFBProfileRequest() {
+        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
+                        if (jsonObject != null) {
+                            JSONObject userProfile = new JSONObject();
+
+                            try {
+                                userProfile.put("facebookId", jsonObject.getLong("id"));
+                                userProfile.put("name", jsonObject.getString("name"));
+
+                                if (jsonObject.getString("gender") != null)
+                                    userProfile.put("gender", jsonObject.getString("gender"));
+
+                                if (jsonObject.getString("email") != null)
+                                    userProfile.put("email", jsonObject.getString("email"));
+
+                                // Save the user profile info in a user property
+                                ParseUser currentUser = ParseUser.getCurrentUser();
+                                currentUser.put("profile", userProfile);
+                                currentUser.saveInBackground();
+
+                            } catch (JSONException e) {
+                                Log.d(APP_TAG,
+                                        "Error parsing returned user data. " + e);
+                            }
+                        } else if (graphResponse.getError() != null) {
+                            switch (graphResponse.getError().getCategory()) {
+                                case LOGIN_RECOVERABLE:
+                                    Log.d(APP_TAG,
+                                            "Authentication error: " + graphResponse.getError());
+                                    break;
+
+                                case TRANSIENT:
+                                    Log.d(APP_TAG,
+                                            "Transient error. Try again. " + graphResponse.getError());
+                                    break;
+
+                                case OTHER:
+                                    Log.d(APP_TAG,
+                                            "Some other error: " + graphResponse.getError());
+                                    break;
+                            }
+                        }
+                    }
+                });
+
+        request.executeAsync();
+
+    /* get cover Image
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "?fields={cover}",
+                null,
+                HttpMethod.GET,
+                new Request.Callback() {
+                    public void onCompleted(Downloader.Response response) {
+            */
+/* handle the result *//*
+
+                    }
+                }
+        ).executeAsync();*/
+
+    }
+
 
     public static byte[] getByteArrayFromBitmap(Bitmap bmp) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
