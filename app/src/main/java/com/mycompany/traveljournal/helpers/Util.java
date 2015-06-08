@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import android.location.Address;
@@ -40,6 +41,13 @@ public class Util {
      * returned in Activity.onActivityResult
      */
     public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+
+    public static byte[] getByteArrayFromBitmap(Bitmap bmp) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
 
     private Boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
