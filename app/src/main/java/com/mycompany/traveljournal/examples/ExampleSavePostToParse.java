@@ -66,16 +66,16 @@ public class ExampleSavePostToParse {
 
         // Get sample byte Array
         // THIS REQUIRES THE ASYNC TASK
-        String imageUrl = "http://s3-media1.fl.yelpcdn.com/bphoto/kQFIQt5MeDtpxRmTel8cuA/l.jpg";
+        String imageUrl = "http://upload.wikimedia.org/wikipedia/commons/c/cd/Google_Campus2_cropped.jpg";
         byte[] imageBytes = getByteArrayFromUrl(imageUrl);
 
 
         // No Async task required
         PostCreator creator = new PostCreator();
-        String caption = "Can you get hummus at Hummus?";
+        String caption = "At the Goog!";
         String description = "";
-        double latitude = 37.563872;
-        double longitude = -122.322837;
+        double latitude = 37.421828;
+        double longitude = -122.084889;
 
         creator.createPost(imageBytes, caption, description, latitude, longitude);
     }
