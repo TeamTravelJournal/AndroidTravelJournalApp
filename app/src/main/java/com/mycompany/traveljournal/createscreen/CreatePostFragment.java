@@ -103,14 +103,9 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 PostCreator postCreator =  new PostCreator();
-
-                int bytes = takenImage.getByteCount();
-                //Create a new buffer
-                ByteBuffer buffer = ByteBuffer.allocate(bytes);
-                //Move the byte data to the buffer
-                takenImage.copyPixelsToBuffer(buffer);
-                byte[] array = buffer.array();
-
+                //int bytes = takenImage.getByteCount();
+                //Toast.makeText(getActivity(), "After size 2 " + bytes,Toast.LENGTH_SHORT).show();
+                byte[] array = Util.getByteArrayFromBitmap(takenImage);
                 postCreator.createPost(array ,etCaption.getText().toString(), "", latLng.latitude, latLng.longitude);
                 callNextIntent();
 
@@ -139,9 +134,13 @@ public class CreatePostFragment extends Fragment {
 
     public void setPhotoPath(Uri photoPathUri){
         Bitmap takenImage1 = Util.rotateBitmapOrientation(photoPathUri.getPath());
+        //int bytes1 = takenImage1.getByteCount();
+        //Toast.makeText(getActivity(), "Before size " + bytes1,Toast.LENGTH_SHORT).show();
         int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
         // Resize a Bitmap maintaining aspect ratio based on screen width
         takenImage = BitmapScaler.scaleToFitWidth(takenImage1, screenWidth);
+        //int bytes = takenImage.getByteCount();
+        //Toast.makeText(getActivity(), "after size 1 " + bytes,Toast.LENGTH_SHORT).show();
         // Load the taken image into a preview
         ivPreview.setImageBitmap(takenImage);
     }
