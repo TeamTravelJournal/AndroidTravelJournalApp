@@ -64,7 +64,9 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
 
         Picasso.with(getContext())
                 .load(post.getImageUrl())
-                .fit().centerInside()
+                .fit()
+                .centerCrop()
+                //.centerInside()
                 .placeholder(R.drawable.placeholderwide)
                 .into(viewHolder.ivPost);
 
