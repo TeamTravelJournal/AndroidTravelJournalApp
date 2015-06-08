@@ -62,6 +62,12 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
 
         viewHolder.tvCaption.setText(post.getCaption());
 
+        Picasso.with(getContext())
+                .load(post.getImageUrl())
+                .fit().centerInside()
+                .placeholder(R.drawable.placeholderwide)
+                .into(viewHolder.ivPost);
+
         setUpListeners(post);
 
         return convertView;

@@ -20,10 +20,7 @@ import android.widget.Toast;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mapscreen.MapActivity;
 import com.mycompany.traveljournal.models.Post;
-import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalCallBack;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 
 import java.util.Date;
 import java.util.List;
