@@ -138,7 +138,10 @@ public class CreatePostFragment extends Fragment {
     }
 
     public void setPhotoPath(Uri photoPathUri){
-        takenImage = BitmapFactory.decodeFile(photoPathUri.getPath());
+        Bitmap takenImage1 = Util.rotateBitmapOrientation(photoPathUri.getPath());
+        int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
+        // Resize a Bitmap maintaining aspect ratio based on screen width
+        takenImage = BitmapScaler.scaleToFitWidth(takenImage1, screenWidth);
         // Load the taken image into a preview
         ivPreview.setImageBitmap(takenImage);
     }

@@ -51,10 +51,6 @@ public class CreatePostActivity extends PostsListActivity {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Uri takenPhotoUri = Util.getPhotoFileUri(photoFileName);
-                Bitmap takenImage = Util.rotateBitmapOrientation(takenPhotoUri.getPath());
-                int screenWidth = DeviceDimensionsHelper.getDisplayWidth(this);
-                // Resize a Bitmap maintaining aspect ratio based on screen width
-                BitmapScaler.scaleToFitWidth(takenImage, screenWidth);
                 createPostFragment.setPhotoPath(takenPhotoUri);
 
             } else { // Result was a failure
