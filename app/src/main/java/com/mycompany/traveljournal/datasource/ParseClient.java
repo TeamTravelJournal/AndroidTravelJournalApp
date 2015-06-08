@@ -4,6 +4,7 @@ package com.mycompany.traveljournal.datasource;
 import android.content.Context;
 import android.util.Log;
 
+import com.facebook.FacebookSdk;
 import com.mycompany.traveljournal.models.Like;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.models.User;
@@ -13,6 +14,7 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -55,6 +57,8 @@ public class ParseClient implements JournalService {
         ParseObject.registerSubclass(Like.class);
 
         Parse.initialize(context, "ZFoSsZ6iQBe1CvJaNqio6V0nmlN4V7U4VzboX4J4", "0GDxAZahVe7ibC6pqiMNK6n91fYoh7HRfxXLo5TK");
+        FacebookSdk.sdkInitialize(context);
+        ParseFacebookUtils.initialize(context);
     }
 
     //TODO

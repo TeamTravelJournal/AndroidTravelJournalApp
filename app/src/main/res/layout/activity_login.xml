@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:text="Into put in string.xml"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+
+        android:text="@string/com_facebook_loginview_log_in_button"
+        android:textColor="@color/com_facebook_share_button_text_color"
+        android:textSize="@dimen/com_facebook_share_button_text_size"
+        android:textStyle="bold"
+
+        android:background="@drawable/com_facebook_button_background"
+        android:drawableLeft="@drawable/com_facebook_button_icon"
+        android:drawablePadding="@dimen/com_facebook_share_button_compound_drawable_padding"
+        android:paddingLeft="@dimen/com_facebook_share_button_padding_left"
+        android:paddingTop="@dimen/com_facebook_share_button_padding_top"
+        android:paddingRight="@dimen/com_facebook_share_button_padding_right"
+        android:paddingBottom="@dimen/com_facebook_share_button_padding_bottom"
+        android:onClick="onLoginClick"/>
+
+
+</LinearLayout>
