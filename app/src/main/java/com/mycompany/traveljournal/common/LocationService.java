@@ -47,9 +47,9 @@ public class LocationService implements
                     .addConnectionCallbacks(LocationService.this)
                     .addOnConnectionFailedListener(this)
                     .build();
-            this.context =  context;
-            this.locationOnConnectListener = locationOnConnectListener;
         }
+        this.context =  context;
+        this.locationOnConnectListener = locationOnConnectListener;
     }
 
     public void connectClient() {
