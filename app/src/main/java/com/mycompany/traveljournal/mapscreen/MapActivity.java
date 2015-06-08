@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.LocationOnConnectListener;
 import com.mycompany.traveljournal.common.LocationService;
+import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
@@ -32,6 +33,7 @@ import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -45,17 +47,19 @@ public class MapActivity extends ActionBarActivity implements
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private final static String TAG = "MapActivityDebug";
-
-    private ArrayList<LatLng> points=null;
     private boolean ready = false;
-    private LatLng fixAddress = new LatLng(37.533278, -122.237933);//my redwoodshores address
     private ArrayList<Marker> markers = null;
     private int markerIndex =0;
     private ArrayList<Boolean> shown= null;
+    private ArrayList<Post> currentPosts = null;
     private String m_query;
     private LatLng m_location;
     private JournalService client;
     private LocationService locationService;
+    private HashMap markersToPosts = new HashMap();
+
+    //private ArrayList<LatLng> points=null;
+    //private LatLng fixAddress = new LatLng(37.533278, -122.237933);//my redwood shores address
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +107,7 @@ public class MapActivity extends ActionBarActivity implements
                             @Override
                             public void onFinish() {
                                 ready=true;
-                            }g
+                            }
 
                             @Override
                             public void onCancel() {
@@ -112,6 +116,17 @@ public class MapActivity extends ActionBarActivity implements
                         map.moveCamera(cameraUpdate);
                         ready = true;
                     }
+                }
+            });
+
+            map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+                    //Call detail page from here
+                    Post post = (Post)markersToPosts.get(marker);
+                    Intent i = new Intent(MapActivity.this, DetailActivity.class);
+                    i.putExtra("post_id", post.getPostID());
+                    startActivity(i);
                 }
             });
 
@@ -140,7 +155,9 @@ public class MapActivity extends ActionBarActivity implements
         Log.d("DEBUG", "on camera change");
 
         //if(points==null && ready) {
+
             //map.clear();
+            //clear also all hashmaps and arraylists
 
             //Log.d("DEBUG", "camera change - location is set/ready");
             // Create random points within the boundaries of the map
@@ -154,7 +171,7 @@ public class MapActivity extends ActionBarActivity implements
 
     private void getPostsOnCurrentWindowAndPutPins(){
 
-        points = new ArrayList<>();
+        currentPosts = new ArrayList<>();
 
         LatLngBounds curScreen = map.getProjection().getVisibleRegion().latLngBounds;
 
@@ -175,7 +192,7 @@ public class MapActivity extends ActionBarActivity implements
         client.getPostsWithinWindow(rangeMinLat, rangeMinLng, rangeMaxLat, rangeMaxLng, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
             @Override
             public void onSuccess(List<Post> posts) {
-                //Toast.makeText(, "parse call succesful", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(, "parse call successful", Toast.LENGTH_SHORT).show();
                 for (int i = 0; i < posts.size(); i++) {
 
                     Post post = posts.get(i);
@@ -190,11 +207,12 @@ public class MapActivity extends ActionBarActivity implements
 
                         Log.d("DEBUG", "Adding post point: " + point.toString());
 
-                        points.add(point);
+                        currentPosts.add(post);
+                        putSinglePin(post);
                     }
                 }
 
-                putPins(points);
+                //putPins(points);
             }
             @Override
             public void onFailure(Exception e) {
@@ -202,43 +220,6 @@ public class MapActivity extends ActionBarActivity implements
                 Log.d(TAG, "Failed to get posts");
             }
         });
-    }
-
-    private ArrayList<LatLng> createRandomPointsOnVisibleMap(){
-
-        Random r = new Random();
-
-        ArrayList<LatLng> points = new ArrayList<>();
-
-        LatLngBounds curScreen = map.getProjection().getVisibleRegion().latLngBounds;
-
-        LatLng ne = curScreen.northeast;
-        LatLng sw = curScreen.southwest;
-
-        Log.d("DEBUG", "Screen boundaries. ne: " + ne.toString() + ", sw: " + sw.toString());
-
-        // west - x coordinate
-        double rangeMinLng = sw.longitude;
-        // east - x coordinate
-        double rangeMaxLng = ne.longitude;
-        // north - y coordinate
-        double rangeMaxLat = ne.latitude;
-        // south - y coordinate
-        double rangeMinLat = sw.latitude;
-
-        for(int i =0; i<10; i++){
-
-            double randomValueLng = rangeMinLng + (rangeMaxLng - rangeMinLng) * r.nextDouble();
-            double randomValueLat = rangeMinLat + (rangeMaxLat - rangeMinLat) * r.nextDouble();
-
-            //LatLng point = new LatLng(37.5513928, -122.2865121);
-            LatLng point = new LatLng(randomValueLat, randomValueLng);
-
-            Log.d("DEBUG", "Adding random point: " + point.toString());
-
-            points.add(point);
-        }
-        return points;
     }
 
     private void putSinglePin(Post post){
@@ -249,6 +230,7 @@ public class MapActivity extends ActionBarActivity implements
         BitmapDescriptor defaultMarker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
 
         LatLng point = new LatLng(post.getLatitude(), post.getLongitude());
+
         String imageUrl = post.getImageUrl();
         String caption = post.getCaption();
 
@@ -260,33 +242,8 @@ public class MapActivity extends ActionBarActivity implements
                 .icon(defaultMarker));
 
         markers.add(marker);
+        markersToPosts.put(marker, post);
         Log.d("DEBUG", "Marked pin at point: " + point.toString());
-    }
-
-    private void putPins(ArrayList<LatLng> points){
-
-        Log.d("DEBUG", "Entering put pins");
-
-        for(LatLng point: points){
-
-
-            // Define color of marker icon
-            BitmapDescriptor defaultMarker =
-                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
-
-            // Creates and adds marker to the map
-            Marker marker = map.addMarker(new MarkerOptions()
-                    .position(point)
-                            //        .title(title)
-                            //        .snippet(snippet)
-                    .icon(defaultMarker));
-
-            markers.add(marker);
-            Log.d("DEBUG", "Marking pin for point: " + point.toString());
-
-            //dropPinEffect(marker);
-
-        }
     }
 
     /*
@@ -331,7 +288,6 @@ public class MapActivity extends ActionBarActivity implements
                 }
         }
     }
-
 
     @Override
     public void onMapLongClick(LatLng point) {
@@ -418,5 +374,67 @@ public class MapActivity extends ActionBarActivity implements
                 }
             }
         });
+    }
+
+    private ArrayList<LatLng> createRandomPointsOnVisibleMap(){
+
+        Random r = new Random();
+
+        ArrayList<LatLng> points = new ArrayList<>();
+
+        LatLngBounds curScreen = map.getProjection().getVisibleRegion().latLngBounds;
+
+        LatLng ne = curScreen.northeast;
+        LatLng sw = curScreen.southwest;
+
+        Log.d("DEBUG", "Screen boundaries. ne: " + ne.toString() + ", sw: " + sw.toString());
+
+        // west - x coordinate
+        double rangeMinLng = sw.longitude;
+        // east - x coordinate
+        double rangeMaxLng = ne.longitude;
+        // north - y coordinate
+        double rangeMaxLat = ne.latitude;
+        // south - y coordinate
+        double rangeMinLat = sw.latitude;
+
+        for(int i =0; i<10; i++){
+
+            double randomValueLng = rangeMinLng + (rangeMaxLng - rangeMinLng) * r.nextDouble();
+            double randomValueLat = rangeMinLat + (rangeMaxLat - rangeMinLat) * r.nextDouble();
+
+            //LatLng point = new LatLng(37.5513928, -122.2865121);
+            LatLng point = new LatLng(randomValueLat, randomValueLng);
+
+            Log.d("DEBUG", "Adding random point: " + point.toString());
+
+            points.add(point);
+        }
+        return points;
+    }
+
+    private void putPins(ArrayList<LatLng> points){
+
+        Log.d("DEBUG", "Entering put pins");
+
+        for(LatLng point: points){
+
+
+            // Define color of marker icon
+            BitmapDescriptor defaultMarker =
+                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+
+            // Creates and adds marker to the map
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .position(point)
+                            //        .title(title)
+                            //        .snippet(snippet)
+                    .icon(defaultMarker));
+
+            markers.add(marker);
+            Log.d("DEBUG", "Marking pin for point: " + point.toString());
+
+            //dropPinEffect(marker);
+        }
     }
 }
