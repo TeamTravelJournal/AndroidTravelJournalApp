@@ -24,17 +24,13 @@ public class DetailFragment extends Fragment {
 
     private final static String TAG = "DetailFragment";
     private String postId;
-
     private ImageView ivProfile;
     private ImageView ivPost;
     private TextView tvCaption;
-
     private ImageView ivShare;
     private ImageView ivFollow;
     private ImageView ivStar;
     private TextView tvLikes;
-
-
 
     public static DetailFragment newInstance(String postId) {
         DetailFragment detailFragment = new DetailFragment();
@@ -49,20 +45,14 @@ public class DetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_post_detail, container, false);
         setUpViews(view);
         setUpListeners();
-
         fetchPostAndPopulateViews();
         return view;
     }
-
-
-
-
 
     public void setUpViews(View v){
         ivProfile = (ImageView) v.findViewById(R.id.ivProfile);
         ivPost = (ImageView) v.findViewById(R.id.ivPost);
         tvCaption = (TextView) v.findViewById(R.id.tvCaption);
-
         ivShare = (ImageView) v.findViewById(R.id.ivShare);
         ivFollow = (ImageView) v.findViewById(R.id.ivFollow);
         ivStar = (ImageView) v.findViewById(R.id.ivStar);
@@ -106,7 +96,9 @@ public class DetailFragment extends Fragment {
         // Default profile picture
         Picasso.with(getActivity()).load(R.drawable.icon_user_32).into(ivProfile);
 
-        Picasso.with(getActivity()).load(post.getCreatedByUser().getProfileImageUrl()).into(ivProfile);
+        if(post.getParseUser()!=null) {
+            Picasso.with(getActivity()).load(post.getParseUser().get("profile_image_url").toString()).into(ivProfile);
+        }
     }
 
 

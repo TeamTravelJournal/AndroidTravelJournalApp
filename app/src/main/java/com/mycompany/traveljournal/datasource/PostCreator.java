@@ -3,9 +3,11 @@ package com.mycompany.traveljournal.datasource;
 
 import android.util.Log;
 
+import com.mycompany.traveljournal.examples.SignedInUser;
 import com.mycompany.traveljournal.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class PostCreator {
@@ -37,9 +39,7 @@ public class PostCreator {
         location.setLatitude(latitude);
         location.setLongitude(longitude);
         post.put("location", location);
-
-        post.put("user_id", SignedInUser.getSignedInUser().getUserId());
-        post.put("created_by", SignedInUser.getSignedInUser());
+        post.put("parse_user", ParseUser.getCurrentUser());
         post.put("likes", 0);
         post.put("trip_id", 0);
 
