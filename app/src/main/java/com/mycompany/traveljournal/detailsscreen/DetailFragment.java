@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.models.Post;
-import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
@@ -107,18 +106,7 @@ public class DetailFragment extends Fragment {
         // Default profile picture
         Picasso.with(getActivity()).load(R.drawable.icon_user_32).into(ivProfile);
 
-        // profile
-        post.getUser(new JournalCallBack<User>() {
-            @Override
-            public void onSuccess(User user) {
-                Picasso.with(getActivity()).load(user.getProfileImageUrl()).into(ivProfile);
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.wtf(TAG, "failed to load user's profile image");
-            }
-        });
+        Picasso.with(getActivity()).load(post.getCreatedByUser().getProfileImageUrl()).into(ivProfile);
     }
 
 
