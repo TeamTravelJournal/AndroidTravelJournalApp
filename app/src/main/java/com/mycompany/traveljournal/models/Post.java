@@ -1,8 +1,5 @@
 package com.mycompany.traveljournal.models;
 
-import com.mycompany.traveljournal.service.JournalApplication;
-import com.mycompany.traveljournal.service.JournalCallBack;
-import com.mycompany.traveljournal.service.JournalService;
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -73,17 +70,9 @@ public class Post extends ParseObject {
         return getString("image_url");
     }
 
-    // This gets a Parse poiter to the created by user
-    public User getCreatedByUserPointer() {
+    public User getCreatedByUser() {
         return (User) getParseObject("created_by");
     }
-
-    // This actually retrieves the created by user. It is async so work must be defined in the callback
-    public void getUser(JournalCallBack<User> journalCallBack) {
-        JournalService client = JournalApplication.getClient();
-        client.getCreatedByUserFromPost(getCreatedByUserPointer(), journalCallBack);
-    }
-
 
     public Post() {
 

@@ -23,5 +23,4 @@ public interface JournalService {
 
     public void getUserWithId(String userId, final JournalCallBack<List<User>> journalCallBack);
 
-    public void getCreatedByUserFromPost(User user, final JournalCallBack<User> journalCallBack);
 }

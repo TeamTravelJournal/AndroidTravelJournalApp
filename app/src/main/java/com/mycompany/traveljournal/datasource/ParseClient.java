@@ -2,7 +2,6 @@ package com.mycompany.traveljournal.datasource;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import com.facebook.FacebookSdk;
 import com.mycompany.traveljournal.models.Like;
@@ -11,14 +10,12 @@ import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.SaveCallback;
 
 import java.util.Date;
 import java.util.List;
@@ -72,6 +69,7 @@ public class ParseClient implements JournalService {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.whereEqualTo("objectId", postId);
         query.setLimit(1);
+        query.include("created_by");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> resultPosts, ParseException e) {
@@ -89,6 +87,7 @@ public class ParseClient implements JournalService {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.whereNear("location", userLocation);
         query.setLimit(limit);
+        query.include("created_by");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> resultPosts, ParseException e) {
@@ -107,6 +106,7 @@ public class ParseClient implements JournalService {
         ParseGeoPoint swPoint = new ParseGeoPoint(latitudeMin, longitudeMin);
         ParseGeoPoint nePoint = new ParseGeoPoint(latitudeMax, longitudeMax);
         query.whereWithinGeoBox("location", swPoint, nePoint);
+        query.include("created_by");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> resultPosts, ParseException e) {
@@ -130,6 +130,7 @@ public class ParseClient implements JournalService {
         }
         query.orderByDescending("createdAt");
         query.setLimit(limit);
+        query.include("created_by");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> resultPosts, ParseException e) {
@@ -153,6 +154,7 @@ public class ParseClient implements JournalService {
         }
         query.orderByDescending("createdAt");
         query.setLimit(limit);
+        query.include("created_by");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> resultPosts, ParseException e) {
@@ -176,6 +178,7 @@ public class ParseClient implements JournalService {
         }
         query.orderByDescending("createdAt");
         query.setLimit(limit);
+        query.include("created_by");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> resultPosts, ParseException e) {
@@ -197,19 +200,6 @@ public class ParseClient implements JournalService {
             public void done(List<User> resultUsers, ParseException e) {
                 if (e == null) {
                     journalCallBack.onSuccess(resultUsers);
-                } else {
-                    journalCallBack.onFailure(e);
-                }
-            }
-        });
-    }
-
-    public void getCreatedByUserFromPost(User user, final JournalCallBack<User> journalCallBack) {
-        user.fetchIfNeededInBackground(new GetCallback<User>() {
-            @Override
-            public void done(User user, ParseException e) {
-                if (e == null) {
-                    journalCallBack.onSuccess(user);
                 } else {
                     journalCallBack.onFailure(e);
                 }
