@@ -79,7 +79,7 @@ public class LoginActivity extends ActionBarActivity {
 
     private void showUserMainActivity() {
         if(ParseUser.getCurrentUser() != null)
-            Util.makeFBProfileRequest();
+            Util.makeFBProfileRequest(this);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

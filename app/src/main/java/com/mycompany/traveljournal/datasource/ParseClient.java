@@ -2,11 +2,12 @@ package com.mycompany.traveljournal.datasource;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.facebook.FacebookSdk;
 import com.mycompany.traveljournal.models.Like;
 import com.mycompany.traveljournal.models.Post;
-import com.mycompany.traveljournal.models.User;
+import com.mycompany.traveljournal.examples.User;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.parse.FindCallback;
@@ -16,6 +17,8 @@ import com.parse.ParseFacebookUtils;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.Date;
 import java.util.List;
@@ -49,11 +52,12 @@ public class ParseClient implements JournalService {
         Parse.enableLocalDatastore(context);
 
         // Register Parse sublasses
-        ParseObject.registerSubclass(User.class);
+        //ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Like.class);
 
         Parse.initialize(context, "ZFoSsZ6iQBe1CvJaNqio6V0nmlN4V7U4VzboX4J4", "0GDxAZahVe7ibC6pqiMNK6n91fYoh7HRfxXLo5TK");
+        ParseUser.enableRevocableSessionInBackground();
         FacebookSdk.sdkInitialize(context);
         ParseFacebookUtils.initialize(context);
     }
@@ -69,7 +73,7 @@ public class ParseClient implements JournalService {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.whereEqualTo("objectId", postId);
         query.setLimit(1);
-        query.include("created_by");
+        query.include("parse_user");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> resultPosts, ParseException e) {
@@ -87,7 +91,7 @@ public class ParseClient implements JournalService {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.whereNear("location", userLocation);
         query.setLimit(limit);
-        query.include("created_by");
+        query.include("parse_user");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> resultPosts, ParseException e) {
@@ -100,13 +104,29 @@ public class ParseClient implements JournalService {
         });
     }
 
+    public void createUser(String name, String profile_image_url, String cover_image_url) {
+        final ParseUser user = ParseUser.getCurrentUser();
+        user.put("name", name);
+        user.put("profile_image_url", profile_image_url);
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.wtf(TAG, "Succesfully saved user");
+                } else {
+                    Log.wtf(TAG, "Failed to save user" + e.toString());
+                }
+            }
+        });
+    }
+
     public void getPostsWithinWindow(double latitudeMin, double longitudeMin, double latitudeMax, double longitudeMax, int limit, final JournalCallBack<List<Post>> journalCallBack) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.setLimit(limit);
         ParseGeoPoint swPoint = new ParseGeoPoint(latitudeMin, longitudeMin);
         ParseGeoPoint nePoint = new ParseGeoPoint(latitudeMax, longitudeMax);
         query.whereWithinGeoBox("location", swPoint, nePoint);
-        query.include("created_by");
+        query.include("parse_user");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> resultPosts, ParseException e) {
@@ -130,7 +150,7 @@ public class ParseClient implements JournalService {
         }
         query.orderByDescending("createdAt");
         query.setLimit(limit);
-        query.include("created_by");
+        query.include("parse_user");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> resultPosts, ParseException e) {
@@ -154,7 +174,7 @@ public class ParseClient implements JournalService {
         }
         query.orderByDescending("createdAt");
         query.setLimit(limit);
-        query.include("created_by");
+        query.include("parse_user");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> resultPosts, ParseException e) {
@@ -178,7 +198,7 @@ public class ParseClient implements JournalService {
         }
         query.orderByDescending("createdAt");
         query.setLimit(limit);
-        query.include("created_by");
+        query.include("parse_user");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> resultPosts, ParseException e) {
