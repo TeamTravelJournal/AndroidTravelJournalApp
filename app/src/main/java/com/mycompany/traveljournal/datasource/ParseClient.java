@@ -108,6 +108,7 @@ public class ParseClient implements JournalService {
         final ParseUser user = ParseUser.getCurrentUser();
         user.put("name", name);
         user.put("profile_image_url", profile_image_url);
+        user.put("cover_image_url", cover_image_url);
         user.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

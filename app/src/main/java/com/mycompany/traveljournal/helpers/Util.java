@@ -50,62 +50,6 @@ public class Util {
      */
     public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
-    public static void makeFBProfileRequest(Context context) {
-        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
-                        if (jsonObject != null) {
-
-                            try {
-                                String profile_img_url = "https://graph.facebook.com/" + jsonObject.getString("id").toString() +"/picture?type=small";
-                                JournalService client = JournalApplication.getClient();
-                                client.createUser(jsonObject.getString("name"), profile_img_url, "");
-                            } catch (JSONException e) {
-                                Log.d(APP_TAG,
-                                        "Error parsing returned user data. " + e);
-                            }
-                        } else if (graphResponse.getError() != null) {
-                            switch (graphResponse.getError().getCategory()) {
-                                case LOGIN_RECOVERABLE:
-                                    Log.d(APP_TAG,
-                                            "Authentication error: " + graphResponse.getError());
-                                    break;
-
-                                case TRANSIENT:
-                                    Log.d(APP_TAG,
-                                            "Transient error. Try again. " + graphResponse.getError());
-                                    break;
-
-                                case OTHER:
-                                    Log.d(APP_TAG,
-                                            "Some other error: " + graphResponse.getError());
-                                    break;
-                            }
-                        }
-                    }
-                });
-
-        request.executeAsync();
-
-    /* get cover Image
-        new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "?fields={cover}",
-                null,
-                HttpMethod.GET,
-                new Request.Callback() {
-                    public void onCompleted(Downloader.Response response) {
-            */
-/* handle the result *//*
-
-                    }
-                }
-        ).executeAsync();*/
-
-    }
-
-
     public static byte[] getByteArrayFromBitmap(Bitmap bmp) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
