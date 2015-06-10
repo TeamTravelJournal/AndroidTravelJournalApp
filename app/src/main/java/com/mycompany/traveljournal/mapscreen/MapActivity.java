@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -116,6 +117,26 @@ public class MapActivity extends ActionBarActivity implements
                         map.moveCamera(cameraUpdate);
                         ready = true;
                     }
+                }
+            });
+
+            map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+                @Override
+                public boolean onMarkerClick(final Marker mark) {
+
+                    mark.showInfoWindow();
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mark.showInfoWindow();
+
+                        }
+                    }, 200);
+
+                    return true;
                 }
             });
 
@@ -294,7 +315,7 @@ public class MapActivity extends ActionBarActivity implements
         //Toast.makeText(this, "Long Press to " + point.toString(), Toast.LENGTH_LONG).show();
         //showAlertDialogForPoint(point);
 
-        doAnimation();
+        //doAnimation();
     }
 
     private void doAnimation(){

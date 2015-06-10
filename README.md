@@ -66,6 +66,12 @@ Post Creation
 
 Wireframes can be found [here](https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/wireframesTravelJournal.pdf).
 
+## Gif Walkthrough
+
+Sprint-1: June 10th 2015
+
+<img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_1.gif' title='Sprint 1 Walkthrough' width='' alt='Video Walkthrough' />
+
 ## License
 
     Copyright [2015] [Srivats Jayaram, Esra Kucukoguz, Richard Pon]

@@ -1,6 +1,7 @@
 package com.mycompany.traveljournal.base;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.PostListenerObj;
+import com.mycompany.traveljournal.examples.User;
 import com.mycompany.traveljournal.models.Post;
 import com.squareup.picasso.Picasso;
 
@@ -58,7 +60,6 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
         }
 
         viewHolder.ivPost.setImageResource(android.R.color.transparent);
-
         viewHolder.tvCaption.setText(post.getCaption());
 
         Picasso.with(getContext())
@@ -77,8 +78,7 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
                     .load(post.getParseUser().getProfileImgUrl())
                     .fit()
                     .centerCrop()
-                            //.centerInside()
-                    .placeholder(R.drawable.placeholderwide)
+                    .placeholder(R.drawable.placeholderthumbnail)
                     .into(viewHolder.ivProfile);
         }
 
