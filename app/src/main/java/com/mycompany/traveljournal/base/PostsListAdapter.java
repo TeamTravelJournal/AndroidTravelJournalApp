@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.PostListenerObj;
+import com.mycompany.traveljournal.examples.User;
 import com.mycompany.traveljournal.models.Post;
 import com.squareup.picasso.Picasso;
 
@@ -59,7 +60,6 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
         }
 
         viewHolder.ivPost.setImageResource(android.R.color.transparent);
-
         viewHolder.tvCaption.setText(post.getCaption());
 
         Picasso.with(getContext())
@@ -70,22 +70,6 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
                 .placeholder(R.drawable.placeholderwide)
                 .into(viewHolder.ivPost);
 
-/*
-        // Default profile picture
-        Picasso.with(getContext()).load(R.drawable.icon_user_32).into(viewHolder.ivProfile);
-
-        User user = post.getCreatedByUser();
-        String profileImageUrl = "";
-        if(user!=null){
-            Log.d("DEBUG", "user associated with this post is: " + user.toString());
-            profileImageUrl = user.getProfileImageUrl();
-
-            Picasso.with(getContext())
-                    .load(profileImageUrl)
-                    .centerInside()
-                    .resize(50, 50)
-                            //.placeholder(R.drawable.placeholderthumbnail)
-*/
         viewHolder.ivProfile.setImageResource(android.R.color.transparent);
         Picasso.with(getContext()).load(R.drawable.icon_user_32).into(viewHolder.ivProfile);
         if(post.getParseUser()!=null)
@@ -94,8 +78,7 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
                     .load(post.getParseUser().get("profile_image_url").toString())
                     .fit()
                     .centerCrop()
-                            //.centerInside()
-                    .placeholder(R.drawable.placeholderwide)
+                    .placeholder(R.drawable.placeholderthumbnail)
                     .into(viewHolder.ivProfile);
         }
 
