@@ -48,6 +48,7 @@ public class MapActivity extends ActionBarActivity implements
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private final static String TAG = "MapActivityDebug";
+
     private boolean ready = false;
     private ArrayList<Marker> markers = null;
     private int markerIndex =0;
@@ -103,7 +104,7 @@ public class MapActivity extends ActionBarActivity implements
                 public void onLocationAvailable(Location location) {
                     if (m_location == null) {// if query location is null, use current location
                         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 10);
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, Util.ZOOM_MEDIUM);
                         /*map.animateCamera(cameraUpdate, new GoogleMap.CancelableCallback() {
                             @Override
                             public void onFinish() {
@@ -164,7 +165,7 @@ public class MapActivity extends ActionBarActivity implements
     private void setTargetLocation(LatLng location) {
 
         if(location!=null){
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 10/*17*/);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, Util.ZOOM_MEDIUM);
             map.animateCamera(cameraUpdate);
             ready = true;
         }
@@ -173,14 +174,14 @@ public class MapActivity extends ActionBarActivity implements
     @Override
     public void onCameraChange(CameraPosition cameraPosition) {
 
-        Log.d("DEBUG", "on camera change");
+        Log.d(TAG, "on camera change");
 
         //if(points==null && ready) {
 
             //map.clear();
             //clear also all hashmaps and arraylists
 
-            //Log.d("DEBUG", "camera change - location is set/ready");
+            //Log.d(TAG, "camera change - location is set/ready");
             // Create random points within the boundaries of the map
             //points = createRandomPointsOnVisibleMap();//this method will be replaces by querying parse
             getPostsOnCurrentWindowAndPutPins();
@@ -199,7 +200,7 @@ public class MapActivity extends ActionBarActivity implements
         LatLng ne = curScreen.northeast;
         LatLng sw = curScreen.southwest;
 
-        Log.d("DEBUG", "Screen boundaries. ne: " + ne.toString() + ", sw: " + sw.toString());
+        Log.d(TAG, "Screen boundaries. ne: " + ne.toString() + ", sw: " + sw.toString());
 
         // west - x coordinate
         double rangeMinLng = sw.longitude;
@@ -226,7 +227,7 @@ public class MapActivity extends ActionBarActivity implements
                         //LatLng point = new LatLng(37.5513928, -122.2865121);
                         LatLng point = new LatLng(post.getLatitude(), post.getLongitude());
 
-                        Log.d("DEBUG", "Adding post point: " + point.toString());
+                        Log.d(TAG, "Adding post point: " + point.toString());
 
                         currentPosts.add(post);
                         putSinglePin(post);
@@ -245,7 +246,7 @@ public class MapActivity extends ActionBarActivity implements
 
     private void putSinglePin(Post post){
 
-        Log.d("DEBUG", "Will put pin for post: " + post.toString());
+        Log.d(TAG, "Will put pin for post: " + post.toString());
 
         // Define color of marker icon
         BitmapDescriptor defaultMarker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
@@ -264,7 +265,7 @@ public class MapActivity extends ActionBarActivity implements
 
         markers.add(marker);
         markersToPosts.put(marker, post);
-        Log.d("DEBUG", "Marked pin at point: " + point.toString());
+        Log.d(TAG, "Marked pin at point: " + point.toString());
     }
 
     /*
@@ -341,7 +342,7 @@ public class MapActivity extends ActionBarActivity implements
                     long elapsed = SystemClock.uptimeMillis() - start;
 
                     if(markerIndex >= markers.size()){
-                        Log.d("DEBUG", "end of animation");
+                        Log.d(TAG, "end of animation");
                     }
                     else if(shown.get(markerIndex)==false){
                         //pic not shown before
@@ -408,7 +409,7 @@ public class MapActivity extends ActionBarActivity implements
         LatLng ne = curScreen.northeast;
         LatLng sw = curScreen.southwest;
 
-        Log.d("DEBUG", "Screen boundaries. ne: " + ne.toString() + ", sw: " + sw.toString());
+        Log.d(TAG, "Screen boundaries. ne: " + ne.toString() + ", sw: " + sw.toString());
 
         // west - x coordinate
         double rangeMinLng = sw.longitude;
@@ -427,7 +428,7 @@ public class MapActivity extends ActionBarActivity implements
             //LatLng point = new LatLng(37.5513928, -122.2865121);
             LatLng point = new LatLng(randomValueLat, randomValueLng);
 
-            Log.d("DEBUG", "Adding random point: " + point.toString());
+            Log.d(TAG, "Adding random point: " + point.toString());
 
             points.add(point);
         }
@@ -436,7 +437,7 @@ public class MapActivity extends ActionBarActivity implements
 
     private void putPins(ArrayList<LatLng> points){
 
-        Log.d("DEBUG", "Entering put pins");
+        Log.d(TAG, "Entering put pins");
 
         for(LatLng point: points){
 
@@ -453,7 +454,7 @@ public class MapActivity extends ActionBarActivity implements
                     .icon(defaultMarker));
 
             markers.add(marker);
-            Log.d("DEBUG", "Marking pin for point: " + point.toString());
+            Log.d(TAG, "Marking pin for point: " + point.toString());
 
             //dropPinEffect(marker);
         }

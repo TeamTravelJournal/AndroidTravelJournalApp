@@ -22,6 +22,7 @@
     <string name="title_activity_login">LoginActivity</string>
 
     <string name="facebook_app_id">993513677328878</string>
+    <string name="title_activity_single_map">SingleMapActivity</string>
     <!--string name="facebook_app_id">1629757617260429</string-->
 
 </resources>
