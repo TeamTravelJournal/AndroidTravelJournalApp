@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.datasource.ParseClient;
+import com.mycompany.traveljournal.helpers.FacebookUtil;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mainscreen.MainActivity;
 import com.parse.LogInCallback;
@@ -79,7 +80,7 @@ public class LoginActivity extends ActionBarActivity {
 
     private void showUserMainActivity() {
         if(ParseUser.getCurrentUser() != null)
-            Util.makeFBProfileRequest(this);
+            FacebookUtil.makeFBProfileRequest();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
