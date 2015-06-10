@@ -8,20 +8,22 @@ import android.view.MenuItem;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.datasource.ParseClient;
+import com.mycompany.traveljournal.models.User;
 
 public class ProfileActivity extends ActionBarActivity {
 
     UserPostsFragment userPostsFragment;
-    ParseClient parseClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        User user = (User) getIntent().getSerializableExtra("User");
 
+        UserProfileFragment userProfileFragment = (UserProfileFragment)getSupportFragmentManager().findFragmentById(R.id.userFragment);
+        userProfileFragment.setData(user);
         getSupportActionBar().hide();
 
-        parseClient = ParseClient.getInstance(this);
 
         if(savedInstanceState == null)
             setUpFragment();
