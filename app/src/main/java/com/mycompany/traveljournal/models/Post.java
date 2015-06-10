@@ -1,6 +1,5 @@
 package com.mycompany.traveljournal.models;
 
-import com.mycompany.traveljournal.examples.User;
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -59,12 +58,23 @@ public class Post extends ParseObject {
         return (User) getParseObject("created_by");
     }*/
 
-    public ParseUser getParseUser() {
-        return (ParseUser) getParseObject("parse_user");
+    public User getParseUser() {
+        ParseUser parseUser = (ParseUser) getParseObject("parse_user");
+        return getUserFromParseUser(parseUser);
     }
 
     public Post() {
 
+    }
+
+    public static User getUserFromParseUser(ParseUser parseUser){
+        User user = new User();
+        try {
+            user.setName(parseUser.getString("name"));
+            user.setProfileImgUrl(parseUser.get("profile_image_url") != null ? parseUser.get("profile_image_url").toString() : "");
+            user.setCovereImageUrl(parseUser.get("cover_image_url") != null ? parseUser.get("cover_image_url").toString() : "");
+        }catch(Exception e){}
+        return user;
     }
 
     public static ArrayList<Post> getFakePosts() {

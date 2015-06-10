@@ -26,10 +26,12 @@ import com.mycompany.traveljournal.common.PostListenerObj;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.models.Post;
+import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.profilescreen.ProfileActivity;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalService;
 import com.mycompany.traveljournal.wishlistscreen.WishListActivity;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
@@ -105,7 +107,7 @@ public abstract class PostsListFragment extends Fragment {
         int id = item.getItemId();
 
         if(id == R.id.action_profile){
-            executeProfileIntent();
+            executeProfileIntent(client.getCurrentUser());
         }
         else if(id == R.id.action_wishlist){
             Intent i = new Intent(getActivity(), WishListActivity.class);
@@ -179,7 +181,7 @@ public abstract class PostsListFragment extends Fragment {
         aPosts.setPostObjListener(new PostListenerObj.PostListener() {
             @Override
             public void onProfileClick(Post data) {
-                executeProfileIntent();
+                executeProfileIntent(data.getParseUser());
             }
 
             @Override
@@ -190,8 +192,9 @@ public abstract class PostsListFragment extends Fragment {
 
     }
 
-    private void executeProfileIntent(){
+    private void executeProfileIntent(User data){
         Intent i = new Intent(getActivity(), ProfileActivity.class);
+        i.putExtra("User", data);
         startActivity(i);
     }
 

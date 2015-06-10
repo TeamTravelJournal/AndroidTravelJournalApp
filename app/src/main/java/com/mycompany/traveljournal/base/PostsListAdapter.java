@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.PostListenerObj;
-import com.mycompany.traveljournal.examples.User;
 import com.mycompany.traveljournal.models.Post;
 import com.squareup.picasso.Picasso;
 
@@ -75,7 +74,7 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
         if(post.getParseUser()!=null)
         {
             Picasso.with(getContext())
-                    .load(post.getParseUser().get("profile_image_url").toString())
+                    .load(post.getParseUser().getProfileImgUrl())
                     .fit()
                     .centerCrop()
                     .placeholder(R.drawable.placeholderthumbnail)

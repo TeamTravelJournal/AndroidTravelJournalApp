@@ -112,7 +112,7 @@ public class DetailFragment extends Fragment {
         Picasso.with(getActivity()).load(R.drawable.icon_user_32).into(ivProfile);
 
         if(post.getParseUser()!=null) {
-            Picasso.with(getActivity()).load(post.getParseUser().get("profile_image_url").toString()).into(ivProfile);
+            Picasso.with(getActivity()).load(post.getParseUser().getProfileImgUrl()).into(ivProfile);
         }
     }
 

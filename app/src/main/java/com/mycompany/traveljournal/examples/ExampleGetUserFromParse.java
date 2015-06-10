@@ -3,6 +3,7 @@ package com.mycompany.traveljournal.examples;
 
 import android.util.Log;
 
+import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
@@ -24,7 +25,7 @@ public class ExampleGetUserFromParse {
                 User user = users.get(0);
                 Log.wtf(TAG, user.getName());
                 //Log.wtf(TAG, user.getUserId());
-                Log.wtf(TAG, user.getProfileImageUrl());
+                //Log.wtf(TAG, user.getProfileImageUrl());
             }
             @Override
             public void onFailure(Exception e) {

@@ -1,7 +1,7 @@
 package com.mycompany.traveljournal.service;
 
 import com.mycompany.traveljournal.models.Post;
-import com.mycompany.traveljournal.examples.User;
+import com.mycompany.traveljournal.models.User;
 
 import java.util.Date;
 import java.util.List;
@@ -24,5 +24,7 @@ public interface JournalService {
     public void getUserWithId(String userId, final JournalCallBack<List<User>> journalCallBack);
 
     public void createUser(String name, String profile_image_url, String cover_image_url);
+
+    public User getCurrentUser();
 
 }
