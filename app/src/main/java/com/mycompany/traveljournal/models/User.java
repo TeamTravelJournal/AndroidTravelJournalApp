@@ -2,6 +2,7 @@ package com.mycompany.traveljournal.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.io.Serializable;
 
@@ -10,16 +11,26 @@ public class User implements Serializable{
 
     String name;
     String profileImgUrl;
-    String covereImageUrl;
+    String coverImageUrl;
+    String id;
 
-    public void User(String name, String profileImgUrl, String covereImageUrl){
+    public void User(String name, String profileImgUrl, String covereImageUrl, String id){
         this.name = name;
         this.profileImgUrl = profileImgUrl;
-        this.covereImageUrl = covereImageUrl;
+        this.coverImageUrl = covereImageUrl;
+        this.id = id;
     }
 
     public void User(){
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -31,7 +42,7 @@ public class User implements Serializable{
     }
 
     public void setCovereImageUrl(String covereImageUrl) {
-        this.covereImageUrl = covereImageUrl;
+        this.coverImageUrl = covereImageUrl;
     }
 
     public String getName() {
@@ -42,8 +53,8 @@ public class User implements Serializable{
         return profileImgUrl;
     }
 
-    public String getCovereImageUrl() {
-        return covereImageUrl;
+    public String getCoverImageUrl() {
+        return coverImageUrl;
     }
 
     // This is just for debugging purposes
