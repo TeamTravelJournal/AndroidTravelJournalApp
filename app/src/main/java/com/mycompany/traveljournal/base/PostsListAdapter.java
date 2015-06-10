@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.PostListenerObj;
 import com.mycompany.traveljournal.models.Post;
-import com.mycompany.traveljournal.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -71,8 +70,7 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
                 .placeholder(R.drawable.placeholderwide)
                 .into(viewHolder.ivPost);
 
-<<<<<<< HEAD
-
+/*
         // Default profile picture
         Picasso.with(getContext()).load(R.drawable.icon_user_32).into(viewHolder.ivProfile);
 
@@ -87,7 +85,7 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
                     .centerInside()
                     .resize(50, 50)
                             //.placeholder(R.drawable.placeholderthumbnail)
-=======
+*/
         viewHolder.ivProfile.setImageResource(android.R.color.transparent);
         Picasso.with(getContext()).load(R.drawable.icon_user_32).into(viewHolder.ivProfile);
         if(post.getParseUser()!=null)
@@ -98,7 +96,6 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
                     .centerCrop()
                             //.centerInside()
                     .placeholder(R.drawable.placeholderwide)
->>>>>>> upstream/master
                     .into(viewHolder.ivProfile);
         }
 
