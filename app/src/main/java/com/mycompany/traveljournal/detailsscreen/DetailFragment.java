@@ -1,5 +1,6 @@
 package com.mycompany.traveljournal.detailsscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
+import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
@@ -61,6 +63,19 @@ public class DetailFragment extends Fragment {
 
     public void setUpListeners() {
 
+
+
+
+        //Using below code for my testing. Pls do not remove/you can comment it out. //Esra
+        ivShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(getActivity(), SingleMapActivity.class);
+                i.putExtra("post_id", postId);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
