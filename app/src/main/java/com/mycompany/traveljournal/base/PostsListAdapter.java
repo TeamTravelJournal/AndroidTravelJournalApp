@@ -74,7 +74,7 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
         if(post.getParseUser()!=null)
         {
             Picasso.with(getContext())
-                    .load(post.getParseUser().get("profile_image_url").toString())
+                    .load(post.getParseUser().getProfileImgUrl())
                     .fit()
                     .centerCrop()
                             //.centerInside()

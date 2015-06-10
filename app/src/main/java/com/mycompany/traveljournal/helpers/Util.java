@@ -27,8 +27,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.model.LatLng;
 import com.mycompany.traveljournal.common.ErrorDialogFragment;
+import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalService;
+import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,7 +90,6 @@ public class Util {
             return false;
         }
     }
-
 
     public static Boolean isOnline() {
         try {

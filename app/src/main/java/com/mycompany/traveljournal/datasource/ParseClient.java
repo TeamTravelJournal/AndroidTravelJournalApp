@@ -7,7 +7,7 @@ import android.util.Log;
 import com.facebook.FacebookSdk;
 import com.mycompany.traveljournal.models.Like;
 import com.mycompany.traveljournal.models.Post;
-import com.mycompany.traveljournal.examples.User;
+import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.parse.FindCallback;
@@ -121,6 +121,11 @@ public class ParseClient implements JournalService {
         });
     }
 
+    @Override
+    public User getCurrentUser() {
+        return Post.getUserFromParseUser(ParseUser.getCurrentUser());
+    }
+
     public void getPostsWithinWindow(double latitudeMin, double longitudeMin, double latitudeMax, double longitudeMax, int limit, final JournalCallBack<List<Post>> journalCallBack) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.setLimit(limit);
@@ -213,7 +218,7 @@ public class ParseClient implements JournalService {
     }
 
     public void getUserWithId(String userId, final JournalCallBack<List<User>> journalCallBack) {
-        ParseQuery<User> query = ParseQuery.getQuery(User.class);
+        /*ParseQuery<User> query = ParseQuery.getQuery(User.class);
         query.whereEqualTo("user_id", userId);
         query.setLimit(1);
         query.findInBackground(new FindCallback<User>() {
@@ -225,7 +230,7 @@ public class ParseClient implements JournalService {
                     journalCallBack.onFailure(e);
                 }
             }
-        });
+        });*/
     }
 
 }
