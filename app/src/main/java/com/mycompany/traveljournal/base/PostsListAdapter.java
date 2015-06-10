@@ -59,7 +59,6 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.ivProfile.setImageResource(android.R.color.transparent);
         viewHolder.ivPost.setImageResource(android.R.color.transparent);
 
         viewHolder.tvCaption.setText(post.getCaption());
@@ -72,6 +71,7 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
                 .placeholder(R.drawable.placeholderwide)
                 .into(viewHolder.ivPost);
 
+<<<<<<< HEAD
 
         // Default profile picture
         Picasso.with(getContext()).load(R.drawable.icon_user_32).into(viewHolder.ivProfile);
@@ -87,6 +87,18 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
                     .centerInside()
                     .resize(50, 50)
                             //.placeholder(R.drawable.placeholderthumbnail)
+=======
+        viewHolder.ivProfile.setImageResource(android.R.color.transparent);
+        Picasso.with(getContext()).load(R.drawable.icon_user_32).into(viewHolder.ivProfile);
+        if(post.getParseUser()!=null)
+        {
+            Picasso.with(getContext())
+                    .load(post.getParseUser().get("profile_image_url").toString())
+                    .fit()
+                    .centerCrop()
+                            //.centerInside()
+                    .placeholder(R.drawable.placeholderwide)
+>>>>>>> upstream/master
                     .into(viewHolder.ivProfile);
         }
 

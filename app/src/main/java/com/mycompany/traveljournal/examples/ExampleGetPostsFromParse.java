@@ -23,7 +23,7 @@ public class ExampleGetPostsFromParse {
             public void onSuccess(List<Post> posts) {
                 Post post = posts.get(0);
                 Log.wtf(TAG, post.toString());
-                Log.wtf(TAG, post.getCreatedByUser().toString());
+                //Log.wtf(TAG, post.getCreatedByUser().toString());
             }
             @Override
             public void onFailure(Exception e) {

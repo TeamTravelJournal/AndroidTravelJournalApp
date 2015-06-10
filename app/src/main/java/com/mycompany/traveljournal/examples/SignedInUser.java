@@ -1,7 +1,5 @@
-package com.mycompany.traveljournal.datasource;
+package com.mycompany.traveljournal.examples;
 
-
-import com.mycompany.traveljournal.models.User;
 
 public class SignedInUser {
 

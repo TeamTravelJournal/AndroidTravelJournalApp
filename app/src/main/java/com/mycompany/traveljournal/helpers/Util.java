@@ -23,13 +23,12 @@ import android.support.v4.app.FragmentActivity;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.model.LatLng;
 import com.mycompany.traveljournal.common.ErrorDialogFragment;
-import com.parse.ParseUser;
-import com.squareup.picasso.Downloader;
+import com.mycompany.traveljournal.service.JournalApplication;
+import com.mycompany.traveljournal.service.JournalService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,29 +50,17 @@ public class Util {
      */
     public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
-    public static void makeFBProfileRequest() {
+    public static void makeFBProfileRequest(Context context) {
         GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
                         if (jsonObject != null) {
-                            JSONObject userProfile = new JSONObject();
 
                             try {
-                                userProfile.put("facebookId", jsonObject.getLong("id"));
-                                userProfile.put("name", jsonObject.getString("name"));
-
-                                if (jsonObject.getString("gender") != null)
-                                    userProfile.put("gender", jsonObject.getString("gender"));
-
-                                if (jsonObject.getString("email") != null)
-                                    userProfile.put("email", jsonObject.getString("email"));
-
-                                // Save the user profile info in a user property
-                                ParseUser currentUser = ParseUser.getCurrentUser();
-                                currentUser.put("profile", userProfile);
-                                currentUser.saveInBackground();
-
+                                String profile_img_url = "https://graph.facebook.com/" + jsonObject.getString("id").toString() +"/picture?type=small";
+                                JournalService client = JournalApplication.getClient();
+                                client.createUser(jsonObject.getString("name"), profile_img_url, "");
                             } catch (JSONException e) {
                                 Log.d(APP_TAG,
                                         "Error parsing returned user data. " + e);

@@ -6,10 +6,6 @@ import com.parse.ParseObject;
 @ParseClassName("Like")
 public class Like extends ParseObject {
 
-    private String userID;
-
-    private int postID;
-
     public String getUserId() {
         return getString("user_id");
     }

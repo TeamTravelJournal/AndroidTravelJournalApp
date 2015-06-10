@@ -1,29 +1,18 @@
 package com.mycompany.traveljournal.models;
 
+import com.mycompany.traveljournal.examples.User;
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
 @ParseClassName("Post")
 public class Post extends ParseObject {
 
-    private String postID; //Parse ids are strings
-
-    private String imageUrl;
-    //private ParseFile image;
-
-    private String caption;
-    private String description;
-    private ParseGeoPoint location;
-    private String userID;
-    private int likes;
-    private String tripID; //Parse Ids are strings
-
     //We will not need timeStamp
     //as Parse object has built-in createdAt field
-
 
     // The post id is the Parse object id and will be auto generated
     public String getPostID() {
@@ -54,10 +43,6 @@ public class Post extends ParseObject {
         return 0.0d;
     }
 
-    public String getUserID() {
-        return getString("user_id");
-    }
-
     public int getLikes() {
         return getInt("likes");
     }
@@ -70,8 +55,12 @@ public class Post extends ParseObject {
         return getString("image_url");
     }
 
-    public User getCreatedByUser() {
+    /*public User getCreatedByUser() {
         return (User) getParseObject("created_by");
+    }*/
+
+    public ParseUser getParseUser() {
+        return (ParseUser) getParseObject("parse_user");
     }
 
     public Post() {
@@ -90,7 +79,6 @@ public class Post extends ParseObject {
         location.setLongitude(-122.432080);
         post1.put("location", location);
 
-        post1.put("user_id", "101");
         post1.put("likes", "18");
         post1.put("trip_id", 0);
         posts.add(post1);
@@ -105,7 +93,6 @@ public class Post extends ParseObject {
         location2.setLongitude(-122.433104);
         post1.put("location", location2);
 
-        post2.put("user_id", "101");
         post2.put("likes", "3");
         post2.put("trip_id", 0);
         posts.add(post2);
@@ -119,7 +106,6 @@ public class Post extends ParseObject {
         String output = "";
         output += getCaption() + " ";
         output += getDescription() + " ";
-        output += getUserID() + " ";
         output += getLikes() + " ";
         output += getTripID() + " ";
         output += getLatitude() + " ";
