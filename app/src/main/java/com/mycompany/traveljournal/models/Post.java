@@ -70,6 +70,7 @@ public class Post extends ParseObject {
     public static User getUserFromParseUser(ParseUser parseUser){
         User user = new User();
         try {
+            user.setId(parseUser.getObjectId());
             user.setName(parseUser.getString("name"));
             user.setProfileImgUrl(parseUser.get("profile_image_url") != null ? parseUser.get("profile_image_url").toString() : "");
             user.setCovereImageUrl(parseUser.get("cover_image_url") != null ? parseUser.get("cover_image_url").toString() : "");
