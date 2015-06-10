@@ -38,6 +38,7 @@ import java.util.List;
 
 /**
  * Created by sjayaram on 6/4/2015.
+ * This code is managed by ekucukog
  */
 public class MainPostFragment extends PostsListFragment {
 

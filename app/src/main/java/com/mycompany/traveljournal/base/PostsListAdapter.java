@@ -1,6 +1,7 @@
 package com.mycompany.traveljournal.base;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.PostListenerObj;
 import com.mycompany.traveljournal.models.Post;
+import com.mycompany.traveljournal.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -69,6 +71,24 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
                 //.centerInside()
                 .placeholder(R.drawable.placeholderwide)
                 .into(viewHolder.ivPost);
+
+
+        // Default profile picture
+        Picasso.with(getContext()).load(R.drawable.icon_user_32).into(viewHolder.ivProfile);
+
+        User user = post.getCreatedByUser();
+        String profileImageUrl = "";
+        if(user!=null){
+            Log.d("DEBUG", "user associated with this post is: " + user.toString());
+            profileImageUrl = user.getProfileImageUrl();
+
+            Picasso.with(getContext())
+                    .load(profileImageUrl)
+                    .centerInside()
+                    .resize(50, 50)
+                            //.placeholder(R.drawable.placeholderthumbnail)
+                    .into(viewHolder.ivProfile);
+        }
 
         setUpListeners(post);
 
