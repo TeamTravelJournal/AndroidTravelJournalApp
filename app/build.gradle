@@ -29,5 +29,6 @@ dependencies {
     compile 'com.google.android.gms:play-services:6.5.+'
     compile 'net.bozho.easycamera:easycamera:0.0.1:aar@aar'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
+    compile 'com.loopj.android:android-async-http:1.4.5'
     compile project(':library');
 }
