@@ -3,7 +3,9 @@ package com.mycompany.traveljournal.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
@@ -174,7 +176,12 @@ public abstract class PostsListFragment extends Fragment {
                 Intent i = new Intent(getActivity(), DetailActivity.class);
                 Post post = (Post)parent.getItemAtPosition(position);
                 i.putExtra("post_id", post.getPostID());
-                startActivity(i);
+
+                Pair<View, String> p1 = Pair.create(view.findViewById(R.id.ivPost), "postImg");
+                Pair<View, String> p2 = Pair.create(view.findViewById(R.id.ivProfile), "profileImg");
+
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), p1, p2);
+                getActivity().startActivity(i, options.toBundle());
             }
         });
 
