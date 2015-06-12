@@ -48,17 +48,18 @@ public class MapActivity extends ActionBarActivity implements
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private final static String TAG = "MapActivityDebug";
-
-    private boolean ready = false;
-    private ArrayList<Marker> markers = null;
-    private int markerIndex =0;
-    private ArrayList<Boolean> shown= null;
-    private ArrayList<Post> currentPosts = null;
-    private String m_query;
-    private LatLng m_location;
     private JournalService client;
     private LocationService locationService;
+    private String m_query;
+    private LatLng m_location;
+
+    private ArrayList<Marker> markers = null;
+    private ArrayList<Post> currentPosts = null;
     private HashMap markersToPosts = new HashMap();
+
+    private int markerIndex =0;
+    private ArrayList<Boolean> shown= null;
+    private boolean ready = false;
 
     //private ArrayList<LatLng> points=null;
     //private LatLng fixAddress = new LatLng(37.533278, -122.237933);//my redwood shores address
@@ -68,10 +69,12 @@ public class MapActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_activity);
 
-        markers = new ArrayList<>();
         m_query = getIntent().getStringExtra("query");
         m_location = Util.getLocationFromQuery(this, m_query);
         client = JournalApplication.getClient();
+
+        markers = new ArrayList<>();
+        currentPosts = new ArrayList<>();
 
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         if (mapFragment != null) {
@@ -105,39 +108,9 @@ public class MapActivity extends ActionBarActivity implements
                     if (m_location == null) {// if query location is null, use current location
                         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, Util.ZOOM_MEDIUM);
-                        /*map.animateCamera(cameraUpdate, new GoogleMap.CancelableCallback() {
-                            @Override
-                            public void onFinish() {
-                                ready=true;
-                            }
-
-                            @Override
-                            public void onCancel() {
-                            }
-                        });*/
                         map.moveCamera(cameraUpdate);
                         ready = true;
                     }
-                }
-            });
-
-            map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-
-                @Override
-                public boolean onMarkerClick(final Marker mark) {
-
-                    mark.showInfoWindow();
-
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mark.showInfoWindow();
-
-                        }
-                    }, 200);
-
-                    return true;
                 }
             });
 
@@ -179,7 +152,7 @@ public class MapActivity extends ActionBarActivity implements
         //if(points==null && ready) {
 
             //map.clear();
-            //clear also all hashmaps and arraylists
+            clearOutOfMap();
 
             //Log.d(TAG, "camera change - location is set/ready");
             // Create random points within the boundaries of the map
@@ -193,25 +166,9 @@ public class MapActivity extends ActionBarActivity implements
 
     private void getPostsOnCurrentWindowAndPutPins(){
 
-        currentPosts = new ArrayList<>();
+        double[] boundaries = getMapBoundaries();
 
-        LatLngBounds curScreen = map.getProjection().getVisibleRegion().latLngBounds;
-
-        LatLng ne = curScreen.northeast;
-        LatLng sw = curScreen.southwest;
-
-        Log.d(TAG, "Screen boundaries. ne: " + ne.toString() + ", sw: " + sw.toString());
-
-        // west - x coordinate
-        double rangeMinLng = sw.longitude;
-        // east - x coordinate
-        double rangeMaxLng = ne.longitude;
-        // north - y coordinate
-        double rangeMaxLat = ne.latitude;
-        // south - y coordinate
-        double rangeMinLat = sw.latitude;
-
-        client.getPostsWithinWindow(rangeMinLat, rangeMinLng, rangeMaxLat, rangeMaxLng, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
+        client.getPostsWithinWindow(boundaries[3], boundaries[0], boundaries[2], boundaries[1], Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
             @Override
             public void onSuccess(List<Post> posts) {
                 //Toast.makeText(, "parse call successful", Toast.LENGTH_SHORT).show();
@@ -227,14 +184,10 @@ public class MapActivity extends ActionBarActivity implements
                         //LatLng point = new LatLng(37.5513928, -122.2865121);
                         LatLng point = new LatLng(post.getLatitude(), post.getLongitude());
 
-                        Log.d(TAG, "Adding post point: " + point.toString());
-
-                        currentPosts.add(post);
-                        putSinglePin(post);
+                        Log.d(TAG, "Returned point: " + point.toString());
+                        takeActionForPost(post);
                     }
                 }
-
-                //putPins(points);
             }
             @Override
             public void onFailure(Exception e) {
@@ -242,6 +195,43 @@ public class MapActivity extends ActionBarActivity implements
                 Log.d(TAG, "Failed to get posts");
             }
         });
+    }
+
+    private void takeActionForPost(Post post){
+
+        if(!currentPosts.contains(post)){
+            currentPosts.add(post);
+            putSinglePin(post);
+        }
+    }
+
+    private void clearOutOfMap(){
+
+        LatLngBounds bounds = getMapBoundariesAsLatLngBounds();
+
+        //for all markers, if it is outside the boundary, remove marker, remove post as well
+        //start from end, as removing will mess up the greater indices
+        for(int i=markers.size()-1; i>=0; i--){
+
+            Post post = (Post) markersToPosts.get(markers.get(i));
+            LatLng point = new LatLng(post.getLatitude(), post.getLongitude());
+
+            if(!bounds.contains(point)){
+
+                Log.d(TAG, "marker is out of map bounds for post : " + post.getPostID());
+                markers.get(i).remove();//remove marker from map
+
+                currentPosts.remove(post);//remove post from currentPost
+                markersToPosts.remove(markers.get(i));//remove marker from hash
+                markers.remove(i);//remove marker from array
+
+            }else{
+                //keep it.
+                Log.d(TAG, "marker is still in map bounds for post : " + post.getPostID());
+            }
+        }
+
+        Log.d(TAG, "current posts " + currentPosts.toString());
     }
 
     private void putSinglePin(Post post){
@@ -309,6 +299,42 @@ public class MapActivity extends ActionBarActivity implements
                         break;
                 }
         }
+    }
+
+    private double[] getMapBoundaries(){
+
+        if(map==null){
+            return new double[]{0.0d,0.0d,0.0d,0.0d};
+        }
+
+        LatLngBounds curScreen = map.getProjection().getVisibleRegion().latLngBounds;
+
+        LatLng ne = curScreen.northeast;
+        LatLng sw = curScreen.southwest;
+
+        Log.d(TAG, "Screen boundaries. ne: " + ne.toString() + ", sw: " + sw.toString());
+
+        // west - x coordinate
+        double rangeMinLng = sw.longitude;
+        // east - x coordinate
+        double rangeMaxLng = ne.longitude;
+        // north - y coordinate
+        double rangeMaxLat = ne.latitude;
+        // south - y coordinate
+        double rangeMinLat = sw.latitude;
+
+        return new double[]{rangeMinLng, rangeMaxLng, rangeMaxLat, rangeMinLat};
+    }
+
+    private LatLngBounds getMapBoundariesAsLatLngBounds(){
+
+
+        double[] boundaries = getMapBoundaries();
+
+        LatLng sw = new LatLng(boundaries[3], boundaries[0]);
+        LatLng ne = new LatLng(boundaries[2], boundaries[1]);
+
+        return new LatLngBounds(sw, ne);
     }
 
     @Override

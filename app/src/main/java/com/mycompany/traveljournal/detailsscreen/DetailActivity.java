@@ -1,11 +1,15 @@
 package com.mycompany.traveljournal.detailsscreen;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
+import com.google.android.gms.maps.MapFragment;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
+import com.mycompany.traveljournal.mapscreen.SingleMapFragment;
+import com.mycompany.traveljournal.profilescreen.UserProfileFragment;
 
 public class DetailActivity extends PostsListActivity {
 

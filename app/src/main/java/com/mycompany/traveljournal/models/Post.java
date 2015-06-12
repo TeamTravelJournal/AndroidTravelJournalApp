@@ -1,5 +1,6 @@
 package com.mycompany.traveljournal.models;
 
+import com.google.android.gms.appindexing.Thing;
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -124,6 +125,12 @@ public class Post extends ParseObject {
         return output;
     }
 
+    public boolean equals (Object o) {
+        Post second = (Post) o;
+        if (second.getPostID().equals(getPostID()))
+            return true;
+        return false;
+    }
 
 
 }
