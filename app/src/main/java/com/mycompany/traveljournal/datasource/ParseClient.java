@@ -330,4 +330,21 @@ public class ParseClient implements JournalService {
         });
     }
 
+    public void getCommentsForPost(String postId, int limit, final JournalCallBack<List<Comment>> journalCallBack) {
+        ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
+        query.whereEqualTo("post_id", postId);
+        query.setLimit(limit);
+
+        query.findInBackground(new FindCallback<Comment>() {
+            @Override
+            public void done(List<Comment> comments, ParseException e) {
+                if (e == null) {
+                    journalCallBack.onSuccess(comments);
+                } else {
+                    journalCallBack.onFailure(e);
+                }
+            }
+        });
+    }
+
 }

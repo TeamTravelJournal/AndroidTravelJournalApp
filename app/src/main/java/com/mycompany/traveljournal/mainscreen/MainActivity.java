@@ -48,7 +48,8 @@ public class MainActivity extends PostsListActivity {
         //ExampleSavePostToParse savePost = new ExampleSavePostToParse();
         //savePost.createPostExample();
 
-
+        //ExampleComments exampleComments = new ExampleComments();
+        //exampleComments.getCommentsForPost();
 
 
 
