@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
+import com.mycompany.traveljournal.mapscreen.SingleMapFragment;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
@@ -48,8 +50,19 @@ public class DetailFragment extends Fragment {
         setUpViews(view);
         setUpListeners();
         fetchPostAndPopulateViews();
+        //insertNestedFragment();//inserts map fragment
         return view;
     }
+/*
+    // Embeds the map fragment dynamically
+    private void insertNestedFragment() {
+        SingleMapFragment childFragment = SingleMapFragment.newInstance(postId);
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.map_container, childFragment).commit();
+        /*SingleMapFragment singleMapFragment = (SingleMapFragment)(getChildFragmentManager().findFragmentById(R.id.single_map));
+        singleMapFragment.setData(postId);
+    }
+*/
 
     public void setUpViews(View v){
         ivProfile = (ImageView) v.findViewById(R.id.ivProfile);
@@ -66,7 +79,7 @@ public class DetailFragment extends Fragment {
 
 
 
-        //Using below code for my testing. Pls do not remove/you can comment it out. //Esra
+        //Using below code for my testing. Pls do not remove/feel free to comment it out. //Esra
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
