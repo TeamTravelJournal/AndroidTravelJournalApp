@@ -6,35 +6,26 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.location.Address;
+import android.location.Geocoder;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import android.location.Address;
-import android.location.Geocoder;
-import android.support.v4.app.FragmentActivity;
-
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.model.LatLng;
 import com.mycompany.traveljournal.common.ErrorDialogFragment;
 import com.mycompany.traveljournal.models.User;
-import com.mycompany.traveljournal.service.JournalApplication;
-import com.mycompany.traveljournal.service.JournalService;
 import com.parse.ParseUser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -176,4 +167,16 @@ public class Util {
 
         return p1;
     }
+
+    public static User getUserFromParseUser(ParseUser parseUser){
+        User user = new User();
+        try {
+            user.setId(parseUser.getObjectId());
+            user.setName(parseUser.getString("name"));
+            user.setProfileImgUrl(parseUser.get("profile_image_url") != null ? parseUser.get("profile_image_url").toString() : "");
+            user.setCovereImageUrl(parseUser.get("cover_image_url") != null ? parseUser.get("cover_image_url").toString() : "");
+        }catch(Exception e){}
+        return user;
+    }
+
 }
