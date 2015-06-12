@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -51,6 +53,7 @@ public abstract class PostsListFragment extends Fragment {
     protected String m_query;
     protected LatLng m_location;
     protected JournalService client;
+    protected Toolbar toolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -133,6 +136,8 @@ public abstract class PostsListFragment extends Fragment {
         lvPosts = (ListView)v.findViewById(R.id.lvPosts);
         swipeContainer = (SwipeRefreshLayout)v.findViewById(R.id.swipeContainer);
         mQuickReturnView = (ImageView)v.findViewById(R.id.quick_return_iv);
+        toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
     }
 
     public void setUpListeners(){
@@ -199,10 +204,10 @@ public abstract class PostsListFragment extends Fragment {
 
     }
 
-    private void executeProfileIntent(User data){
+    protected void executeProfileIntent(User data){
         Intent i = new Intent(getActivity(), ProfileActivity.class);
         i.putExtra("User", data);
-        startActivity(i);
+        getActivity().startActivity(i);
     }
 
     //override in subclass
