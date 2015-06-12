@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="10dp"
+    >
+
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="8dp"
+    android:foreground="?android:attr/selectableItemBackground">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
@@ -10,6 +23,7 @@
         android:layout_height="match_parent"
         android:id="@+id/ivPost"
         android:scaleType="fitXY"
+        android:transitionName="postImg"
         android:adjustViewBounds="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -21,6 +35,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/ivProfile"
+        android:transitionName="profileImg"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -49,3 +64,7 @@
     </RelativeLayout>
 
 </RelativeLayout>
+
+</android.support.v7.widget.CardView>
+
+</LinearLayout>

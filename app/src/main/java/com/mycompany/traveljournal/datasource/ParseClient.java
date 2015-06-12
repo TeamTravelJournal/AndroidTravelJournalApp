@@ -126,6 +126,35 @@ public class ParseClient implements JournalService {
         return Post.getUserFromParseUser(ParseUser.getCurrentUser());
     }
 
+    @Override
+    public void getPostsForUser(String userId, Date createdAt, int limit, final JournalCallBack<List<Post>> journalCallBack) {
+
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+
+        ParseQuery<ParseUser> userQuery = ParseQuery.getQuery("_User");
+        userQuery.whereEqualTo("objectId", userId);
+        query.whereMatchesQuery("parse_user", userQuery);
+        if(createdAt!=null){
+            //if we pass a timestamp, query the posts older than timestamp
+            //otherwise query everything sorted by timestamp
+            query.whereLessThan("createdAt", createdAt);
+        }
+        query.orderByDescending("createdAt");
+        query.setLimit(limit);
+        query.include("parse_user");
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> resultPosts, ParseException e) {
+                if (e == null) {
+                    journalCallBack.onSuccess(resultPosts);
+                } else {
+                    journalCallBack.onFailure(e);
+                }
+            }
+        });
+
+    }
+
     public void getPostsWithinWindow(double latitudeMin, double longitudeMin, double latitudeMax, double longitudeMax, int limit, final JournalCallBack<List<Post>> journalCallBack) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.setLimit(limit);

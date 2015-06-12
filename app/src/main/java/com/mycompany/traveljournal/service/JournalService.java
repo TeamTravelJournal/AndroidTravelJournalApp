@@ -27,4 +27,7 @@ public interface JournalService {
 
     public User getCurrentUser();
 
+    public void getPostsForUser(String userId, Date createdAt, int limit, JournalCallBack<List<Post>> journalCallBack);
+
+
 }

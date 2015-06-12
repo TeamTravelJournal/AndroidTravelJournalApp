@@ -39,8 +39,8 @@ public class UserProfileFragment extends Fragment{
         tvName.setText(user.getName());
         if(!"".equals(user.getProfileImgUrl()))
             Picasso.with(getActivity()).load(user.getProfileImgUrl()).into(ivProfileImg);
-        if(!"".equals(user.getCovereImageUrl()))
-            Picasso.with(getActivity()).load(user.getCovereImageUrl()).into(ivCover);
+        if(!"".equals(user.getCoverImageUrl()))
+            Picasso.with(getActivity()).load(user.getCoverImageUrl()).into(ivCover);
     }
 
     @Override
