@@ -51,12 +51,18 @@ public class MainActivity extends PostsListActivity {
 
 
 
+
+
         // Richard - please keep, for my debugging
 //        Intent i = new Intent(this, DetailActivity.class);
 //        String postId = "8nxq1SkIUo";
 //        Log.wtf(TAG, "adding post id "+postId);
 //        i.putExtra("post_id", postId);
 //        startActivity(i);
+
+
+
     }
+
 
 }

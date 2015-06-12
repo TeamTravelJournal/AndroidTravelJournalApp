@@ -65,6 +65,10 @@ public class Post extends ParseObject {
         return Util.getUserFromParseUser(parseUser);
     }
 
+    public int getNumComments() {
+        return getInt("num_comments");
+    }
+
     public Post() {
 
     }

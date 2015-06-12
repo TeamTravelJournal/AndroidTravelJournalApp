@@ -20,7 +20,7 @@ public class Comment extends ParseObject {
         return getString("body");
     }
 
-    public String getPostID() {
+    public String gePostID() {
         return getString("post_id");
     }
 

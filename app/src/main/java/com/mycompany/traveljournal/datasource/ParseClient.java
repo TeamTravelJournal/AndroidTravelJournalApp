@@ -13,6 +13,7 @@ import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
@@ -30,6 +31,8 @@ public class ParseClient implements JournalService {
 
     private static final String TAG = "ParseClient";
     private static ParseClient instance = null;
+
+    private ParseUser parseUser;
 
     protected ParseClient() {
 
@@ -263,6 +266,68 @@ public class ParseClient implements JournalService {
                 }
             }
         });*/
+    }
+
+    public void createComment(Post post, String body) {
+        Comment comment = new Comment();
+
+        comment.put("post_id", post.getPostID());
+        comment.put("parse_user", ParseUser.getCurrentUser());
+        comment.put("body", body);
+
+        comment.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.wtf(TAG, "Successfully saved comment");
+                } else {
+                    Log.wtf(TAG, "Failed to save comment"+e.toString());
+                }
+            }
+        });
+
+        // Increment number of comments
+        post.increment("num_comments");
+        post.saveInBackground();
+    }
+
+    /**
+     * This method is to change the author of a comment programmatically. It is
+     * needed as it seems that the user pointer can't be modified from the Parse UI
+     */
+    public void updateCommentUser(final String commentId, String userId) {
+        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+        query.getInBackground(userId, new GetCallback<ParseUser>() {
+            @Override
+            public void done(ParseUser curParseUser, ParseException e) {
+
+                if (e != null) {
+                    Log.wtf(TAG, "Couldnt get parse user: "+e.toString());
+                }
+
+                // Store the current Parse User
+                parseUser = curParseUser;
+                Log.wtf(TAG, "parse user name is "+parseUser.getString("name"));
+
+                ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
+                query.getInBackground(commentId, new GetCallback<Comment>() {
+                    @Override
+                    public void done(Comment comment, ParseException e) {
+                        comment.put("parse_user", parseUser);
+                        comment.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    Log.wtf(TAG, "Success: Changed User for Comment "+commentId);
+                                } else {
+                                    Log.wtf(TAG, "Problem updating user for comment "+commentId);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
     }
 
 }
