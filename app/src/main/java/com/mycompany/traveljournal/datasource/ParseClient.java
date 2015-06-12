@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.facebook.FacebookSdk;
+import com.mycompany.traveljournal.helpers.Util;
+import com.mycompany.traveljournal.models.Comment;
 import com.mycompany.traveljournal.models.Like;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.models.User;
@@ -55,6 +57,7 @@ public class ParseClient implements JournalService {
         //ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Like.class);
+        ParseObject.registerSubclass(Comment.class);
 
         Parse.initialize(context, "ZFoSsZ6iQBe1CvJaNqio6V0nmlN4V7U4VzboX4J4", "0GDxAZahVe7ibC6pqiMNK6n91fYoh7HRfxXLo5TK");
         ParseUser.enableRevocableSessionInBackground();
@@ -123,7 +126,7 @@ public class ParseClient implements JournalService {
 
     @Override
     public User getCurrentUser() {
-        return Post.getUserFromParseUser(ParseUser.getCurrentUser());
+        return Util.getUserFromParseUser(ParseUser.getCurrentUser());
     }
 
     @Override
