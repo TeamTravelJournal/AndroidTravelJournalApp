@@ -40,9 +40,6 @@ public class DetailActivity extends PostsListActivity {
 
     @Override
     public void setUpFragment() {
-
-        getSupportActionBar().hide();
-
         DetailFragment detailFragment =  DetailFragment.newInstance(postId);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flContainer, detailFragment);

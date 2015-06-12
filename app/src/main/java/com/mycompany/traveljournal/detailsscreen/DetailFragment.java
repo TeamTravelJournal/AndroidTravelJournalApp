@@ -1,9 +1,13 @@
 package com.mycompany.traveljournal.detailsscreen;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +37,8 @@ public class DetailFragment extends Fragment {
     private ImageView ivFollow;
     private ImageView ivStar;
     private TextView tvLikes;
+    private  TextView tvName;
+    private Toolbar toolbar;
 
     public static DetailFragment newInstance(String postId) {
         DetailFragment detailFragment = new DetailFragment();
@@ -46,6 +52,7 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_detail, container, false);
         setUpViews(view);
+        setToolbar();
         setUpListeners();
         fetchPostAndPopulateViews();
         return view;
@@ -59,12 +66,11 @@ public class DetailFragment extends Fragment {
         ivFollow = (ImageView) v.findViewById(R.id.ivFollow);
         ivStar = (ImageView) v.findViewById(R.id.ivStar);
         tvLikes = (TextView) v.findViewById(R.id.tvLikes);
+        tvName = (TextView) v.findViewById(R.id.tvUserName);
+        toolbar = (Toolbar) v.findViewById(R.id.toolbar);
     }
 
     public void setUpListeners() {
-
-
-
 
         //Using below code for my testing. Pls do not remove/you can comment it out. //Esra
         ivShare.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +113,7 @@ public class DetailFragment extends Fragment {
         Picasso.with(getActivity()).load(post.getImageUrl()).into(ivPost);
         tvCaption.setText(post.getCaption());
         tvLikes.setText(post.getLikes()+" Likes");
+        tvName.setText(post.getParseUser().getName());
 
         // Default profile picture
         Picasso.with(getActivity()).load(R.drawable.icon_user_32).into(ivProfile);
@@ -116,57 +123,16 @@ public class DetailFragment extends Fragment {
         }
     }
 
+    private void setToolbar() {
+        if (toolbar != null) {
+            ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
+            //toolbar.setBackgroundColor(Color.parseColor(user.getProfileBackgroundColor()));
 
-
-//    private void loadImage() {
-//
-//
-//
-//        String postId = "6KGn7knDWJ";
-//        JournalService client = JournalApplication.getClient();
-//        client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
-//            @Override
-//            public void onSuccess(List<Post> posts) {
-//                    Post post = posts.get(0);
-//                    Log.wtf(TAG, post.toString());
-//
-//
-//                    post.doWithPhoto(new GetDataCallback() {
-//                        String postId = "6KGn7knDWJ";
-//
-//                        @Override
-//                        public void done(byte[] bytes, ParseException e) {
-//                            Log.wtf(TAG, "DonE!");
-//                            ImageView ivPost = (ImageView) getActivity().findViewById(R.id.ivPost);
-//
-//
-//                            try {
-//                                //File f = new File(getActivity().getCacheDir(), "somefilename");
-//                                File f = new File(getActivity().getCacheDir(), postId);
-//                                f.createNewFile();
-//                                FileOutputStream fos = new FileOutputStream(f);
-//                                fos.write(bytes);
-//                                fos.flush();
-//                                fos.close();
-//                                Picasso.with(getActivity()).load(f).into(ivPost);
-//                                Log.wtf(TAG, "YES!!");
-//                            } catch (IOException e1) {
-//                                e1.printStackTrace();
-//                                Log.wtf(TAG, "NO="+e.toString());
-//                            }
-//
-//                            //Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                            //Picasso.with(getActivity()).load(bmp).into(ivPost);
-//                        }
-//                    });
-//
-//
-//                }
-//              @Override
-//              public void onFailure(Exception e) {
-//                  Log.wtf(TAG, "Post not found");
-//              }
-//        });
-//    }
+            // Set the home icon on toolbar
+            ActionBar actionbar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
+        }
+    }
 
 }

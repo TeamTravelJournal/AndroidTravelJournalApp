@@ -123,19 +123,5 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?android:attr/actionBarSize"
-        android:layout_alignParentTop="true">
-        <TextView
-            android:id="@+id/tvUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:layout_gravity="start"/>
-    </android.support.v7.widget.Toolbar>
 
 </RelativeLayout>

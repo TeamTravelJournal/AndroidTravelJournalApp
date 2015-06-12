@@ -2,16 +2,19 @@ package com.mycompany.traveljournal.profilescreen;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListFragment;
 import com.mycompany.traveljournal.detailsscreen.DetailFragment;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.models.Post;
+import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalCallBack;
 
 import java.util.Date;
@@ -38,6 +41,7 @@ public class UserPostsFragment extends PostsListFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         mQuickReturnView.setVisibility(View.GONE);
+        toolbar.setVisibility(View.GONE);
         populateList();
         return v;
     }
@@ -79,6 +83,10 @@ public class UserPostsFragment extends PostsListFragment {
 
     @Override
     public void populateListOnSearch(){
+
+    }
+
+    protected void executeProfileIntent(User data){
 
     }
 

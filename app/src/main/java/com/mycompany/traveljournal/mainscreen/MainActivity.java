@@ -1,7 +1,9 @@
 package com.mycompany.traveljournal.mainscreen;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
