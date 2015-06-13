@@ -1,5 +1,6 @@
 package com.mycompany.traveljournal.service;
 
+import com.mycompany.traveljournal.models.Comment;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.models.User;
 
@@ -29,5 +30,10 @@ public interface JournalService {
 
     public void getPostsForUser(String userId, Date createdAt, int limit, JournalCallBack<List<Post>> journalCallBack);
 
+    public void createComment(Post post, String body);
 
+    // Programmatically update a comment's author
+    public void updateCommentUser(final String commentId, String userId);
+
+    public void getCommentsForPost(String postId, int limit, JournalCallBack<List<Comment>> journalCallBack);
 }
