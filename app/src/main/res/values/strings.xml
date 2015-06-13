@@ -27,4 +27,8 @@
     <string name="title_activity_comments">CommentsActivity</string>
     <!--string name="facebook_app_id">1629757617260429</string-->
 
+    <!-- Comments -->
+    <string name="add_comment_hint">Write a Comment&#8230;</string>
+    <string name="button_add_comment">Add</string>
+
 </resources>
