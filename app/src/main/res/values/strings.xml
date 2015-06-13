@@ -30,5 +30,7 @@
     <!-- Comments -->
     <string name="add_comment_hint">Write a Comment&#8230;</string>
     <string name="button_add_comment">Add</string>
+    <string name="comment_user_name">My Name Here</string>
+    <string name="comment_body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed leo odio. Mauris eu nibh sollicitudin, blandit nulla nec, pharetra ante.</string>
 
 </resources>
