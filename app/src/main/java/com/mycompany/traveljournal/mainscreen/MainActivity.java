@@ -48,6 +48,9 @@ public class MainActivity extends PostsListActivity {
         //ExampleSavePostToParse savePost = new ExampleSavePostToParse();
         //savePost.createPostExample();
 
+        //ExampleComments exampleComments = new ExampleComments();
+        //exampleComments.getCommentsForPost();
+
 
 
 
@@ -57,6 +60,10 @@ public class MainActivity extends PostsListActivity {
 //        Log.wtf(TAG, "adding post id "+postId);
 //        i.putExtra("post_id", postId);
 //        startActivity(i);
+
+
+
     }
+
 
 }

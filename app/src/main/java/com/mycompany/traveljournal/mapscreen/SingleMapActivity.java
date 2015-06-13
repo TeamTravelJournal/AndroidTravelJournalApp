@@ -139,6 +139,7 @@ public class SingleMapActivity extends ActionBarActivity {
                 .snippet(imageUrl)
                 .icon(defaultMarker));
 
+        //marker.showInfoWindow();
         //markers.add(marker);
         //markersToPosts.put(marker, post);
         Log.d(TAG, "Marked pin at point: " + point.toString());

@@ -2,6 +2,7 @@ package com.mycompany.traveljournal.mapscreen;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +24,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.LocationOnConnectListener;
 import com.mycompany.traveljournal.common.LocationService;
@@ -57,11 +60,11 @@ public class MapActivity extends ActionBarActivity implements
     private ArrayList<Post> currentPosts = null;
     private HashMap markersToPosts = new HashMap();
 
-    private int markerIndex =0;
+    private int animationIndex =0;
+    private ArrayList<Marker> sortedMarkers = null;
     private ArrayList<Boolean> shown= null;
-    private boolean ready = false;
+    private ArrayList<Polyline> polylines = null;
 
-    //private ArrayList<LatLng> points=null;
     //private LatLng fixAddress = new LatLng(37.533278, -122.237933);//my redwood shores address
 
     @Override
@@ -75,6 +78,7 @@ public class MapActivity extends ActionBarActivity implements
 
         markers = new ArrayList<>();
         currentPosts = new ArrayList<>();
+        polylines = new ArrayList<>();
 
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         if (mapFragment != null) {
@@ -109,7 +113,7 @@ public class MapActivity extends ActionBarActivity implements
                         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, Util.ZOOM_MEDIUM);
                         map.moveCamera(cameraUpdate);
-                        ready = true;
+                        //ready = true;
                     }
                 }
             });
@@ -140,7 +144,7 @@ public class MapActivity extends ActionBarActivity implements
         if(location!=null){
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, Util.ZOOM_MEDIUM);
             map.animateCamera(cameraUpdate);
-            ready = true;
+            //ready = true;
         }
     }
 
@@ -337,17 +341,40 @@ public class MapActivity extends ActionBarActivity implements
         return new LatLngBounds(sw, ne);
     }
 
+
+    public ArrayList<Marker> getSortedMarkers(){
+
+        ArrayList<Marker> sorted = new ArrayList<>();
+
+        for(Marker marker: markers){
+
+            //insert into right position
+            int i =0;
+            for(; i<sorted.size(); i++){
+                Post currentPost = (Post)markersToPosts.get(marker);
+                Post sortedPost = (Post)markersToPosts.get(sorted.get(i));
+                if(currentPost.getCreatedAt().before(sortedPost.getCreatedAt())){
+                    break;
+                }
+            }
+            sorted.add(i, marker);
+        }
+
+        //Log.d(TAG, "sorted");
+        return sorted;
+    }
+
     @Override
     public void onMapLongClick(LatLng point) {
         //Toast.makeText(this, "Long Press to " + point.toString(), Toast.LENGTH_LONG).show();
-        //showAlertDialogForPoint(point);
-
-        //doAnimation();
+        doAnimation();
     }
 
     private void doAnimation(){
 
-        if(markers!=null){
+        sortedMarkers = getSortedMarkers();
+
+        if(sortedMarkers!=null){
 
             // Handler allows us to repeat a code block after a specified delay
             final android.os.Handler handler = new android.os.Handler();
@@ -355,37 +382,60 @@ public class MapActivity extends ActionBarActivity implements
             final long durationForPic = 2000;//2 sec
             final long durationTransition = 15;//15ms
 
-            int size = markers.size();
-            shown = new ArrayList<Boolean>();
-
-            for(int i=0; i<size; i++){
+            shown = new ArrayList<>();
+            for(int i=0; i<sortedMarkers.size(); i++){
                 shown.add(new Boolean(false));
             }
+            for(int i=0; i<polylines.size(); i++){
+                polylines.get(i).remove();
+            }
+            polylines = new ArrayList<>();
+            animationIndex =0;
 
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    long elapsed = SystemClock.uptimeMillis() - start;
 
-                    if(markerIndex >= markers.size()){
+                    if(animationIndex >= sortedMarkers.size()){
                         Log.d(TAG, "end of animation");
+
                     }
-                    else if(shown.get(markerIndex)==false){
+                    else if(shown.get(animationIndex)==false){
                         //pic not shown before
 
-                        markers.get(markerIndex).showInfoWindow();
-                        shown.remove(markerIndex);
-                        shown.add(markerIndex, new Boolean(true));
+                        sortedMarkers.get(animationIndex).showInfoWindow();
+                        shown.remove(animationIndex);
+                        shown.add(animationIndex, new Boolean(true));
                         // Post this event again 1s from now.
                         handler.postDelayed(this, durationForPic);
                     }
                     else{
                         //pic has been shown, switch to next photo
-                        markers.get(markerIndex).hideInfoWindow();
+                        sortedMarkers.get(animationIndex).hideInfoWindow();
+
+                        //if not last marker, then
+                        //draw a line between this and next point
+                        if( animationIndex < sortedMarkers.size()-1 ){
+
+                            Post current = (Post)markersToPosts.get(sortedMarkers.get(animationIndex));
+                            Post next = (Post)markersToPosts.get(sortedMarkers.get(animationIndex+1));
+
+                            LatLng currentPoint = new LatLng(current.getLatitude(), current.getLongitude());
+                            LatLng nextPoint = new LatLng(next.getLatitude(), next.getLongitude());
+
+                            Polyline polyline = map.addPolyline(new PolylineOptions()
+                                    .add(currentPoint)
+                                    .add(nextPoint)
+                                    .color(Color.CYAN)
+                                    .width(12));
+
+                            polylines.add(polyline);
+                            Log.d(TAG, "drawing a line here");
+                        }
 
                         // Post this event again 15ms from now.
                         handler.postDelayed(this, durationTransition);
-                        markerIndex ++;
+                        animationIndex ++;
                     }
                 }
             });
@@ -427,62 +477,36 @@ public class MapActivity extends ActionBarActivity implements
     private ArrayList<LatLng> createRandomPointsOnVisibleMap(){
 
         Random r = new Random();
-
         ArrayList<LatLng> points = new ArrayList<>();
-
-        LatLngBounds curScreen = map.getProjection().getVisibleRegion().latLngBounds;
-
-        LatLng ne = curScreen.northeast;
-        LatLng sw = curScreen.southwest;
-
-        Log.d(TAG, "Screen boundaries. ne: " + ne.toString() + ", sw: " + sw.toString());
-
-        // west - x coordinate
-        double rangeMinLng = sw.longitude;
-        // east - x coordinate
-        double rangeMaxLng = ne.longitude;
-        // north - y coordinate
-        double rangeMaxLat = ne.latitude;
-        // south - y coordinate
-        double rangeMinLat = sw.latitude;
+        double[] boundaries = getMapBoundaries();
 
         for(int i =0; i<10; i++){
-
-            double randomValueLng = rangeMinLng + (rangeMaxLng - rangeMinLng) * r.nextDouble();
-            double randomValueLat = rangeMinLat + (rangeMaxLat - rangeMinLat) * r.nextDouble();
+            double randomValueLng = boundaries[0] + (boundaries[1] - boundaries[0]) * r.nextDouble();
+            double randomValueLat = boundaries[3] + (boundaries[2] - boundaries[3]) * r.nextDouble();
 
             //LatLng point = new LatLng(37.5513928, -122.2865121);
             LatLng point = new LatLng(randomValueLat, randomValueLng);
-
             Log.d(TAG, "Adding random point: " + point.toString());
-
             points.add(point);
         }
         return points;
     }
 
     private void putPins(ArrayList<LatLng> points){
-
         Log.d(TAG, "Entering put pins");
-
         for(LatLng point: points){
-
-
             // Define color of marker icon
             BitmapDescriptor defaultMarker =
                     BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
-
             // Creates and adds marker to the map
             Marker marker = map.addMarker(new MarkerOptions()
                     .position(point)
                             //        .title(title)
                             //        .snippet(snippet)
                     .icon(defaultMarker));
-
             markers.add(marker);
             Log.d(TAG, "Marking pin for point: " + point.toString());
-
-            //dropPinEffect(marker);
+       //dropPinEffect(marker);
         }
     }
 }

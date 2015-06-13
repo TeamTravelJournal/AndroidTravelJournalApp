@@ -1,6 +1,7 @@
 package com.mycompany.traveljournal.models;
 
 import com.google.android.gms.appindexing.Thing;
+import com.mycompany.traveljournal.helpers.Util;
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -61,22 +62,15 @@ public class Post extends ParseObject {
 
     public User getParseUser() {
         ParseUser parseUser = (ParseUser) getParseObject("parse_user");
-        return getUserFromParseUser(parseUser);
+        return Util.getUserFromParseUser(parseUser);
+    }
+
+    public int getNumComments() {
+        return getInt("num_comments");
     }
 
     public Post() {
 
-    }
-
-    public static User getUserFromParseUser(ParseUser parseUser){
-        User user = new User();
-        try {
-            user.setId(parseUser.getObjectId());
-            user.setName(parseUser.getString("name"));
-            user.setProfileImgUrl(parseUser.get("profile_image_url") != null ? parseUser.get("profile_image_url").toString() : "");
-            user.setCovereImageUrl(parseUser.get("cover_image_url") != null ? parseUser.get("cover_image_url").toString() : "");
-        }catch(Exception e){}
-        return user;
     }
 
     public static ArrayList<Post> getFakePosts() {
