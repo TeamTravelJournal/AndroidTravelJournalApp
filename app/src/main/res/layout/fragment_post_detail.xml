@@ -8,6 +8,7 @@
 
 
 
+    <!-- Post, caption, profile -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -111,7 +112,79 @@
             />
 
 
-        <!--//Add Maps here -->
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivShare"
+        android:contentDescription="@string/detail_share_description"
+        android:layout_below="@+id/rlHeader"
+        android:src="@drawable/ic_share"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivFollow"
+        android:contentDescription="@string/detail_follow_description"
+        android:src="@drawable/ic_arrow_down"
+        android:layout_below="@+id/rlHeader"
+        android:layout_toLeftOf="@+id/ivShare"
+        android:layout_toStartOf="@+id/ivShare"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_alignBottom="@+id/ivShare"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivStar"
+        android:contentDescription="@string/detail_star_description"
+        android:layout_below="@+id/rlHeader"
+        android:layout_toLeftOf="@+id/ivFollow"
+        android:layout_toStartOf="@+id/ivFollow"
+        android:src="@drawable/ic_star"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_alignBottom="@+id/ivShare"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivComment"
+        android:contentDescription="@string/detail_comment_description"
+        android:layout_below="@+id/rlHeader"
+        android:layout_toLeftOf="@+id/ivStar"
+        android:layout_toStartOf="@+id/ivStar"
+        android:src="@drawable/speech_bubble"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_alignBottom="@+id/ivShare"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvLikes"
+        android:text="10 likes"
+        android:layout_below="@+id/rlHeader"
+        android:layout_toLeftOf="@+id/ivComment"
+        android:layout_marginRight="15dp"
+        android:textColor="#A6A6A6"
+        android:gravity="center"
+        android:layout_alignBottom="@+id/ivShare"
+        />
+
+
+    <!--//Add Maps here -->
+
+    <!--FrameLayout
+        android:layout_below="@+id/tvLikes"
+        android:id="@+id/map_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" /-->
 
         <ImageView
             android:layout_width="fill_parent"

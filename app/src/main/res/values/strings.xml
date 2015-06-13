@@ -19,6 +19,7 @@
     <string name="detail_share_description">Share this post</string>
     <string name="detail_follow_description">Follow the post\'s author</string>
     <string name="detail_star_description">Add this post to your wishlist</string>
+    <string name="detail_comment_description">Comment on this post</string>
     <string name="title_activity_login">LoginActivity</string>
 
     <string name="facebook_app_id">993513677328878</string>
