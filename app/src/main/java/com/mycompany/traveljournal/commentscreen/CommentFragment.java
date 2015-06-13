@@ -128,8 +128,17 @@ public class CommentFragment extends Fragment {
 
         // Don't allow empty comments
         if (commentText.length() == 0) {
+            Log.wtf(TAG, "No empty comments please");
             return;
         }
+
+        Log.wtf(TAG, "Creating a comment="+commentText);
+        // Hide the keyboard
+        hideSoftKeyboard(v);
+
+        // Clear the contents
+        etAddComment.setText("");
+
 
         client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
@@ -140,16 +149,11 @@ public class CommentFragment extends Fragment {
                         // Add the comment to the adapter
                         aComments.add(comment);
 
-                        // Hide the keyboard
-                        hideSoftKeyboard(v);
-
-                        // Clear the contents
-                        etAddComment.setText("");
-                        Log.wtf(TAG, "Created comment "+comment.getBody());
-
                         //Scroll to bottom of comments to show most recent
                         int position = aComments.getCount() - 1;
                         lvComments.smoothScrollToPosition(position);
+
+                        Log.wtf(TAG, "Created comment "+comment.getBody());
                     }
 
                     @Override
