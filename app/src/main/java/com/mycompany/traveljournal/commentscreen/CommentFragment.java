@@ -126,6 +126,11 @@ public class CommentFragment extends Fragment {
     public void onClickCreateComment(final View v) {
         commentText = etAddComment.getText().toString();
 
+        // Don't allow empty comments
+        if (commentText.length() == 0) {
+            return;
+        }
+
         client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
             public void onSuccess(Post post) {
