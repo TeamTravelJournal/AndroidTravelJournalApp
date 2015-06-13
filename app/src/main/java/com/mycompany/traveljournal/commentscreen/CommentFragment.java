@@ -1,6 +1,7 @@
 package com.mycompany.traveljournal.commentscreen;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -121,7 +123,7 @@ public class CommentFragment extends Fragment {
         });
     }
 
-    public void onClickCreateComment(View v) {
+    public void onClickCreateComment(final View v) {
         commentText = etAddComment.getText().toString();
 
         client.getPostWithId(postId, new JournalCallBack<Post>() {
@@ -130,6 +132,14 @@ public class CommentFragment extends Fragment {
                 client.createComment(post, commentText, new JournalCallBack<Comment>() {
                     @Override
                     public void onSuccess(Comment comment) {
+                        // Add the comment to the adapter
+                        aComments.add(comment);
+
+                        // Hide the keyboard
+                        hideSoftKeyboard(v);
+
+                        // Clear the contents
+                        etAddComment.setText("");
                         Log.wtf(TAG, "Created comment "+comment.getBody());
                     }
 
@@ -147,5 +157,11 @@ public class CommentFragment extends Fragment {
         });
 
     }
+
+    private void hideSoftKeyboard(View view){
+        InputMethodManager imm =(InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 
 }
