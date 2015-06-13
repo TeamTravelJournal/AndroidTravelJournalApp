@@ -75,16 +75,14 @@ public class ParseClient implements JournalService {
 
     }
 
-    public void getPostWithId(String postId, final JournalCallBack<List<Post>> journalCallBack) {
+    public void getPostWithId(String postId, final JournalCallBack<Post> journalCallBack) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.whereEqualTo("objectId", postId);
-        query.setLimit(1);
         query.include("parse_user");
-        query.findInBackground(new FindCallback<Post>() {
+        query.getInBackground(postId, new GetCallback<Post>() {
             @Override
-            public void done(List<Post> resultPosts, ParseException e) {
+            public void done(Post post, ParseException e) {
                 if (e == null) {
-                    journalCallBack.onSuccess(resultPosts);
+                    journalCallBack.onSuccess(post);
                 } else {
                     journalCallBack.onFailure(e);
                 }
@@ -281,7 +279,7 @@ public class ParseClient implements JournalService {
                 if (e == null) {
                     Log.wtf(TAG, "Successfully saved comment");
                 } else {
-                    Log.wtf(TAG, "Failed to save comment"+e.toString());
+                    Log.wtf(TAG, "Failed to save comment" + e.toString());
                 }
             }
         });
@@ -302,12 +300,12 @@ public class ParseClient implements JournalService {
             public void done(ParseUser curParseUser, ParseException e) {
 
                 if (e != null) {
-                    Log.wtf(TAG, "Couldnt get parse user: "+e.toString());
+                    Log.wtf(TAG, "Couldnt get parse user: " + e.toString());
                 }
 
                 // Store the current Parse User
                 parseUser = curParseUser;
-                Log.wtf(TAG, "parse user name is "+parseUser.getString("name"));
+                Log.wtf(TAG, "parse user name is " + parseUser.getString("name"));
 
                 ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
                 query.getInBackground(commentId, new GetCallback<Comment>() {
@@ -318,9 +316,9 @@ public class ParseClient implements JournalService {
                             @Override
                             public void done(ParseException e) {
                                 if (e == null) {
-                                    Log.wtf(TAG, "Success: Changed User for Comment "+commentId);
+                                    Log.wtf(TAG, "Success: Changed User for Comment " + commentId);
                                 } else {
-                                    Log.wtf(TAG, "Problem updating user for comment "+commentId);
+                                    Log.wtf(TAG, "Problem updating user for comment " + commentId);
                                 }
                             }
                         });

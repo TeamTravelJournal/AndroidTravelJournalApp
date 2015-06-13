@@ -7,12 +7,9 @@ import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.SaveCallback;
-
-import java.util.List;
 
 public class ImageUploader {
 
@@ -58,10 +55,9 @@ public class ImageUploader {
      */
     private void setImageUrlOnPost() {
 
-        client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
+        client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
-            public void onSuccess(List<Post> posts) {
-                Post post = posts.get(0);
+            public void onSuccess(Post post) {
                 post.put("image_url", imageUrl);
                 post.saveInBackground();
             }
