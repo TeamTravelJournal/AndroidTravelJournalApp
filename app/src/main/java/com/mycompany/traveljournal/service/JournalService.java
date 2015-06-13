@@ -30,7 +30,7 @@ public interface JournalService {
 
     public void getPostsForUser(String userId, Date createdAt, int limit, JournalCallBack<List<Post>> journalCallBack);
 
-    public void createComment(Post post, String body);
+    public void createComment(Post post, String body, JournalCallBack<Comment> journalCallBack);
 
     // Programmatically update a comment's author
     public void updateCommentUser(final String commentId, String userId);

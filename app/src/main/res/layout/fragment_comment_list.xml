@@ -27,7 +27,6 @@
         android:text="@string/button_add_comment"
         android:id="@+id/btnAddComment"
         android:layout_alignTop="@+id/etAddComment"
-        android:onClick="onClickCreateComment"
         android:layout_alignParentEnd="true" />
 
 

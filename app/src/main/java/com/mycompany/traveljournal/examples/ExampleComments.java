@@ -30,7 +30,17 @@ public class ExampleComments {
         client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
             public void onSuccess(Post post) {
-                client.createComment(post, body);
+                client.createComment(post, body, new JournalCallBack<Comment>() {
+                    @Override
+                    public void onSuccess(Comment comment) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+
+                    }
+                });
             }
 
             @Override

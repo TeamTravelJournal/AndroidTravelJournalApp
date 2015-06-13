@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -34,7 +35,9 @@ public class CommentFragment extends Fragment {
 
     private ListView lvComments;
     private EditText etAddComment;
+    private Button btnAddComment;
     protected JournalService client;
+    private String commentText;
 
     public static CommentFragment newInstance(String postId) {
         CommentFragment commentFragment = new CommentFragment();
@@ -71,10 +74,16 @@ public class CommentFragment extends Fragment {
     public void setUpViews(View v) {
         lvComments = (ListView) v.findViewById(R.id.lvComments);
         etAddComment = (EditText) v.findViewById(R.id.etAddComment);
+        btnAddComment = (Button) v.findViewById(R.id.btnAddComment);
     }
 
     public void setUpListeners() {
-
+        btnAddComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickCreateComment(v);
+            }
+        });
     }
 
     private void setToolbar() {
@@ -113,10 +122,29 @@ public class CommentFragment extends Fragment {
     }
 
     public void onClickCreateComment(View v) {
-        EditText etAddComment = (EditText) v.findViewById(R.id.etAddComment);
-        String text = etAddComment.getText().toString();
+        commentText = etAddComment.getText().toString();
 
-        client.getPostWithId(postId, );
+        client.getPostWithId(postId, new JournalCallBack<Post>() {
+            @Override
+            public void onSuccess(Post post) {
+                client.createComment(post, commentText, new JournalCallBack<Comment>() {
+                    @Override
+                    public void onSuccess(Comment comment) {
+                        Log.wtf(TAG, "Created comment "+comment.getBody());
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.wtf(TAG, "Failed to comment " + e.toString());
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.wtf(TAG, "Can't create comment, failed to get post with id " + postId);
+            }
+        });
 
     }
 

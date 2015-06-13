@@ -33,6 +33,7 @@ public class ParseClient implements JournalService {
     private static ParseClient instance = null;
 
     private ParseUser parseUser;
+    private Comment comment;
 
     protected ParseClient() {
 
@@ -266,8 +267,9 @@ public class ParseClient implements JournalService {
         });*/
     }
 
-    public void createComment(Post post, String body) {
-        Comment comment = new Comment();
+    public void createComment(Post post, String body, final JournalCallBack<Comment> journalCallBack) {
+
+        comment = new Comment();
 
         comment.put("post_id", post.getPostID());
         comment.put("parse_user", ParseUser.getCurrentUser());
@@ -277,9 +279,9 @@ public class ParseClient implements JournalService {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Log.wtf(TAG, "Successfully saved comment");
+                    journalCallBack.onSuccess(comment);
                 } else {
-                    Log.wtf(TAG, "Failed to save comment" + e.toString());
+                    journalCallBack.onFailure(e);
                 }
             }
         });
