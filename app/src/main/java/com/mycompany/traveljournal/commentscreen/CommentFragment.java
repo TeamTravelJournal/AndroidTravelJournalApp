@@ -141,6 +141,10 @@ public class CommentFragment extends Fragment {
                         // Clear the contents
                         etAddComment.setText("");
                         Log.wtf(TAG, "Created comment "+comment.getBody());
+
+                        //Scroll to bottom of comments to show most recent
+                        int position = aComments.getCount() - 1;
+                        lvComments.smoothScrollToPosition(position);
                     }
 
                     @Override
