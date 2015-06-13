@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
+import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
 import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
 import com.mycompany.traveljournal.mapscreen.SingleMapFragment;
 import com.mycompany.traveljournal.models.Post;
@@ -40,6 +41,7 @@ public class DetailFragment extends Fragment {
     private TextView tvLikes;
     private  TextView tvName;
     private Toolbar toolbar;
+    private ImageView ivStaticMap;
 
     public static DetailFragment newInstance(String postId) {
         DetailFragment detailFragment = new DetailFragment();
@@ -56,19 +58,8 @@ public class DetailFragment extends Fragment {
         setToolbar();
         setUpListeners();
         fetchPostAndPopulateViews();
-        //insertNestedFragment();//inserts map fragment
         return view;
     }
-/*
-    // Embeds the map fragment dynamically
-    private void insertNestedFragment() {
-        SingleMapFragment childFragment = SingleMapFragment.newInstance(postId);
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.map_container, childFragment).commit();
-        /*SingleMapFragment singleMapFragment = (SingleMapFragment)(getChildFragmentManager().findFragmentById(R.id.single_map));
-        singleMapFragment.setData(postId);
-    }
-*/
 
     public void setUpViews(View v){
         ivProfile = (ImageView) v.findViewById(R.id.ivProfile);
@@ -80,12 +71,13 @@ public class DetailFragment extends Fragment {
         tvLikes = (TextView) v.findViewById(R.id.tvLikes);
         tvName = (TextView) v.findViewById(R.id.tvUserName);
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+        ivStaticMap = (ImageView)v.findViewById(R.id.ivStaticMap);
     }
 
     public void setUpListeners() {
 
-        //Using below code for my testing. Pls do not remove/feel free to comment it out. //Esra
-        ivShare.setOnClickListener(new View.OnClickListener() {
+        //Once clicked to map, go to single map activity for that post
+        ivStaticMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -133,6 +125,18 @@ public class DetailFragment extends Fragment {
         if(post.getParseUser()!=null) {
             Picasso.with(getActivity()).load(post.getParseUser().getProfileImgUrl()).into(ivProfile);
         }
+
+        //put static map
+        double latitude = post.getLatitude();
+        double longitude = post.getLongitude();
+        int width = DeviceDimensionsHelper.getDisplayWidth(getActivity());
+        width = 600;
+        String staticMapUrl = "https://maps.googleapis.com/maps/api/staticmap?size="
+                + width + "x" + width + "&zoom=17&markers="
+                //+ "icon:http://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=cafe%257C996600%7C"
+                + latitude + "," + longitude;
+        Picasso.with(getActivity()).load(staticMapUrl)
+                .into(ivStaticMap);
     }
 
     private void setToolbar() {

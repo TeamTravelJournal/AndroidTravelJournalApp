@@ -61,7 +61,8 @@
                 android:layout_marginTop="23dp"
                 android:maxLength="140"
                 android:inputType="text"
-                />
+                android:textColor="#000000"
+                android:textColorHint="#000000" />
 
             <ImageView
                 android:layout_width="300dp"

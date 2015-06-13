@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.LocationOnConnectListener;
@@ -62,6 +63,7 @@ public class MapActivity extends ActionBarActivity implements
     private int animationIndex =0;
     private ArrayList<Marker> sortedMarkers = null;
     private ArrayList<Boolean> shown= null;
+    private ArrayList<Polyline> polylines = null;
 
     //private LatLng fixAddress = new LatLng(37.533278, -122.237933);//my redwood shores address
 
@@ -76,6 +78,7 @@ public class MapActivity extends ActionBarActivity implements
 
         markers = new ArrayList<>();
         currentPosts = new ArrayList<>();
+        polylines = new ArrayList<>();
 
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         if (mapFragment != null) {
@@ -383,6 +386,11 @@ public class MapActivity extends ActionBarActivity implements
             for(int i=0; i<sortedMarkers.size(); i++){
                 shown.add(new Boolean(false));
             }
+            for(int i=0; i<polylines.size(); i++){
+                polylines.get(i).remove();
+            }
+            polylines = new ArrayList<>();
+            animationIndex =0;
 
             handler.post(new Runnable() {
                 @Override
@@ -390,6 +398,7 @@ public class MapActivity extends ActionBarActivity implements
 
                     if(animationIndex >= sortedMarkers.size()){
                         Log.d(TAG, "end of animation");
+
                     }
                     else if(shown.get(animationIndex)==false){
                         //pic not shown before
@@ -414,12 +423,14 @@ public class MapActivity extends ActionBarActivity implements
                             LatLng currentPoint = new LatLng(current.getLatitude(), current.getLongitude());
                             LatLng nextPoint = new LatLng(next.getLatitude(), next.getLongitude());
 
-                            map.addPolyline(new PolylineOptions()
+                            Polyline polyline = map.addPolyline(new PolylineOptions()
                                     .add(currentPoint)
                                     .add(nextPoint)
                                     .color(Color.CYAN)
-                                    .width(5));
-                            Log.d(TAG, "drew a line here");
+                                    .width(12));
+
+                            polylines.add(polyline);
+                            Log.d(TAG, "drawing a line here");
                         }
 
                         // Post this event again 15ms from now.
