@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.models.Comment;
+import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
@@ -109,6 +110,14 @@ public class CommentFragment extends Fragment {
                 Log.wtf(TAG, "Failed to get comments!");
             }
         });
+    }
+
+    public void onClickCreateComment(View v) {
+        EditText etAddComment = (EditText) v.findViewById(R.id.etAddComment);
+        String text = etAddComment.getText().toString();
+
+        client.getPostWithId(postId, );
+
     }
 
 }
