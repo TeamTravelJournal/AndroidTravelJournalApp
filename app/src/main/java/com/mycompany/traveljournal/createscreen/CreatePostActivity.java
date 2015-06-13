@@ -24,6 +24,7 @@ public class CreatePostActivity extends PostsListActivity {
     CreatePostFragment createPostFragment;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";
+    private final String CREATE_FRAGMENT_TAG = "createPostFragment";
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -35,8 +36,12 @@ public class CreatePostActivity extends PostsListActivity {
         setUpCameraIntent();
         createPostFragment =  CreatePostFragment.newInstance();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.flContainer, createPostFragment);
+        ft.replace(R.id.flContainer, createPostFragment, CREATE_FRAGMENT_TAG);
         ft.commit();
+    }
+
+    public void setUpFragmentFromTag(){
+        createPostFragment = (CreatePostFragment)getSupportFragmentManager().findFragmentByTag(CREATE_FRAGMENT_TAG);
     }
 
     public void setUpCameraIntent(){
