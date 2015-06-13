@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface JournalService {
 
-    public void getPostWithId(String postId, JournalCallBack<List<Post>> journalCallBack);
+    public void getPostWithId(String postId, JournalCallBack<Post> journalCallBack);
 
     public void getPostsNearLocation(double latitude, double longitude, int limit, JournalCallBack<List<Post>> journalCallBack);
 

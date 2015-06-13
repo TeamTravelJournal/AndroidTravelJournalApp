@@ -27,10 +27,9 @@ public class ExampleComments {
         postId = "4jJZPXv8Zu";
         body = "Outdoor Shopping =)";
 
-        client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
+        client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
-            public void onSuccess(List<Post> posts) {
-                Post post = posts.get(0);
+            public void onSuccess(Post post) {
                 client.createComment(post, body);
             }
 

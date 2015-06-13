@@ -1,7 +1,6 @@
 package com.mycompany.traveljournal.detailsscreen;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,14 +17,11 @@ import android.widget.TextView;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
 import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
-import com.mycompany.traveljournal.mapscreen.SingleMapFragment;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 
 public class DetailFragment extends Fragment {
@@ -99,10 +95,9 @@ public class DetailFragment extends Fragment {
 
     private void fetchPostAndPopulateViews() {
         JournalService client = JournalApplication.getClient();
-        client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
+        client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
-            public void onSuccess(List<Post> posts) {
-                Post post = posts.get(0);
+            public void onSuccess(Post post) {
                 populateViews(post);
             }
             @Override
