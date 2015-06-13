@@ -9,12 +9,15 @@ import android.view.MenuItem;
 import com.google.android.gms.maps.MapFragment;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
+import com.mycompany.traveljournal.createscreen.CreatePostFragment;
 import com.mycompany.traveljournal.mapscreen.SingleMapFragment;
 import com.mycompany.traveljournal.profilescreen.UserProfileFragment;
 
 public class DetailActivity extends PostsListActivity {
 
     private static final String TAG = "DetailActivity";
+    private final String DETAIL_FRAGMENT_TAG = "detailPostFragment";
+    DetailFragment detailFragment;
     String postId;
 
     @Override
@@ -44,9 +47,13 @@ public class DetailActivity extends PostsListActivity {
 
     @Override
     public void setUpFragment() {
-        DetailFragment detailFragment =  DetailFragment.newInstance(postId);
+        detailFragment =  DetailFragment.newInstance(postId);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.flContainer, detailFragment);
+        ft.replace(R.id.flContainer, detailFragment, DETAIL_FRAGMENT_TAG);
         ft.commit();
+    }
+
+    public void setUpFragmentFromTag(){
+        detailFragment = (DetailFragment)getSupportFragmentManager().findFragmentByTag(DETAIL_FRAGMENT_TAG);
     }
 }

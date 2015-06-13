@@ -89,6 +89,7 @@ public class CreatePostFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     public void setUpListeners(){
@@ -130,6 +131,7 @@ public class CreatePostFragment extends Fragment {
         ivCamera = (ImageView) v.findViewById(R.id.ivCamera);
         btPost = (Button)v.findViewById(R.id.btPost);
         etCaption = (EditText)v.findViewById(R.id.etCaption);
+        ivPreview.setImageBitmap(takenImage);
     }
 
     public void setPhotoPath(Uri photoPathUri){

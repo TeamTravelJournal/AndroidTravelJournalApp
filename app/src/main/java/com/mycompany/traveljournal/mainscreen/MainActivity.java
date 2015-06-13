@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
+import com.mycompany.traveljournal.createscreen.CreatePostFragment;
 import com.mycompany.traveljournal.datasource.ParseClient;
 
 
@@ -15,17 +16,22 @@ public class MainActivity extends PostsListActivity {
     private final static String TAG = "MainActivity";
     MainPostFragment mainPostFragment;
     ParseClient parseClient;
+    private final String MAIN_FRAGMENT_TAG = "mainPostFragment";
 
     @Override
     public void setUpFragment() {
 
         mainPostFragment =  new MainPostFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.flContainer, mainPostFragment);
+        ft.replace(R.id.flContainer, mainPostFragment, MAIN_FRAGMENT_TAG);
         ft.commit();
 
     }
 
+    @Override
+    public void setUpFragmentFromTag() {
+        mainPostFragment = (MainPostFragment)getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG);
+    }
 
     /**
      *
