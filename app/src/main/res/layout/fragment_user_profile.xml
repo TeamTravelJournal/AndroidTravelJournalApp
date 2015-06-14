@@ -123,5 +123,17 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Travels"
+        android:id="@+id/tvTravel"
+        android:gravity="center"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/tvTweetsCount"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/rlUserHeader"
+     />
 
 </RelativeLayout>

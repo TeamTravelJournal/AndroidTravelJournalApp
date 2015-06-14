@@ -1,7 +1,6 @@
 package com.mycompany.traveljournal.detailsscreen;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
 import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
-import com.mycompany.traveljournal.mapscreen.SingleMapFragment;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
