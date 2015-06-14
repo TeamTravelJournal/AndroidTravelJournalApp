@@ -14,12 +14,14 @@ public class DetailActivity extends PostsListActivity {
     private final String DETAIL_FRAGMENT_TAG = "detailPostFragment";
     DetailFragment detailFragment;
     String postId;
+    String localPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         // Get Post ID
         postId = getIntent().getStringExtra("post_id");
+        localPhotoPath = getIntent().getStringExtra("local_photo_path");
 
         if (postId == null) {
             Log.wtf(TAG, "Using default post id");
@@ -42,7 +44,7 @@ public class DetailActivity extends PostsListActivity {
 
     @Override
     public void setUpFragment() {
-        detailFragment =  DetailFragment.newInstance(postId);
+        detailFragment =  DetailFragment.newInstance(postId, localPhotoPath);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flContainer, detailFragment, DETAIL_FRAGMENT_TAG);
         ft.commit();

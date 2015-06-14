@@ -72,10 +72,33 @@ public class ParseClient implements JournalService {
     }
 
     //TODO
-    public void createPost(byte[] imageBytes, String caption, String description, double latitude, double longitude, final JournalCallBack<List<Post>> journalCallBack) {
-        //PostCreator postCreator = new PostCreator();
-        //postCreator.createPost();
+    public void createPost(final byte[] imageBytes, String caption, String description, double latitude, double longitude, final JournalCallBack<Post> journalCallBack) {
+        final PostCreatorHelper postCreator = new PostCreatorHelper();
 
+        post = new Post();
+        post.put("caption", caption);
+        post.put("description", description);
+
+        ParseGeoPoint location = new ParseGeoPoint();
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        post.put("location", location);
+        post.put("parse_user", ParseUser.getCurrentUser());
+        post.put("likes", 0);
+        post.put("trip_id", 0);
+
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    journalCallBack.onSuccess(post);
+                    postCreator.uploadAndAddImageToPost(post.getPostID(), imageBytes);
+
+                } else {
+                    journalCallBack.onFailure(e);
+                }
+            }
+        });
     }
 
     public void getPostWithId(String postId, final JournalCallBack<Post> journalCallBack) {
