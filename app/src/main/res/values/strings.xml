@@ -24,6 +24,8 @@
     <string name="detail_comment_description">Comment on this post</string>
     <string name="title_activity_login">LoginActivity</string>
 
+    <string name="detail_sample_caption">This coffee is so fantastic. Best of all, you get free wi-fi!</string>
+
     <string name="facebook_app_id">993513677328878</string>
     <!--string name="facebook_app_id">1629757617260429</string-->
     <string name="title_activity_comments">CommentsActivity</string>
