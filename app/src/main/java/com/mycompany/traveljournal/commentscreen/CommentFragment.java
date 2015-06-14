@@ -144,9 +144,7 @@ public class CommentFragment extends Fragment {
                 // Add the comment to the adapter
                 aComments.add(comment);
 
-                //Scroll to bottom of comments to show most recent
-                int position = aComments.getCount() - 1;
-                lvComments.smoothScrollToPosition(position);
+                scrollToMostRecentComment();
 
                 Log.wtf(TAG, "Yay! Created comment "+comment.getBody());
             }
@@ -162,6 +160,12 @@ public class CommentFragment extends Fragment {
     private void hideSoftKeyboard(View view){
         InputMethodManager imm =(InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    //Scroll to bottom of comments to show most recent
+    private void scrollToMostRecentComment() {
+        int position = aComments.getCount() - 1;
+        lvComments.smoothScrollToPosition(position);
     }
 
 
