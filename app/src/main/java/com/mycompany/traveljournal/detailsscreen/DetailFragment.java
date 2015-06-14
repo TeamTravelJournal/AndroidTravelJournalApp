@@ -37,10 +37,11 @@ public class DetailFragment extends Fragment {
     private ImageView ivStar;
     private ImageView ivComment;
     private TextView tvLikes;
-    private  TextView tvName;
+    private TextView tvName;
     private Toolbar toolbar;
     private ImageView ivStaticMap;
     private Post m_post;
+    private TextView tvNumComments;
 
     public static DetailFragment newInstance(String postId) {
         DetailFragment detailFragment = new DetailFragment();
@@ -72,6 +73,7 @@ public class DetailFragment extends Fragment {
         tvName = (TextView) v.findViewById(R.id.tvUserName);
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
         ivStaticMap = (ImageView)v.findViewById(R.id.ivStaticMap);
+        tvNumComments = (TextView) v.findViewById(R.id.tvNumComments);
     }
 
     public void setUpListeners() {
@@ -135,6 +137,17 @@ public class DetailFragment extends Fragment {
         tvCaption.setText(post.getCaption());
         tvLikes.setText(post.getLikes()+" Likes");
         tvName.setText(post.getParseUser().getName());
+
+        // Number of Comments
+        int numComments = post.getNumComments();
+        String numCommentText;
+        if (numComments == 1) {
+            numCommentText = numComments + " Comment";
+        } else {
+            numCommentText = numComments + " Comments";
+        }
+        tvNumComments.setText(numCommentText);
+
 
         // Default profile picture
         Picasso.with(getActivity()).load(R.drawable.icon_user_32).into(ivProfile);

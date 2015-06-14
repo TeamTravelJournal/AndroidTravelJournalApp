@@ -7,6 +7,7 @@ import com.mycompany.traveljournal.examples.SignedInUser;
 import com.mycompany.traveljournal.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -66,6 +67,14 @@ public class PostCreator {
     private void uploadAndAddImageToPost() {
         ImageUploader uploader = new ImageUploader(this.postId, this.imageBytes);
         uploader.upload();
+        sendPush();
+    }
+
+    private void sendPush(){
+        ParsePush push = new ParsePush();
+        push.setChannel("Travel");
+        push.setMessage("The Giants just scored! It's now 2-2 against the Mets.");
+        push.sendInBackground();
     }
 
 }
