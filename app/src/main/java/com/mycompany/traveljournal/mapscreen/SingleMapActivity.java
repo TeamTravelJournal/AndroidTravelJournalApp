@@ -1,13 +1,8 @@
 package com.mycompany.traveljournal.mapscreen;
 
-import android.content.Intent;
-import android.location.Location;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -21,16 +16,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mycompany.traveljournal.R;
-import com.mycompany.traveljournal.common.LocationOnConnectListener;
-import com.mycompany.traveljournal.common.LocationService;
-import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SingleMapActivity extends ActionBarActivity {
@@ -74,10 +65,10 @@ public class SingleMapActivity extends ActionBarActivity {
             // Map is ready
             Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
 
-            client.getPostWithId(m_postID,new JournalCallBack<List<Post>>() {
+        client.getPostWithId(m_postID,new JournalCallBack<Post>() {
                 @Override
-                public void onSuccess(List<Post> posts) {
-                    m_post = posts.get(0);
+                public void onSuccess(Post post) {
+                    m_post = post;
                     if(m_post!=null){
                         m_location = new LatLng(m_post.getLatitude(), m_post.getLongitude());
                         //make sure map camera goes to target location

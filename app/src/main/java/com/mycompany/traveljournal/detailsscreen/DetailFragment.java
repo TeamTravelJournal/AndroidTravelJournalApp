@@ -23,8 +23,6 @@ import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 
 public class DetailFragment extends Fragment {
 
@@ -97,10 +95,9 @@ public class DetailFragment extends Fragment {
 
     private void fetchPostAndPopulateViews() {
         JournalService client = JournalApplication.getClient();
-        client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
+        client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
-            public void onSuccess(List<Post> posts) {
-                Post post = posts.get(0);
+            public void onSuccess(Post post) {
                 populateViews(post);
             }
             @Override

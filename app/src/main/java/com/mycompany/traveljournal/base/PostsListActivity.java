@@ -23,7 +23,11 @@ public abstract class PostsListActivity extends ActionBarActivity {
 
         if(savedInstanceState == null)
             setUpFragment();
+        else
+            setUpFragmentFromTag();
     }
+
+    public abstract void setUpFragmentFromTag();
 
     public abstract void setUpFragment();
 

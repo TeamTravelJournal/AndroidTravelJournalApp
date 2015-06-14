@@ -14,6 +14,11 @@ public class WishListActivity extends PostsListActivity {
     WishListPostsFragment wishListPostsFragment;
 
     @Override
+    public void setUpFragmentFromTag() {
+
+    }
+
+    @Override
     public void setUpFragment() {
 
         getSupportActionBar().hide();

@@ -18,10 +18,9 @@ public class ExampleGetPostsFromParse {
 
         String postId = "pD7HdQPTSg";
         JournalService client = JournalApplication.getClient();
-        client.getPostWithId(postId, new JournalCallBack<List<Post>>() {
+        client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
-            public void onSuccess(List<Post> posts) {
-                Post post = posts.get(0);
+            public void onSuccess(Post post) {
                 Log.wtf(TAG, post.toString());
                 //Log.wtf(TAG, post.getCreatedByUser().toString());
             }
