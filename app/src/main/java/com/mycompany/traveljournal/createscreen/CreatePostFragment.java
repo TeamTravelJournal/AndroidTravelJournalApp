@@ -161,9 +161,23 @@ public class CreatePostFragment extends Fragment {
         Bitmap takenImage1 = Util.rotateBitmapOrientation(photoPathUri.getPath());
         //int bytes1 = takenImage1.getByteCount();
         //Toast.makeText(getActivity(), "Before size " + bytes1,Toast.LENGTH_SHORT).show();
+
         int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
         // Resize a Bitmap maintaining aspect ratio based on screen width
-        takenImage = BitmapScaler.scaleToFitWidth(takenImage1, screenWidth);
+
+        int width = takenImage1.getWidth();
+        int height = takenImage1.getHeight();
+        Log.d(TAG, "taken image width: " + width + ", height: " + height);
+        if(width > height){
+            Log.d(TAG, "wide image");
+            //Following screenWidth is coming bigger than we expect
+            // that is why we use smaller than to width to scale
+            takenImage = BitmapScaler.scaleToFitWidth(takenImage1, screenWidth/2);
+        }else{
+            Log.d(TAG, "tall image");
+            takenImage = BitmapScaler.scaleToFitWidth(takenImage1, screenWidth/3);
+        }
+
         //int bytes = takenImage.getByteCount();
         //Toast.makeText(getActivity(), "after size 1 " + bytes,Toast.LENGTH_SHORT).show();
         // Load the taken image into a preview
