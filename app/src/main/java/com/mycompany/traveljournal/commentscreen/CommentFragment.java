@@ -141,12 +141,12 @@ public class CommentFragment extends Fragment {
         client.createComment(postId, commentText, new JournalCallBack<Comment>() {
             @Override
             public void onSuccess(Comment comment) {
+                Log.wtf(TAG, "Yay! Created comment "+comment.getBody());
+
                 // Add the comment to the adapter
                 aComments.add(comment);
 
                 scrollToMostRecentComment();
-
-                Log.wtf(TAG, "Yay! Created comment "+comment.getBody());
             }
 
             @Override
