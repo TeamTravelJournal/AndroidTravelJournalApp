@@ -3,7 +3,6 @@ package com.mycompany.traveljournal.examples;
 import android.util.Log;
 
 import com.mycompany.traveljournal.models.Comment;
-import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
@@ -27,20 +26,11 @@ public class ExampleComments {
         postId = "4jJZPXv8Zu";
         body = "Outdoor Shopping =)";
 
-        client.getPostWithId(postId, new JournalCallBack<Post>() {
+
+        client.createComment(postId, body, new JournalCallBack<Comment>() {
             @Override
-            public void onSuccess(Post post) {
-                client.createComment(post, body, new JournalCallBack<Comment>() {
-                    @Override
-                    public void onSuccess(Comment comment) {
+            public void onSuccess(Comment comment) {
 
-                    }
-
-                    @Override
-                    public void onFailure(Exception e) {
-
-                    }
-                });
             }
 
             @Override
@@ -48,6 +38,7 @@ public class ExampleComments {
 
             }
         });
+
     }
 
     public void updateCommentAuthor() {

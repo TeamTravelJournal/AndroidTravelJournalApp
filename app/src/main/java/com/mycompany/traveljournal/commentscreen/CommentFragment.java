@@ -19,7 +19,6 @@ import android.widget.ListView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.models.Comment;
-import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
@@ -139,28 +138,17 @@ public class CommentFragment extends Fragment {
         // Clear the contents
         etAddComment.setText("");
 
-
-        client.getPostWithId(postId, new JournalCallBack<Post>() {
+        client.createComment(postId, commentText, new JournalCallBack<Comment>() {
             @Override
-            public void onSuccess(Post post) {
-                client.createComment(post, commentText, new JournalCallBack<Comment>() {
-                    @Override
-                    public void onSuccess(Comment comment) {
-                        // Add the comment to the adapter
-                        aComments.add(comment);
+            public void onSuccess(Comment comment) {
+                // Add the comment to the adapter
+                aComments.add(comment);
 
-                        //Scroll to bottom of comments to show most recent
-                        int position = aComments.getCount() - 1;
-                        lvComments.smoothScrollToPosition(position);
+                //Scroll to bottom of comments to show most recent
+                int position = aComments.getCount() - 1;
+                lvComments.smoothScrollToPosition(position);
 
-                        Log.wtf(TAG, "Created comment "+comment.getBody());
-                    }
-
-                    @Override
-                    public void onFailure(Exception e) {
-                        Log.wtf(TAG, "Failed to comment " + e.toString());
-                    }
-                });
+                Log.wtf(TAG, "Yay! Created comment "+comment.getBody());
             }
 
             @Override

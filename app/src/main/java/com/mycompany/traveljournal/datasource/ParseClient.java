@@ -34,6 +34,7 @@ public class ParseClient implements JournalService {
 
     private ParseUser parseUser;
     private Comment comment;
+    private Post post;
 
     protected ParseClient() {
 
@@ -267,11 +268,12 @@ public class ParseClient implements JournalService {
         });*/
     }
 
-    public void createComment(Post post, String body, final JournalCallBack<Comment> journalCallBack) {
+    public void createComment(String postId, String body, final JournalCallBack<Comment> journalCallBack) {
 
+        // create the comment first
         comment = new Comment();
 
-        comment.put("post_id", post.getPostID());
+        comment.put("post_id", postId);
         comment.put("parse_user", ParseUser.getCurrentUser());
         comment.put("body", body);
 
@@ -286,9 +288,21 @@ public class ParseClient implements JournalService {
             }
         });
 
+
         // Increment number of comments
-        post.increment("num_comments");
-        post.saveInBackground();
+        getPostWithId(postId, new JournalCallBack<Post>() {
+            @Override
+            public void onSuccess(Post post) {
+                post.increment("num_comments");
+                post.saveInBackground();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.wtf(TAG, "Failed to increment num_comments");
+            }
+        });
+
     }
 
     /**
