@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
@@ -25,17 +27,25 @@ import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
 import com.mycompany.traveljournal.commentscreen.CommentActivity;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mainscreen.MainActivity;
+import com.mycompany.traveljournal.commentscreen.CommentActivity;
+import com.mycompany.traveljournal.commentscreen.CommentsAdapter;
+import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
 import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
+import com.mycompany.traveljournal.models.Comment;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class DetailFragment extends Fragment {
 
     private final static String TAG = "DetailFragment";
+    private final static int numComments = 3;
     private String postId;
     private ImageView ivProfile;
     private ImageView ivPost;
@@ -52,6 +62,11 @@ public class DetailFragment extends Fragment {
     private TextView tvNumComments;
     private String localPhotoPath;
     private boolean imageViewLoaded = false;
+
+    private CommentsAdapter aComments;
+    private LinearLayout llComments;
+    private ArrayList<Comment> comments;
+    JournalService client;
 
     public static DetailFragment newInstance(String postId, String localPhotoPath) {
         DetailFragment detailFragment = new DetailFragment();
@@ -86,6 +101,9 @@ public class DetailFragment extends Fragment {
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
         ivStaticMap = (ImageView)v.findViewById(R.id.ivStaticMap);
         tvNumComments = (TextView) v.findViewById(R.id.tvNumComments);
+        lvComments = (ListView) v.findViewById(R.id.lvComments);
+
+        lvComments.setAdapter(aComments);
     }
 
     public void setUpListeners() {
@@ -127,15 +145,18 @@ public class DetailFragment extends Fragment {
         localPhotoPath = getArguments().getString("local_photo_path");
 
         Log.wtf(TAG, "post_id is : " + postId + " , local_photo_path is : " + localPhotoPath);
+        client = JournalApplication.getClient();
+        comments = new ArrayList<>();
+        aComments = new CommentsAdapter(getActivity(), comments);
     }
 
     private void fetchPostAndPopulateViews() {
-        JournalService client = JournalApplication.getClient();
         client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
             public void onSuccess(Post post) {
                 m_post = post;
                 populateViews(post);
+                fetchAndPopulateComments(post);
             }
             @Override
             public void onFailure(Exception e) {
@@ -182,6 +203,21 @@ public class DetailFragment extends Fragment {
                 + latitude + "," + longitude;
         Picasso.with(getActivity()).load(staticMapUrl)
                 .into(ivStaticMap);
+    }
+
+    private void fetchAndPopulateComments(Post post) {
+        client.getCommentsForPost(post.getPostID(), numComments, new JournalCallBack<List<Comment>>() {
+            @Override
+            public void onSuccess(List<Comment> comments) {
+                Log.wtf(TAG, "Got comments #="+comments.size());
+                aComments.addAll(comments);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.wtf(TAG, "Failed to get comments:"+e.toString());
+            }
+        });
     }
 
     private void setToolbar() {

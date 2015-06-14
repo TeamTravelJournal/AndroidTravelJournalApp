@@ -122,13 +122,21 @@
                 android:layout_marginLeft="10dp"
                 />
 
+            <LinearLayout
+                android:id="@+id/llComments"
+                android:orientation="vertical"
+                android:layout_below="@+id/ivComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+
             <!-- Likes -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvLikes"
                 android:text="10 likes"
-                android:layout_below="@+id/ivComment"
+                android:layout_below="@+id/llComments"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp"
