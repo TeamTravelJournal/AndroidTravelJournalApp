@@ -111,7 +111,7 @@ public class CommentFragment extends Fragment {
                 aComments.addAll(comments);
                 Log.wtf(TAG, "got comments! "+comments.size());
                 for (int i = 0 ; i < comments.size() ; i++) {
-                    Log.wtf(TAG, comments.get(i).toString());
+                    Log.v(TAG, comments.get(i).toString());
                 }
 
             }
