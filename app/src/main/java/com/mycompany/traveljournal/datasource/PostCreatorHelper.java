@@ -30,6 +30,7 @@ public class PostCreatorHelper {
             obj.put("alert", "New Trip posted by " + Util.getUserFromParseUser(ParseUser.getCurrentUser()).getName());
             obj.put("action", MyCustomReceiver.intentAction);
             obj.put("customdata", postId);
+            obj.put("userId", ParseUser.getCurrentUser().getObjectId());
 
             ParsePush push = new ParsePush();
             ParseQuery query = ParseInstallation.getQuery();
@@ -46,4 +47,5 @@ public class PostCreatorHelper {
             e.printStackTrace();
         }
     }
+
 }
