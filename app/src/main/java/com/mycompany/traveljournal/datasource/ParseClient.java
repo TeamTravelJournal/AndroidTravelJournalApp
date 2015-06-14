@@ -18,7 +18,9 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -66,6 +68,18 @@ public class ParseClient implements JournalService {
         ParseUser.enableRevocableSessionInBackground();
         FacebookSdk.sdkInitialize(context);
         ParseFacebookUtils.initialize(context);
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+
+        ParsePush.subscribeInBackground("Travel", new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
+                } else {
+                    Log.e("com.parse.push", "failed to subscribe for push", e);
+                }
+            }
+        });
     }
 
     //TODO
