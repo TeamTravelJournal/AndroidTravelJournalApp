@@ -31,7 +31,6 @@ public class SingleMapActivity extends ActionBarActivity {
     private final static String TAG = "SingleMapActivityDebug";
     private JournalService client;
 
-    private Marker m_marker;
     private Post m_post;
     private String m_postID;
     private LatLng m_location;

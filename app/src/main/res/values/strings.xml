@@ -33,5 +33,6 @@
     <string name="button_add_comment">Add</string>
     <string name="comment_user_name">My Name Here</string>
     <string name="comment_body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed leo odio. Mauris eu nibh sollicitudin, blandit nulla nec, pharetra ante.</string>
+    <string name="title_activity_photo">PhotoActivity</string>
 
 </resources>

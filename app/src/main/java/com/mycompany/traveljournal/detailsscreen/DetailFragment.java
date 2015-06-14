@@ -40,6 +40,7 @@ public class DetailFragment extends Fragment {
     private  TextView tvName;
     private Toolbar toolbar;
     private ImageView ivStaticMap;
+    private Post m_post;
 
     public static DetailFragment newInstance(String postId) {
         DetailFragment detailFragment = new DetailFragment();
@@ -79,7 +80,6 @@ public class DetailFragment extends Fragment {
         ivStaticMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent i = new Intent(getActivity(), SingleMapActivity.class);
                 i.putExtra("post_id", postId);
                 startActivity(i);
@@ -95,6 +95,14 @@ public class DetailFragment extends Fragment {
             }
         });
 
+        ivPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), PhotoActivity.class);
+                i.putExtra("image_url", m_post.getImageUrl());
+                startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -111,6 +119,7 @@ public class DetailFragment extends Fragment {
         client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
             public void onSuccess(Post post) {
+                m_post = post;
                 populateViews(post);
             }
             @Override
