@@ -36,4 +36,6 @@ public interface JournalService {
     public void updateCommentUser(final String commentId, String userId);
 
     public void getCommentsForPost(String postId, int limit, JournalCallBack<List<Comment>> journalCallBack);
+
+    public void createPost(byte[] imageBytes, String caption, String description, double latitude, double longitude, final JournalCallBack<Post> journalCallBack);
 }
