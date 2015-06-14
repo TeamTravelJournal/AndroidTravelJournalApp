@@ -39,7 +39,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvCaption"
-                android:text="@string/detail_sample_caption"
                 android:layout_below="@+id/ivPost"
                 android:layout_marginRight="70dp"
                 android:layout_marginEnd="70dp"
