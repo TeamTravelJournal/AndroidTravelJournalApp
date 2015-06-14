@@ -143,7 +143,7 @@ public class DetailFragment extends Fragment {
 
     private void populateViews(Post post) {
         if(!imageViewLoaded)
-            Picasso.with(getActivity()).load(post.getImageUrl()).into(ivPost);
+            Picasso.with(getActivity()).load(post.getImageUrl()).placeholder(R.drawable.placeholder).into(ivPost);
         tvCaption.setText(post.getCaption());
         tvLikes.setText(post.getLikes()+" Likes");
         tvName.setText(post.getParseUser().getName());
