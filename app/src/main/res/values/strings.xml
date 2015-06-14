@@ -12,6 +12,8 @@
 
     <string name="title_activity_camera">CameraActivity</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_single_map">SingleMapActivity</string>
+    <string name="title_activity_profile_map">SingleMapActivity</string>
 
     <!-- Detail -->
     <string name="detail_profile_description">User\'s profile picture</string>
@@ -23,9 +25,8 @@
     <string name="title_activity_login">LoginActivity</string>
 
     <string name="facebook_app_id">993513677328878</string>
-    <string name="title_activity_single_map">SingleMapActivity</string>
-    <string name="title_activity_comments">CommentsActivity</string>
     <!--string name="facebook_app_id">1629757617260429</string-->
+    <string name="title_activity_comments">CommentsActivity</string>
 
     <!-- Comments -->
     <string name="add_comment_hint">Write a Comment&#8230;</string>

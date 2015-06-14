@@ -1,5 +1,6 @@
 package com.mycompany.traveljournal.profilescreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
+import com.mycompany.traveljournal.detailsscreen.DetailActivity;
+import com.mycompany.traveljournal.mapscreen.MapActivity;
+import com.mycompany.traveljournal.mapscreen.ProfileMapActivity;
+import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.models.User;
 import com.squareup.picasso.Picasso;
 
@@ -23,11 +28,14 @@ public class UserProfileFragment extends Fragment{
     private ImageView ivProfileImg;
     private ImageView ivCover;
     private TextView tvName;
+    private TextView tvTravel;
+    private User m_user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
         setUpViews(view);
+        setUpListeners();
         return view;
     }
 
@@ -35,9 +43,28 @@ public class UserProfileFragment extends Fragment{
         ivProfileImg = (ImageView) v.findViewById(R.id.ivProfileImage);
         ivCover = (ImageView) v.findViewById(R.id.ivBannerImage);
         tvName = (TextView) v.findViewById(R.id.tvName);
+        tvTravel = (TextView) v.findViewById(R.id.tvTravel);
+
+        tvTravel.setText("Travel Map");
+    }
+
+    public void setUpListeners(){
+
+
+        //I will change this click listener from profile image to some text saying "see user's travel on map"
+        tvTravel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(getActivity(), ProfileMapActivity.class);
+                i.putExtra("user_id", m_user.getId());
+                startActivity(i);
+            }
+        });
     }
 
     public void setData(User user){
+        m_user = user;
         tvName.setText(user.getName());
         if(!"".equals(user.getProfileImgUrl()))
             Picasso.with(getActivity()).load(user.getProfileImgUrl()).into(ivProfileImg);

@@ -87,6 +87,12 @@
             android:name=".mapscreen.SingleMapActivity"
             android:label="@string/title_activity_single_map" >
         </activity>
+
+        <activity
+            android:name=".mapscreen.ProfileMapActivity"
+            android:label="@string/title_activity_profile_map" >
+        </activity>
+
         <activity
             android:name=".commentscreen.CommentActivity"
             android:label="@string/title_activity_comments"
