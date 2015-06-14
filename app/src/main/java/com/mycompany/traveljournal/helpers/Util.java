@@ -36,7 +36,7 @@ public class Util {
 
     public static final String APP_TAG = "JournalApp";
     public static final int LIMIT_POST = 10;
-    public static final int MAX_POST_SEARCH_DISTANCE = 25;
+    public static final int MAX_POST_SEARCH_DISTANCE = 15;
     public static final int ZOOM_HIGH=17;
     public static final int ZOOM_MEDIUM=10;
     /*

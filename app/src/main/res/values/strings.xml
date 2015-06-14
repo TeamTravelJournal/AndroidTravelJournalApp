@@ -12,6 +12,8 @@
 
     <string name="title_activity_camera">CameraActivity</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_single_map">SingleMapActivity</string>
+    <string name="title_activity_profile_map">SingleMapActivity</string>
 
     <!-- Detail -->
     <string name="detail_profile_description">User\'s profile picture</string>
@@ -19,10 +21,19 @@
     <string name="detail_share_description">Share this post</string>
     <string name="detail_follow_description">Follow the post\'s author</string>
     <string name="detail_star_description">Add this post to your wishlist</string>
+    <string name="detail_comment_description">Comment on this post</string>
     <string name="title_activity_login">LoginActivity</string>
 
+    <string name="detail_sample_caption">This coffee is so fantastic. Best of all, you get free wi-fi!</string>
+
     <string name="facebook_app_id">993513677328878</string>
-    <string name="title_activity_single_map">SingleMapActivity</string>
     <!--string name="facebook_app_id">1629757617260429</string-->
+    <string name="title_activity_comments">CommentsActivity</string>
+
+    <!-- Comments -->
+    <string name="add_comment_hint">Write a Comment&#8230;</string>
+    <string name="button_add_comment">Add</string>
+    <string name="comment_user_name">My Name Here</string>
+    <string name="comment_body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed leo odio. Mauris eu nibh sollicitudin, blandit nulla nec, pharetra ante.</string>
 
 </resources>

@@ -22,6 +22,8 @@ import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 
+import java.util.List;
+
 public class SingleMapActivity extends ActionBarActivity {
 
     private SupportMapFragment mapFragment;
@@ -63,17 +65,7 @@ public class SingleMapActivity extends ActionBarActivity {
             // Map is ready
             Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
 
-            map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                @Override
-                public void onInfoWindowClick(Marker marker) {
-                    //Call detail page from here, NO!
-                    /*Intent i = new Intent(SingleMapActivity.this, DetailActivity.class);
-                    i.putExtra("post_id", post.getPostID());
-                    startActivity(i);*/
-                }
-            });
-
-            client.getPostWithId(m_postID,new JournalCallBack<Post>() {
+        client.getPostWithId(m_postID,new JournalCallBack<Post>() {
                 @Override
                 public void onSuccess(Post post) {
                     m_post = post;

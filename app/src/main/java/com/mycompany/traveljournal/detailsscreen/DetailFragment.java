@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
+import com.mycompany.traveljournal.commentscreen.CommentActivity;
 import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
@@ -34,10 +35,12 @@ public class DetailFragment extends Fragment {
     private ImageView ivShare;
     private ImageView ivFollow;
     private ImageView ivStar;
+    private ImageView ivComment;
     private TextView tvLikes;
-    private  TextView tvName;
+    private TextView tvName;
     private Toolbar toolbar;
     private ImageView ivStaticMap;
+    private TextView tvNumComments;
 
     public static DetailFragment newInstance(String postId) {
         DetailFragment detailFragment = new DetailFragment();
@@ -64,10 +67,12 @@ public class DetailFragment extends Fragment {
         ivShare = (ImageView) v.findViewById(R.id.ivShare);
         ivFollow = (ImageView) v.findViewById(R.id.ivFollow);
         ivStar = (ImageView) v.findViewById(R.id.ivStar);
+        ivComment = (ImageView) v.findViewById(R.id.ivComment);
         tvLikes = (TextView) v.findViewById(R.id.tvLikes);
         tvName = (TextView) v.findViewById(R.id.tvUserName);
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
         ivStaticMap = (ImageView)v.findViewById(R.id.ivStaticMap);
+        tvNumComments = (TextView) v.findViewById(R.id.tvNumComments);
     }
 
     public void setUpListeners() {
@@ -82,6 +87,16 @@ public class DetailFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        ivComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), CommentActivity.class);
+                i.putExtra("post_id", postId);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
@@ -113,6 +128,17 @@ public class DetailFragment extends Fragment {
         tvCaption.setText(post.getCaption());
         tvLikes.setText(post.getLikes()+" Likes");
         tvName.setText(post.getParseUser().getName());
+
+        // Number of Comments
+        int numComments = post.getNumComments();
+        String numCommentText;
+        if (numComments == 1) {
+            numCommentText = numComments + " Comment";
+        } else {
+            numCommentText = numComments + " Comments";
+        }
+        tvNumComments.setText(numCommentText);
+
 
         // Default profile picture
         Picasso.with(getActivity()).load(R.drawable.icon_user_32).into(ivProfile);

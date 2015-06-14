@@ -17,6 +17,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -376,6 +377,9 @@ public class MapActivity extends ActionBarActivity implements
 
         if(sortedMarkers!=null){
 
+            //map.getUiSettings().setZoomGesturesEnabled(false);
+            //map.getUiSettings().setScrollGesturesEnabled(false);
+
             // Handler allows us to repeat a code block after a specified delay
             final android.os.Handler handler = new android.os.Handler();
             final long start = SystemClock.uptimeMillis();
@@ -439,6 +443,9 @@ public class MapActivity extends ActionBarActivity implements
                     }
                 }
             });
+
+            //map.getUiSettings().setZoomGesturesEnabled(true);
+            //map.getUiSettings().setScrollGesturesEnabled(true);
         }
     }
 

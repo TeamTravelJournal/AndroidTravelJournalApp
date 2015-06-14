@@ -35,6 +35,8 @@ public class ParseClient implements JournalService {
     private static ParseClient instance = null;
 
     private ParseUser parseUser;
+    private Comment comment;
+    private Post post;
 
     protected ParseClient() {
 
@@ -280,10 +282,12 @@ public class ParseClient implements JournalService {
         });*/
     }
 
-    public void createComment(Post post, String body) {
-        Comment comment = new Comment();
+    public void createComment(String postId, String body, final JournalCallBack<Comment> journalCallBack) {
 
-        comment.put("post_id", post.getPostID());
+        // create the comment first
+        comment = new Comment();
+
+        comment.put("post_id", postId);
         comment.put("parse_user", ParseUser.getCurrentUser());
         comment.put("body", body);
 
@@ -291,16 +295,28 @@ public class ParseClient implements JournalService {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Log.wtf(TAG, "Successfully saved comment");
+                    journalCallBack.onSuccess(comment);
                 } else {
-                    Log.wtf(TAG, "Failed to save comment" + e.toString());
+                    journalCallBack.onFailure(e);
                 }
             }
         });
 
+
         // Increment number of comments
-        post.increment("num_comments");
-        post.saveInBackground();
+        getPostWithId(postId, new JournalCallBack<Post>() {
+            @Override
+            public void onSuccess(Post post) {
+                post.increment("num_comments");
+                post.saveInBackground();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.wtf(TAG, "Failed to increment num_comments");
+            }
+        });
+
     }
 
     /**
@@ -346,6 +362,7 @@ public class ParseClient implements JournalService {
         ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
         query.whereEqualTo("post_id", postId);
         query.setLimit(limit);
+        query.orderByAscending("createdAt");
 
         query.findInBackground(new FindCallback<Comment>() {
             @Override
