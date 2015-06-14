@@ -25,7 +25,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.LocationOnConnectListener;
 import com.mycompany.traveljournal.common.LocationService;
-import com.mycompany.traveljournal.datasource.PostCreator;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 import com.mycompany.traveljournal.helpers.BitmapScaler;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;

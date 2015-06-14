@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.mycompany.traveljournal.datasource.PostCreator;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
@@ -76,7 +75,6 @@ public class ExampleSavePostToParse {
 
 
         // No Async task required
-        PostCreator creator = new PostCreator();
         String caption = "At the Goog!";
         String description = "";
         double latitude = 37.421828;

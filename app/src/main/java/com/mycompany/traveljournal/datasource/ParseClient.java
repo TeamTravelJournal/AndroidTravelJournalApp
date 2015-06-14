@@ -61,7 +61,6 @@ public class ParseClient implements JournalService {
         Parse.enableLocalDatastore(context);
 
         // Register Parse sublasses
-        //ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Like.class);
         ParseObject.registerSubclass(Comment.class);
@@ -70,23 +69,11 @@ public class ParseClient implements JournalService {
         ParseUser.enableRevocableSessionInBackground();
         FacebookSdk.sdkInitialize(context);
         ParseFacebookUtils.initialize(context);
-        ParseInstallation.getCurrentInstallation().saveInBackground();
-
-        ParsePush.subscribeInBackground("Travel", new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
-                } else {
-                    Log.e("com.parse.push", "failed to subscribe for push", e);
-                }
-            }
-        });
     }
 
     //TODO
     public void createPost(final byte[] imageBytes, String caption, String description, double latitude, double longitude, final JournalCallBack<Post> journalCallBack) {
-        final PostCreator postCreator = new PostCreator();
+        final PostCreatorHelper postCreator = new PostCreatorHelper();
 
         post = new Post();
         post.put("caption", caption);
@@ -156,6 +143,9 @@ public class ParseClient implements JournalService {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
+                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                    installation.put("user",ParseUser.getCurrentUser());
+                    installation.saveInBackground();
                     Log.wtf(TAG, "Succesfully saved user");
                 } else {
                     Log.wtf(TAG, "Failed to save user" + e.toString());
