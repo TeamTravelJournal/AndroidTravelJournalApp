@@ -80,7 +80,7 @@
         <activity
             android:name=".loginscreen.LoginActivity"
             android:label="@string/app_name"
-            android:noHistory="true">
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -101,15 +101,22 @@
             android:name=".mapscreen.SingleMapActivity"
             android:label="@string/title_activity_single_map" >
         </activity>
-
         <activity
             android:name=".mapscreen.ProfileMapActivity"
             android:label="@string/title_activity_profile_map" >
         </activity>
-
         <activity
             android:name=".commentscreen.CommentActivity"
             android:label="@string/title_activity_comments"
+            android:parentActivityName=".detailsscreen.DetailActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mycompany.traveljournal.detailsscreen.DetailActivity" />
+        </activity>
+
+        <activity
+            android:name=".detailsscreen.PhotoActivity"
+            android:label="@string/title_activity_photo"
             android:parentActivityName=".detailsscreen.DetailActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
