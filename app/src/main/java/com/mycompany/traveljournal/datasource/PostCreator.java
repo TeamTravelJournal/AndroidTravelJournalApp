@@ -3,13 +3,20 @@ package com.mycompany.traveljournal.datasource;
 
 import android.util.Log;
 
+import com.mycompany.traveljournal.common.MyCustomReceiver;
 import com.mycompany.traveljournal.examples.SignedInUser;
+import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseInstallation;
 import com.parse.ParsePush;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class PostCreator {
 
@@ -71,10 +78,27 @@ public class PostCreator {
     }
 
     private void sendPush(){
-        ParsePush push = new ParsePush();
-        push.setChannel("Travel");
-        push.setMessage("The Giants just scored! It's now 2-2 against the Mets.");
-        push.sendInBackground();
+        JSONObject obj;
+        try {
+            obj = new JSONObject();
+            obj.put("alert", "New Trip posted by " + Util.getUserFromParseUser(ParseUser.getCurrentUser()).getName());
+            obj.put("action", MyCustomReceiver.intentAction);
+            obj.put("customdata", postId);
+
+            ParsePush push = new ParsePush();
+            ParseQuery query = ParseInstallation.getQuery();
+
+            // Push the notification to Android users
+            query.whereEqualTo("deviceType", "android");
+            query.whereNotEqualTo("user", ParseUser.getCurrentUser());
+            push.setQuery(query);
+            //push.setChannel("Travel");
+            push.setData(obj);
+            push.sendInBackground();
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+        }
     }
 
 }
