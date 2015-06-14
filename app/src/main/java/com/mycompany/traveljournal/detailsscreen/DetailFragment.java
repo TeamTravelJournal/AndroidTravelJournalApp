@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
+import com.mycompany.traveljournal.commentscreen.CommentActivity;
 import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
@@ -34,6 +35,7 @@ public class DetailFragment extends Fragment {
     private ImageView ivShare;
     private ImageView ivFollow;
     private ImageView ivStar;
+    private ImageView ivComment;
     private TextView tvLikes;
     private  TextView tvName;
     private Toolbar toolbar;
@@ -64,6 +66,7 @@ public class DetailFragment extends Fragment {
         ivShare = (ImageView) v.findViewById(R.id.ivShare);
         ivFollow = (ImageView) v.findViewById(R.id.ivFollow);
         ivStar = (ImageView) v.findViewById(R.id.ivStar);
+        ivComment = (ImageView) v.findViewById(R.id.ivComment);
         tvLikes = (TextView) v.findViewById(R.id.tvLikes);
         tvName = (TextView) v.findViewById(R.id.tvUserName);
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
@@ -82,6 +85,16 @@ public class DetailFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        ivComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), CommentActivity.class);
+                i.putExtra("post_id", postId);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
