@@ -12,6 +12,10 @@ import java.util.Date;
 @ParseClassName("Comment")
 public class Comment extends ParseObject {
 
+    public Comment() {
+
+    }
+
     public String getCommentID() {
         return getObjectId();
     }
