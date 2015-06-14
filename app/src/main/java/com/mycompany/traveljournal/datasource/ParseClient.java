@@ -334,6 +334,7 @@ public class ParseClient implements JournalService {
         ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
         query.whereEqualTo("post_id", postId);
         query.setLimit(limit);
+        query.orderByAscending("createdAt");
 
         query.findInBackground(new FindCallback<Comment>() {
             @Override
