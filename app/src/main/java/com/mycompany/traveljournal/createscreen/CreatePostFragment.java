@@ -139,7 +139,9 @@ public class CreatePostFragment extends Fragment {
         i.putExtra("post_id", postID);
         i.putExtra("local_photo_path", m_localPhotoPath);
         startActivity(i);
+        getActivity().finish();
     }
+
 
     public void setUpCameraIntent(){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
