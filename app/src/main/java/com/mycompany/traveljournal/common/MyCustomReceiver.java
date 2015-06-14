@@ -14,6 +14,7 @@ import android.util.Log;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
+import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,11 +51,15 @@ public class MyCustomReceiver extends BroadcastReceiver {
                 Iterator<String> itr = json.keys();
                 String postID = "";
                 String title = "";
+                String userId = "";
                 while (itr.hasNext()) {
                     String key = (String) itr.next();
                     // Extract custom push data
                     if (key.equals("alert")) {
                         title = json.getString(key);
+                    }
+                    if (key.equals("userId")) {
+                        userId = json.getString(key);
                     }
                     if (key.equals("customdata")) {
                         // Handle pus h notification by invoking activity directly
@@ -66,8 +71,9 @@ public class MyCustomReceiver extends BroadcastReceiver {
                     }
                     Log.d(TAG, "..." + key + " => " + json.getString(key));
                 }
+                if(!userId.equals(ParseUser.getCurrentUser().getObjectId()))
+                    createNotification(context, title, postID);
 
-                createNotification(context, title, postID);
             } catch (JSONException ex) {
                 Log.d(TAG, "JSON failed!");
             }
