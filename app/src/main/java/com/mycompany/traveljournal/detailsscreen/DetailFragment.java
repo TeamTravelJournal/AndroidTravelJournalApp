@@ -1,6 +1,8 @@
 package com.mycompany.traveljournal.detailsscreen;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,8 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
+import com.mycompany.traveljournal.helpers.BitmapScaler;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
 import com.mycompany.traveljournal.commentscreen.CommentActivity;
+import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
@@ -42,11 +46,14 @@ public class DetailFragment extends Fragment {
     private ImageView ivStaticMap;
     private Post m_post;
     private TextView tvNumComments;
+    private String localPhotoPath;
+    private boolean imageViewLoaded = false;
 
-    public static DetailFragment newInstance(String postId) {
+    public static DetailFragment newInstance(String postId, String localPhotoPath) {
         DetailFragment detailFragment = new DetailFragment();
         Bundle args = new Bundle();
         args.putString("post_id", postId);
+        args.putString("local_photo_path", localPhotoPath);
         detailFragment.setArguments(args);
         return detailFragment;
     }
@@ -57,6 +64,7 @@ public class DetailFragment extends Fragment {
         setUpViews(view);
         setToolbar();
         setUpListeners();
+        populateImageViewFromLocal();
         fetchPostAndPopulateViews();
         return view;
     }
@@ -112,8 +120,9 @@ public class DetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         postId = getArguments().getString("post_id", "");
+        localPhotoPath = getArguments().getString("local_photo_path");
 
-        Log.wtf(TAG, "--postid is " + postId);
+        Log.wtf(TAG, "post_id is : " + postId + " , local_photo_path is : " + localPhotoPath);
     }
 
     private void fetchPostAndPopulateViews() {
@@ -133,7 +142,8 @@ public class DetailFragment extends Fragment {
     }
 
     private void populateViews(Post post) {
-        Picasso.with(getActivity()).load(post.getImageUrl()).into(ivPost);
+        if(!imageViewLoaded)
+            Picasso.with(getActivity()).load(post.getImageUrl()).into(ivPost);
         tvCaption.setText(post.getCaption());
         tvLikes.setText(post.getLikes()+" Likes");
         tvName.setText(post.getParseUser().getName());
@@ -181,4 +191,17 @@ public class DetailFragment extends Fragment {
         }
     }
 
+    public void populateImageViewFromLocal(){
+        if(localPhotoPath!=null) {
+
+            Log.d(TAG, "local_photo_path : " + localPhotoPath);
+            Bitmap takenImage1 = Util.rotateBitmapOrientation(localPhotoPath);
+            int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
+            Bitmap localImage = BitmapScaler.scaleToFitWidth(takenImage1, screenWidth);
+            ivPost.setImageBitmap(localImage);
+            imageViewLoaded = true;
+        }else{
+            Log.d(TAG, "local photo path is null");
+        }
+    }
 }

@@ -18,11 +18,11 @@ public class PostCreator {
     private Post post;
     private byte[] imageBytes;
 
-    public void createPost(byte[] imageBytes, String caption, String description, double latitude, double longitude) {
+    /*public void createPost(byte[] imageBytes, String caption, String description, double latitude, double longitude) {
         this.imageBytes = imageBytes;
 
         createPostWithoutImage(caption, description, latitude, longitude);
-    }
+    }*/
 
     /**
      * Multistep process:
@@ -64,13 +64,22 @@ public class PostCreator {
     /**
      * This uploads the image and updates the post with the image url
      */
-    private void uploadAndAddImageToPost() {
+    public void uploadAndAddImageToPost() {
         ImageUploader uploader = new ImageUploader(this.postId, this.imageBytes);
         uploader.upload();
-        sendPush();
+        sendPush(this.postId);
     }
 
-    private void sendPush(){
+    /**
+     * This uploads the image and updates the post with the image url
+     */
+    public void uploadAndAddImageToPost(String postID, byte[] imageInBytes) {
+        ImageUploader uploader = new ImageUploader(postID, imageInBytes);
+        uploader.upload();
+        sendPush(postID);
+    }
+
+    public void sendPush(String postId){
         ParsePush push = new ParsePush();
         push.setChannel("Travel");
         push.setMessage("The Giants just scored! It's now 2-2 against the Mets.");

@@ -4,8 +4,13 @@ package com.mycompany.traveljournal.examples;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.mycompany.traveljournal.datasource.PostCreator;
+import com.mycompany.traveljournal.models.Post;
+import com.mycompany.traveljournal.service.JournalApplication;
+import com.mycompany.traveljournal.service.JournalCallBack;
+import com.mycompany.traveljournal.service.JournalService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -77,7 +82,18 @@ public class ExampleSavePostToParse {
         double latitude = 37.421828;
         double longitude = -122.084889;
 
-        creator.createPost(imageBytes, caption, description, latitude, longitude);
+        JournalService client = JournalApplication.getClient();
+        client.createPost(imageBytes, caption, description, latitude, longitude, new JournalCallBack<Post>() {
+            @Override
+            public void onSuccess(Post post) {
+                Log.d(TAG, "success creating post");
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.d(TAG, "failed to create post");
+            }
+        });
     }
 
     /**

@@ -54,12 +54,15 @@
         </activity>
         <activity
             android:name=".createscreen.CreatePostActivity"
-            android:label="" >
+            android:label="">
         </activity>
         <activity
             android:name=".detailsscreen.DetailActivity"
             android:label=""
             android:parentActivityName=".mainscreen.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mycompany.traveljournal.mainscreen.MainActivity" />
         </activity>
         <activity
             android:name=".mapscreen.MapActivity"

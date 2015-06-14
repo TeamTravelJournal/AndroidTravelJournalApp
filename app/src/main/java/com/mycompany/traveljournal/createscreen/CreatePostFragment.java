@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.internal.cr;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -24,11 +26,14 @@ import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.LocationOnConnectListener;
 import com.mycompany.traveljournal.common.LocationService;
 import com.mycompany.traveljournal.datasource.PostCreator;
+import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 import com.mycompany.traveljournal.helpers.BitmapScaler;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
 import com.mycompany.traveljournal.helpers.Util;
-import com.mycompany.traveljournal.mainscreen.MainActivity;
-import com.mycompany.traveljournal.profilescreen.ProfileActivity;
+import com.mycompany.traveljournal.models.Post;
+import com.mycompany.traveljournal.service.JournalApplication;
+import com.mycompany.traveljournal.service.JournalCallBack;
+import com.mycompany.traveljournal.service.JournalService;
 
 import java.nio.ByteBuffer;
 
@@ -46,6 +51,9 @@ public class CreatePostFragment extends Fragment {
     Bitmap takenImage;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";
+    JournalService client;
+    String m_localPhotoPath;
+    private final static String TAG = "CreatePostFragmentDebug";
 
     public static CreatePostFragment newInstance(){
         CreatePostFragment createPostFragment = new CreatePostFragment();
@@ -57,6 +65,7 @@ public class CreatePostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_create, container, false);
+        client = JournalApplication.getClient();
         setUpViews(view);
         setUpListeners();
         initLocationService();
@@ -103,19 +112,33 @@ public class CreatePostFragment extends Fragment {
         btPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PostCreator postCreator =  new PostCreator();
+                btPost.setEnabled(false);
+                //PostCreator postCreator =  new PostCreator();
                 //int bytes = takenImage.getByteCount();
                 //Toast.makeText(getActivity(), "After size 2 " + bytes,Toast.LENGTH_SHORT).show();
                 byte[] array = Util.getByteArrayFromBitmap(takenImage);
-                postCreator.createPost(array ,etCaption.getText().toString(), "", latLng.latitude, latLng.longitude);
-                callNextIntent();
+                client.createPost(array, etCaption.getText().toString(), "", latLng.latitude, latLng.longitude, new JournalCallBack<Post>() {
+                    @Override
+                    public void onSuccess(Post post) {
+                        //post created, image upload and image url update is happening at the background
+                        Log.d(TAG, "success creating post");
+                        callNextIntent(post.getPostID());
+                    }
 
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d(TAG, "failed to create post");
+                    }
+                });
+                //postCreator.createPost(array ,etCaption.getText().toString(), "", latLng.latitude, latLng.longitude);
             }
         });
     }
 
-    public void callNextIntent(){
-        Intent i = new Intent(getActivity(), MainActivity.class);
+    public void callNextIntent(String postID){
+        Intent i = new Intent(getActivity(), DetailActivity.class);
+        i.putExtra("post_id", postID);
+        i.putExtra("local_photo_path", m_localPhotoPath);
         startActivity(i);
     }
 
@@ -135,6 +158,7 @@ public class CreatePostFragment extends Fragment {
     }
 
     public void setPhotoPath(Uri photoPathUri){
+        m_localPhotoPath = photoPathUri.getPath();
         Bitmap takenImage1 = Util.rotateBitmapOrientation(photoPathUri.getPath());
         //int bytes1 = takenImage1.getByteCount();
         //Toast.makeText(getActivity(), "Before size " + bytes1,Toast.LENGTH_SHORT).show();
