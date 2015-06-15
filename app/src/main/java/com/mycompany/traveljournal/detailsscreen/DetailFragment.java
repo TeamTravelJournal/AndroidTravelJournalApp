@@ -1,41 +1,43 @@
 package com.mycompany.traveljournal.detailsscreen;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
-import com.mycompany.traveljournal.createscreen.CreatePostActivity;
+import com.mycompany.traveljournal.commentscreen.CommentActivity;
+import com.mycompany.traveljournal.commentscreen.CommentsAdapter;
 import com.mycompany.traveljournal.helpers.BitmapScaler;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
-import com.mycompany.traveljournal.commentscreen.CommentActivity;
 import com.mycompany.traveljournal.helpers.Util;
-import com.mycompany.traveljournal.mainscreen.MainActivity;
 import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
+import com.mycompany.traveljournal.models.Comment;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 
 public class DetailFragment extends Fragment {
 
     private final static String TAG = "DetailFragment";
+    private final static int numComments = 3;
     private String postId;
     private ImageView ivProfile;
     private ImageView ivPost;
@@ -52,6 +54,10 @@ public class DetailFragment extends Fragment {
     private TextView tvNumComments;
     private String localPhotoPath;
     private boolean imageViewLoaded = false;
+
+    private CommentsAdapter aComments;
+    private LinearLayout llComments;
+    JournalService client;
 
     public static DetailFragment newInstance(String postId, String localPhotoPath) {
         DetailFragment detailFragment = new DetailFragment();
@@ -86,6 +92,7 @@ public class DetailFragment extends Fragment {
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
         ivStaticMap = (ImageView)v.findViewById(R.id.ivStaticMap);
         tvNumComments = (TextView) v.findViewById(R.id.tvNumComments);
+        llComments = (LinearLayout) v.findViewById(R.id.llComments);
     }
 
     public void setUpListeners() {
@@ -127,19 +134,21 @@ public class DetailFragment extends Fragment {
         localPhotoPath = getArguments().getString("local_photo_path");
 
         Log.wtf(TAG, "post_id is : " + postId + " , local_photo_path is : " + localPhotoPath);
+        client = JournalApplication.getClient();
     }
 
     private void fetchPostAndPopulateViews() {
-        JournalService client = JournalApplication.getClient();
         client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
             public void onSuccess(Post post) {
                 m_post = post;
                 populateViews(post);
+                fetchAndPopulateComments(post);
             }
+
             @Override
             public void onFailure(Exception e) {
-                Log.wtf(TAG, "Post not found with id "+postId);
+                Log.wtf(TAG, "Post not found with id " + postId);
             }
 
         });
@@ -196,6 +205,21 @@ public class DetailFragment extends Fragment {
         }
     }
 
+    private void fetchAndPopulateComments(Post post) {
+        client.getCommentsForPost(post.getPostID(), numComments, new JournalCallBack<List<Comment>>() {
+            @Override
+            public void onSuccess(List<Comment> comments) {
+                Log.wtf(TAG, "Got comments #="+comments.size());
+                addAllCommentsToList(comments);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.wtf(TAG, "Failed to get comments:"+e.toString());
+            }
+        });
+    }
+
     public void populateImageViewFromLocal(){
         if(localPhotoPath!=null) {
 
@@ -209,4 +233,30 @@ public class DetailFragment extends Fragment {
             Log.d(TAG, "local photo path is null");
         }
     }
+
+    public void addAllCommentsToList(List<Comment> comments) {
+        ViewGroup llComments = (ViewGroup) getActivity().findViewById(R.id.llComments);
+
+        for (int i = 0 ; i < comments.size() ; i++ ){
+            addSingleCommentToList(comments.get(i), llComments);
+        }
+    }
+
+    private void addSingleCommentToList(Comment comment, ViewGroup viewGroup) {
+        LayoutInflater i = (LayoutInflater) getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View commentDetailView = i.inflate(R.layout.fragment_comment_detail, null);
+
+        TextView tvName = (TextView) commentDetailView.findViewById(R.id.tvName);
+        TextView tvBody = (TextView) commentDetailView.findViewById(R.id.tvBody);
+        ImageView ivProfileImage = (ImageView) commentDetailView.findViewById(R.id.ivProfileImage);
+
+        tvName.setText(comment.getUser().getName());
+        tvBody.setText(comment.getBody());
+
+        ivProfileImage.setImageResource(android.R.color.transparent);
+        Picasso.with(getActivity()).load(comment.getUser().getProfileImgUrl()).into(ivProfileImage);
+
+        viewGroup.addView(commentDetailView);
+    }
+
 }
