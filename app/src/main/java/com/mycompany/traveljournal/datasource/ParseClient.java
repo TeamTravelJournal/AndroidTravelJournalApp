@@ -69,6 +69,8 @@ public class ParseClient implements JournalService {
         ParseUser.enableRevocableSessionInBackground();
         FacebookSdk.sdkInitialize(context);
         ParseFacebookUtils.initialize(context);
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+        //Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
     }
 
     //TODO
