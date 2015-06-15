@@ -55,7 +55,7 @@ public class MyCustomReceiver extends BroadcastReceiver {
                 while (itr.hasNext()) {
                     String key = (String) itr.next();
                     // Extract custom push data
-                    if (key.equals("alert")) {
+                    if (key.equals("content")) {
                         title = json.getString(key);
                     }
                     if (key.equals("userId")) {

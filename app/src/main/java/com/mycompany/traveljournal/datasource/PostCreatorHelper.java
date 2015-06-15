@@ -27,7 +27,7 @@ public class PostCreatorHelper {
         JSONObject obj;
         try {
             obj = new JSONObject();
-            obj.put("alert", "New Trip posted by " + Util.getUserFromParseUser(ParseUser.getCurrentUser()).getName());
+            obj.put("content", "New Trip posted by " + Util.getUserFromParseUser(ParseUser.getCurrentUser()).getName());
             obj.put("action", MyCustomReceiver.intentAction);
             obj.put("customdata", postId);
             obj.put("userId", ParseUser.getCurrentUser().getObjectId());

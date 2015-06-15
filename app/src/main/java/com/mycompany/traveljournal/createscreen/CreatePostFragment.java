@@ -116,6 +116,11 @@ public class CreatePostFragment extends Fragment {
                 //int bytes = takenImage.getByteCount();
                 //Toast.makeText(getActivity(), "After size 2 " + bytes,Toast.LENGTH_SHORT).show();
                 byte[] array = Util.getByteArrayFromBitmap(takenImage);
+
+                //double latitude = 37.421828;
+                //double longitude = -122.084889;
+
+                //client.createPost(array, etCaption.getText().toString(), "", latitude, longitude, new JournalCallBack<Post>() {
                 client.createPost(array, etCaption.getText().toString(), "", latLng.latitude, latLng.longitude, new JournalCallBack<Post>() {
                     @Override
                     public void onSuccess(Post post) {
@@ -129,7 +134,6 @@ public class CreatePostFragment extends Fragment {
                         Log.d(TAG, "failed to create post");
                     }
                 });
-                //postCreator.createPost(array ,etCaption.getText().toString(), "", latLng.latitude, latLng.longitude);
             }
         });
     }
