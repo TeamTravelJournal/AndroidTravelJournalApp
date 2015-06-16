@@ -72,6 +72,8 @@ public class MainPostFragment extends PostsListFragment {
         super.onViewCreated(view, savedInstanceState);
 
         int footerHeight = getActivity().getResources().getDimensionPixelSize(R.dimen.footer_height);
+        int headerHeight = getActivity().getResources().getDimensionPixelSize(R.dimen.footer_height);
+
         QuickReturnListViewOnScrollListener scrollListener;
 
         scrollListener = new QuickReturnListViewOnScrollListener.Builder(QuickReturnViewType.FOOTER)
@@ -80,6 +82,14 @@ public class MainPostFragment extends PostsListFragment {
                 .build();
 
         scrolls.addScrollListener(scrollListener);
+
+        QuickReturnListViewOnScrollListener scrollListener1 = new QuickReturnListViewOnScrollListener.Builder(QuickReturnViewType.HEADER)
+                .header(toolbar)
+                .minHeaderTranslation(-headerHeight)
+                .build();
+
+        scrolls.addScrollListener(scrollListener1);
+
         lvPosts.setOnScrollListener(scrolls);
     }
 
