@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="footer_height">80dp</dimen>
 
+    <dimen name="image_loader">10dp</dimen>
+
 </resources>

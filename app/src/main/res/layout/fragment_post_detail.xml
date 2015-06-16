@@ -21,7 +21,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/rlHeader">
 
             <!-- Post -->
-            <ImageView
+            <!--ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:id="@+id/ivPost"
@@ -34,14 +34,25 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true" /-->
+
+            <!-- list of Post images -->
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"/>
 
             <!-- Caption -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvCaption"
-                android:layout_below="@+id/ivPost"
+                android:layout_below="@+id/view_pager"
                 android:layout_marginRight="70dp"
                 android:layout_marginEnd="70dp"
                 android:textColor="#A6A6A6"
@@ -61,7 +72,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_below="@+id/ivPost"
+                android:layout_below="@+id/view_pager"
                 android:layout_marginTop="-10dp"
                 />
         </RelativeLayout>

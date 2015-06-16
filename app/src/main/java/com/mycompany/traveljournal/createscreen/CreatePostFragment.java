@@ -117,11 +117,11 @@ public class CreatePostFragment extends Fragment {
                 //Toast.makeText(getActivity(), "After size 2 " + bytes,Toast.LENGTH_SHORT).show();
                 byte[] array = Util.getByteArrayFromBitmap(takenImage);
 
-                //double latitude = 37.421828;
-                //double longitude = -122.084889;
+                double latitude = 37.421828;
+                double longitude = -122.084889;
 
-                //client.createPost(array, etCaption.getText().toString(), "", latitude, longitude, new JournalCallBack<Post>() {
-                client.createPost(array, etCaption.getText().toString(), "", latLng.latitude, latLng.longitude, new JournalCallBack<Post>() {
+                client.createPost(array, etCaption.getText().toString(), "", latitude, longitude, new JournalCallBack<Post>() {
+                //client.createPost(array, etCaption.getText().toString(), "", latLng.latitude, latLng.longitude, new JournalCallBack<Post>() {
                     @Override
                     public void onSuccess(Post post) {
                         //post created, image upload and image url update is happening at the background

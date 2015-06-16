@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
+import com.mycompany.traveljournal.base.ImageAdapter;
 import com.mycompany.traveljournal.commentscreen.CommentActivity;
 import com.mycompany.traveljournal.commentscreen.CommentsAdapter;
 import com.mycompany.traveljournal.helpers.BitmapScaler;
@@ -31,6 +33,7 @@ import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,7 +43,7 @@ public class DetailFragment extends Fragment {
     private final static int numComments = 3;
     private String postId;
     private ImageView ivProfile;
-    private ImageView ivPost;
+    //private ImageView ivPost;
     private TextView tvCaption;
     private ImageView ivShare;
     private ImageView ivFollow;
@@ -54,10 +57,12 @@ public class DetailFragment extends Fragment {
     private TextView tvNumComments;
     private String localPhotoPath;
     private boolean imageViewLoaded = false;
+    private ViewPager viewPager;
 
     private CommentsAdapter aComments;
     private LinearLayout llComments;
     JournalService client;
+    private ArrayList<String> images = new ArrayList<>();
 
     public static DetailFragment newInstance(String postId, String localPhotoPath) {
         DetailFragment detailFragment = new DetailFragment();
@@ -81,7 +86,7 @@ public class DetailFragment extends Fragment {
 
     public void setUpViews(View v){
         ivProfile = (ImageView) v.findViewById(R.id.ivProfile);
-        ivPost = (ImageView) v.findViewById(R.id.ivPost);
+        //ivPost = (ImageView) v.findViewById(R.id.ivPost);
         tvCaption = (TextView) v.findViewById(R.id.tvCaption);
         ivShare = (ImageView) v.findViewById(R.id.ivShare);
         ivFollow = (ImageView) v.findViewById(R.id.ivFollow);
@@ -93,6 +98,9 @@ public class DetailFragment extends Fragment {
         ivStaticMap = (ImageView)v.findViewById(R.id.ivStaticMap);
         tvNumComments = (TextView) v.findViewById(R.id.tvNumComments);
         llComments = (LinearLayout) v.findViewById(R.id.llComments);
+
+        viewPager = (ViewPager) v.findViewById(R.id.view_pager);
+
     }
 
     public void setUpListeners() {
@@ -116,14 +124,14 @@ public class DetailFragment extends Fragment {
             }
         });
 
-        ivPost.setOnClickListener(new View.OnClickListener() {
+        /*ivPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), PhotoActivity.class);
                 i.putExtra("image_url", m_post.getImageUrl());
                 startActivity(i);
             }
-        });
+        });*/
     }
 
     @Override
@@ -156,14 +164,18 @@ public class DetailFragment extends Fragment {
 
 
     private void populateViews(Post post) {
+        //if(!imageViewLoaded)
+            //Picasso.with(getActivity()).load(post.getImageUrl()).placeholder(R.drawable.placeholderwide).into(ivPost);
         if(!imageViewLoaded) {
-            Picasso.with(getActivity())
-                    .load(post.getImageUrl())
-                    .fit()
-                    .centerCrop()
-                    .placeholder(R.drawable.placeholderwide)
-                    .into(ivPost);
+            images.add(post.getImageUrl());
+            //TODO get hardcoded image list from parse
+            images.add("https://canadaalive.files.wordpress.com/2013/03/2789604382_1920dbcc87.jpg");
+            images.add("http://www.specialswallpaper.com/wp-content/uploads/2015/04/free_high_resolution_images_for_download-1.jpg");
+            images.add("http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg");
+            ImageAdapter adapter = new ImageAdapter(getActivity(), images, null);
+            viewPager.setAdapter(adapter);
         }
+
         tvCaption.setText(post.getCaption());
         tvLikes.setText(post.getLikes()+" Likes");
         tvName.setText(post.getParseUser().getName());
@@ -233,7 +245,12 @@ public class DetailFragment extends Fragment {
             Bitmap takenImage1 = Util.rotateBitmapOrientation(localPhotoPath);
             int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
             Bitmap localImage = BitmapScaler.scaleToFitWidth(takenImage1, screenWidth);
-            ivPost.setImageBitmap(localImage);
+            //ivPost.setImageBitmap(localImage);
+            ArrayList<String> fakeImg = new ArrayList<String>();
+            fakeImg.add("");
+
+            ImageAdapter adapter = new ImageAdapter(getActivity(), fakeImg , localImage);
+            viewPager.setAdapter(adapter);
             imageViewLoaded = true;
         }else{
             Log.d(TAG, "local photo path is null");
