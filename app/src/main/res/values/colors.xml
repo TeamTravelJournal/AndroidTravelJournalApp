@@ -6,7 +6,20 @@
     <color name="grey">#BDBDBD</color>
     <color name="transparent_grey">#80BDBDBD</color>
     <color name="dark_grey">#424242</color>
-
     <color name="common_background">#505050</color>
+
+
+    <!--Following 8 should be the only colors we use /-->
+
+    <color name="dark_primary_color">#0097A7</color>
+    <color name="primary_color">#00BCD4</color>
+    <color name="light_primary_color">#B2EBF2</color>
+    <color name="accent_color">#FFC107</color>
+
+    <!--Following 4 is fixed/-->
+    <color name="text_icons">#FFFFFF</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="divider_color">#B6B6B6</color>
 
 </resources>
