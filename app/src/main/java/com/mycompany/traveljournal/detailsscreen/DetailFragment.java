@@ -18,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
+import com.ToxicBakery.viewpager.transforms.FlipVerticalTransformer;
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.ImageAdapter;
 import com.mycompany.traveljournal.commentscreen.CommentActivity;
@@ -100,6 +103,8 @@ public class DetailFragment extends Fragment {
         llComments = (LinearLayout) v.findViewById(R.id.llComments);
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
+
+        viewPager.setPageTransformer(true, new CubeOutTransformer());
 
     }
 

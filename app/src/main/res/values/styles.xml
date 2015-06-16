@@ -13,6 +13,19 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+
+        <!-- specify enter and exit transitions -->
+        <!-- options are: explode, slide, fade -->
+        <item name="android:windowEnterTransition">@transition/transition_type</item>
+
+        <item name="android:windowExitTransition">@transition/transition_type</item>
+
+        <!-- specify shared element transitions -->
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/change_image_transform</item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/change_image_transform</item>
+
     </style>
 
 
