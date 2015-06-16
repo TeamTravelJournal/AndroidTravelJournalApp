@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="footer_height">80dp</dimen>
+    <dimen name="image_loader">10dp</dimen>
 
     <dimen name="text_large_text_size">18sp</dimen>
     <dimen name="text_subheader_text_size">16sp</dimen>
@@ -14,6 +15,5 @@
     <dimen name="view_margin">15dp</dimen>
     <dimen name="button_padding">20dp</dimen>
     <dimen name="button_corner_radius">30dp</dimen>
-
 
 </resources>
