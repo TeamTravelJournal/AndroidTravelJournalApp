@@ -192,17 +192,26 @@ public class DetailFragment extends Fragment {
 
 
         // Default profile picture
-        Picasso.with(getActivity()).load(R.drawable.icon_user_32).into(ivProfile);
+        Picasso.with(getActivity()).load(R.drawable.icon_user_32)
+                .fit()
+                .centerCrop()
+                .placeholder(R.drawable.placeholderthumbnail)
+                .transform(Util.getTransformation())
+                .into(ivProfile);
 
         if(post.getParseUser()!=null) {
-            Picasso.with(getActivity()).load(post.getParseUser().getProfileImgUrl()).into(ivProfile);
+            Picasso.with(getActivity()).load(post.getParseUser().getProfileImgUrl())
+                    .fit()
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholderthumbnail)
+                    .transform(Util.getTransformation())
+                    .into(ivProfile);
         }
 
         //put static map
         double latitude = post.getLatitude();
         double longitude = post.getLongitude();
-        int width = DeviceDimensionsHelper.getDisplayWidth(getActivity());
-        width = 600;
+        int width = 600;
         String staticMapUrl = "https://maps.googleapis.com/maps/api/staticmap?size="
                 + width + "x" + width + "&zoom=17&markers="
                 //+ "icon:http://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=cafe%257C996600%7C"
@@ -277,7 +286,12 @@ public class DetailFragment extends Fragment {
         tvBody.setText(comment.getBody());
 
         ivProfileImage.setImageResource(android.R.color.transparent);
-        Picasso.with(getActivity()).load(comment.getUser().getProfileImgUrl()).into(ivProfileImage);
+        Picasso.with(getActivity()).load(comment.getUser().getProfileImgUrl())
+                .fit()
+                .centerCrop()
+                .placeholder(R.drawable.placeholderthumbnail)
+                .transform(Util.getTransformation())
+                .into(ivProfileImage);
 
         viewGroup.addView(commentDetailView);
     }

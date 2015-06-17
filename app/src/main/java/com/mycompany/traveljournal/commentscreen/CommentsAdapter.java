@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
+import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.models.Comment;
 import com.squareup.picasso.Picasso;
 
@@ -49,7 +50,12 @@ public class CommentsAdapter extends ArrayAdapter<Comment>{
         viewHolder.tvBody.setText(comment.getBody());
 
         viewHolder.ivProfileImage.setImageResource(android.R.color.transparent);
-        Picasso.with(getContext()).load(comment.getUser().getProfileImgUrl()).into(viewHolder.ivProfileImage);
+        Picasso.with(getContext()).load(comment.getUser().getProfileImgUrl())
+                .fit()
+                .centerCrop()
+                .placeholder(R.drawable.placeholderthumbnail)
+                .transform(Util.getTransformation())
+                .into(viewHolder.ivProfileImage);
 
         return convertView;
     }

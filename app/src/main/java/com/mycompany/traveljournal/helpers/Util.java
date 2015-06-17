@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.location.Address;
 import android.location.Geocoder;
@@ -19,9 +20,11 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.model.LatLng;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.mycompany.traveljournal.common.ErrorDialogFragment;
 import com.mycompany.traveljournal.models.User;
 import com.parse.ParseUser;
+import com.squareup.picasso.Transformation;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -177,6 +180,18 @@ public class Util {
             user.setCovereImageUrl(parseUser.get("cover_image_url") != null ? parseUser.get("cover_image_url").toString() : "");
         }catch(Exception e){}
         return user;
+    }
+
+    public static Transformation getTransformation(){
+
+        //profile image round transformation
+        Transformation transformation = new RoundedTransformationBuilder()
+                .borderColor(Color.WHITE)
+                .borderWidthDp(2)
+                .cornerRadiusDp(30)
+                .oval(false)
+                .build();
+        return transformation;
     }
 
 }

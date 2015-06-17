@@ -114,10 +114,6 @@ public abstract class PostsListFragment extends Fragment {
         if(id == R.id.action_profile){
             executeProfileIntent(client.getCurrentUser());
         }
-        else if(id == R.id.action_wishlist){
-            Intent i = new Intent(getActivity(), WishListActivity.class);
-            startActivity(i);
-        }
 
         return super.onOptionsItemSelected(item);
     }

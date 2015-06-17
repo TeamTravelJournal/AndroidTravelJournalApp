@@ -20,14 +20,13 @@
             android:layout_alignParentStart="true" />
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:id="@+id/ivProfileImage"
-            android:background="@drawable/border"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="130dp"
-            android:layout_alignParentTop="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="-30dp"
+            android:layout_below="@+id/ivBannerImage"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
