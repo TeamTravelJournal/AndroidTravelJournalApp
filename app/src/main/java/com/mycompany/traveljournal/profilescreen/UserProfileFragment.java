@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
+import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mapscreen.MapActivity;
 import com.mycompany.traveljournal.mapscreen.ProfileMapActivity;
 import com.mycompany.traveljournal.models.Post;
@@ -67,7 +68,12 @@ public class UserProfileFragment extends Fragment{
         m_user = user;
         tvName.setText(user.getName());
         if(!"".equals(user.getProfileImgUrl()))
-            Picasso.with(getActivity()).load(user.getProfileImgUrl()).into(ivProfileImg);
+            Picasso.with(getActivity()).load(user.getProfileImgUrl())
+                    .fit()
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholderthumbnail)
+                    .transform(Util.getTransformation())
+                    .into(ivProfileImg);
         if(!"".equals(user.getCoverImageUrl()))
             Picasso.with(getActivity()).load(user.getCoverImageUrl()).into(ivCover);
     }

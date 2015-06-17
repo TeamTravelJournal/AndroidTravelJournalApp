@@ -63,8 +63,8 @@
 
             <!-- Profile Image -->
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:id="@+id/ivProfile"
                 android:transitionName="profileImg"
                 android:contentDescription="@string/detail_profile_description"
@@ -73,7 +73,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_below="@+id/view_pager"
-                android:layout_marginTop="-10dp"
+                android:layout_marginTop="-20dp"
                 />
         </RelativeLayout>
 
