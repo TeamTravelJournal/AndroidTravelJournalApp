@@ -68,6 +68,10 @@ Wireframes can be found [here](https://github.com/TeamTravelJournal/AndroidTrave
 
 ## Gif Walkthrough
 
+Sprint-2: June 17th 2015
+
+<img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_2.gif' title='Sprint 2 Walkthrough' width='' alt='Video Walkthrough' />
+
 Sprint-1: June 10th 2015
 
 <img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_1.gif' title='Sprint 1 Walkthrough' width='' alt='Video Walkthrough' />
