@@ -5,12 +5,11 @@
 
     <ImageView
         android:id="@+id/ivProfileImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_margin="5dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:background="@color/material_blue_grey_800"/>
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/tvName"

@@ -15,11 +15,6 @@
         app:showAsAction="ifRoom"
         />
 
-    <item android:id="@+id/action_wishlist" android:orderInCategory="10" android:title="Wish List"
-        android:icon="@drawable/abc_btn_check_material"
-        app:showAsAction="ifRoom"
-        />
-
     <item android:id="@+id/action_profile" android:orderInCategory="12" android:title="Profile"
         android:icon="@drawable/abc_btn_check_material"
         app:showAsAction="ifRoom"

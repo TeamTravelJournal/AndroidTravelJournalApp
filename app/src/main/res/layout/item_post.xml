@@ -1,6 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="10dp"
     >
 
 <android.support.v7.widget.CardView
@@ -8,7 +7,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="8dp"
     card_view:cardElevation="8dp"
     android:foreground="?android:attr/selectableItemBackground">
 
@@ -16,11 +14,11 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent" android:layout_height="200dp">
+        android:layout_width="match_parent" android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="200dp"
         android:id="@+id/ivPost"
         android:scaleType="fitXY"
         android:transitionName="postImg"
@@ -31,37 +29,37 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-
-
-        <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvCaption"
-        android:layout_marginRight="35dp"
-        android:layout_centerInParent="true"
-        android:textColor="#A6A6A6"
-        android:gravity="center"
-        />
-
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/ivStar"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"/>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:id="@+id/ivProfile"
+            android:layout_below="@+id/ivPost"
             android:transitionName="profileImg"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="-30dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvCaption"
+            android:layout_margin="15dp"
+            android:textColor="#A6A6A6"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_below="@+id/ivPost"
+            />
 
     </RelativeLayout>
 
