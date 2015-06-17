@@ -20,6 +20,10 @@ public interface JournalService {
 
     public void getRecentPosts(Date createdAt, int limit, JournalCallBack<List<Post>> journalCallBack);
 
+    public void getLatestPosts(Date createdAt, int limit, JournalCallBack<List<Post>> journalCallBack);
+
+    public List<Post> getLatestPostsFromLocal(Date latestDate);
+
     public void getPostsWithinMilesOrderByDate(Date createdAt, int maxDistance, double latitude, double longitude, int limit, JournalCallBack<List<Post>> journalCallBack);
 
     public void getUserWithId(String userId, final JournalCallBack<List<User>> journalCallBack);
@@ -38,4 +42,5 @@ public interface JournalService {
     public void getCommentsForPost(String postId, int limit, JournalCallBack<List<Comment>> journalCallBack);
 
     public void createPost(byte[] imageBytes, String caption, String description, double latitude, double longitude, final JournalCallBack<Post> journalCallBack);
+
 }

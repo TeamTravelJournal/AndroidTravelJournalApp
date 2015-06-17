@@ -130,6 +130,15 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".common.MyAlarmReceiver"
+             >
+        </receiver>
+
+        <service
+            android:name=".service.NewPostsService"
+            android:exported="false" />
+
         <uses-library
             android:name="com.google.android.maps"
             android:required="true" />
