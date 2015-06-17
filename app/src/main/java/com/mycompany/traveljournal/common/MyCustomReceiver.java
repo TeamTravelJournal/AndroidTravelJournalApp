@@ -71,7 +71,7 @@ public class MyCustomReceiver extends BroadcastReceiver {
                     }
                     Log.d(TAG, "..." + key + " => " + json.getString(key));
                 }
-                if(!userId.equals(ParseUser.getCurrentUser().getObjectId()))
+                //if(!userId.equals(ParseUser.getCurrentUser().getObjectId()))
                     createNotification(context, title, postID);
 
             } catch (JSONException ex) {
