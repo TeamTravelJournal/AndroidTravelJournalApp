@@ -25,6 +25,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -389,6 +390,50 @@ public class ParseClient implements JournalService {
                 }
             }
         });
+    }
+
+    public void getLatestPosts(Date latestDate, int limit, final JournalCallBack<List<Post>> journalCallBack){
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        if(latestDate!=null) {
+            //if we pass a timestamp, query the posts older than timestamp
+            //otherwise query everything sorted by timestamp
+            query.whereGreaterThan("createdAt", latestDate);
+
+            query.orderByDescending("createdAt");
+            query.setLimit(limit);
+            query.include("parse_user");
+            query.findInBackground(new FindCallback<Post>() {
+                @Override
+                public void done(List<Post> resultPosts, ParseException e) {
+                    if (e == null) {
+                        journalCallBack.onSuccess(resultPosts);
+                    } else {
+                        journalCallBack.onFailure(e);
+                    }
+                }
+            });
+        }
+    }
+
+    public List<Post> getLatestPostsFromLocal(Date latestDate){
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.fromLocalDatastore();
+        List<Post> resultPosts =  new ArrayList<>();
+        if(latestDate!=null) {
+            //if we pass a timestamp, query the posts older than timestamp
+            //otherwise query everything sorted by timestamp
+            query.whereGreaterThan("createdAt", latestDate);
+
+            query.orderByDescending("createdAt");
+            query.include("parse_user");
+            try {
+                resultPosts = query.find();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return resultPosts;
     }
 
 }
