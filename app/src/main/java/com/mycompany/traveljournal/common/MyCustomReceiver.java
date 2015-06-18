@@ -1,9 +1,12 @@
 package com.mycompany.traveljournal.common;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,12 +17,12 @@ import android.util.Log;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
-import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by sjayaram on 6/13/2015.
@@ -27,6 +30,7 @@ import java.util.Iterator;
 public class MyCustomReceiver extends BroadcastReceiver {
     private static final String TAG = "MyCustomReceiver";
     public static final String intentAction = "SEND_PUSH";
+    //public static final String activityAction = "com.mycompany.traveljournal.detailsscreen.MainPostFragment";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -41,7 +45,7 @@ public class MyCustomReceiver extends BroadcastReceiver {
     private void processPush(Context context, Intent intent) {
         String action = intent.getAction();
         Log.d(TAG, "got action " + action );
-        if (action.equals(intentAction))
+        if (intentAction.equals(action))
         {
             String channel = intent.getExtras().getString("com.parse.Channel");
             try {
@@ -52,6 +56,7 @@ public class MyCustomReceiver extends BroadcastReceiver {
                 String postID = "";
                 String title = "";
                 String userId = "";
+
                 while (itr.hasNext()) {
                     String key = (String) itr.next();
                     // Extract custom push data
@@ -62,17 +67,25 @@ public class MyCustomReceiver extends BroadcastReceiver {
                         userId = json.getString(key);
                     }
                     if (key.equals("customdata")) {
-                        // Handle pus h notification by invoking activity directly
-                        //launchSomeActivity(context, json.getString(key));
-                        // OR trigger a broadcast to activity
-                        //triggerBroadcastToActivity(context);
-                        // OR create a local notification
                         postID = json.getString(key);
                     }
                     Log.d(TAG, "..." + key + " => " + json.getString(key));
                 }
-                //if(!userId.equals(ParseUser.getCurrentUser().getObjectId()))
+
+                ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+                ComponentName componentInfo = taskInfo.get(0).topActivity;
+
+                if(componentInfo.getPackageName().equalsIgnoreCase("com.mycompany.traveljournal")){
+                    //Activity Running
+                    triggerBroadcastToActivity(context);
+                }
+                else{
+                    //Activity Not Running
+                    //Generate Notification
                     createNotification(context, title, postID);
+                }
+
 
             } catch (JSONException ex) {
                 Log.d(TAG, "JSON failed!");
@@ -117,6 +130,7 @@ public class MyCustomReceiver extends BroadcastReceiver {
     // Handle push notification by sending a local broadcast
     // to which the activity subscribes to
     private void triggerBroadcastToActivity(Context context) {
-        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(intentAction));
+        Intent in = new Intent("com.mycompany.traveljournal.detailsscreen.MainPostFragment");
+        LocalBroadcastManager.getInstance(context).sendBroadcast(in);
     }
 }

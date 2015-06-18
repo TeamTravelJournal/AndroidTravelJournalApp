@@ -105,7 +105,6 @@ public class DetailFragment extends Fragment {
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
 
         viewPager.setPageTransformer(true, new CubeOutTransformer());
-
     }
 
     public void setUpListeners() {

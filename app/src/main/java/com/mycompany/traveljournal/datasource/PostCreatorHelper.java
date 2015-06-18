@@ -30,6 +30,7 @@ public class PostCreatorHelper {
             obj.put("content", "New Trip posted by " + Util.getUserFromParseUser(ParseUser.getCurrentUser()).getName());
             obj.put("action", MyCustomReceiver.intentAction);
             obj.put("customdata", postId);
+            //obj.put("title", "test");
             obj.put("userId", ParseUser.getCurrentUser().getObjectId());
 
             ParsePush push = new ParsePush();
