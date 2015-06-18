@@ -355,5 +355,6 @@ public class MainPostFragment extends PostsListFragment {
         Intent i = new Intent(getActivity(), MapActivity.class);
         i.putExtra("query", query);
         startActivity(i);
+        getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 }

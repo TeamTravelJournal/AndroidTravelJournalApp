@@ -116,6 +116,7 @@ public class DetailFragment extends Fragment {
                 Intent i = new Intent(getActivity(), SingleMapActivity.class);
                 i.putExtra("post_id", postId);
                 startActivity(i);
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
 
@@ -125,6 +126,7 @@ public class DetailFragment extends Fragment {
                 Intent i = new Intent(getActivity(), CommentActivity.class);
                 i.putExtra("post_id", postId);
                 startActivity(i);
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
 

@@ -1,5 +1,6 @@
 package com.mycompany.traveljournal.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -64,6 +65,7 @@ public class ImageAdapter extends PagerAdapter {
                     Intent i = new Intent(context, PhotoActivity.class);
                     i.putExtra("image_url", images.get(position));
                     context.startActivity(i);
+                    ((Activity)context).overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 }
             });
             container.addView(imageView, 0);

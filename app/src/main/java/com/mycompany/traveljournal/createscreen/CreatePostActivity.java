@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
+import com.mycompany.traveljournal.common.ProgressBarListener;
 import com.mycompany.traveljournal.helpers.BitmapScaler;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
 import com.mycompany.traveljournal.helpers.Util;
@@ -19,7 +20,7 @@ import com.mycompany.traveljournal.profilescreen.ProfileActivity;
 /**
  * Created by sjayaram on 6/5/2015.
  */
-public class CreatePostActivity extends PostsListActivity {
+public class CreatePostActivity extends PostsListActivity{
 
     CreatePostFragment createPostFragment;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
@@ -64,4 +65,8 @@ public class CreatePostActivity extends PostsListActivity {
         }
     }
 
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
 }
