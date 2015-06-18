@@ -206,6 +206,7 @@ public abstract class PostsListFragment extends Fragment {
         Intent i = new Intent(getActivity(), ProfileActivity.class);
         i.putExtra("User", data);
         getActivity().startActivity(i);
+        getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     //override in subclass
