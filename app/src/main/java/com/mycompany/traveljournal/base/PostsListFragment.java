@@ -54,6 +54,7 @@ public abstract class PostsListFragment extends Fragment {
     protected LatLng m_location;
     protected JournalService client;
     protected Toolbar toolbar;
+    protected ImageView ivNewPosts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -134,6 +135,7 @@ public abstract class PostsListFragment extends Fragment {
         mQuickReturnView = (ImageView)v.findViewById(R.id.quick_return_iv);
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
         ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
+        ivNewPosts = (ImageView)v.findViewById(R.id.ivNewPosts);
     }
 
     public void setUpListeners(){
