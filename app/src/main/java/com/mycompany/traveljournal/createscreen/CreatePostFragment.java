@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.internal.cr;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.LocationOnConnectListener;
 import com.mycompany.traveljournal.common.LocationService;
+import com.mycompany.traveljournal.common.ProgressBarListener;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 import com.mycompany.traveljournal.helpers.BitmapScaler;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
@@ -53,6 +55,7 @@ public class CreatePostFragment extends Fragment {
     JournalService client;
     String m_localPhotoPath;
     private final static String TAG = "CreatePostFragmentDebug";
+    ProgressBar pbLoading;
 
     public static CreatePostFragment newInstance(){
         CreatePostFragment createPostFragment = new CreatePostFragment();
@@ -111,6 +114,9 @@ public class CreatePostFragment extends Fragment {
         btPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                pbLoading.setVisibility(ProgressBar.VISIBLE);
+
                 btPost.setEnabled(false);
                 //PostCreator postCreator =  new PostCreator();
                 //int bytes = takenImage.getByteCount();
@@ -126,6 +132,8 @@ public class CreatePostFragment extends Fragment {
                     public void onSuccess(Post post) {
                         //post created, image upload and image url update is happening at the background
                         Log.d(TAG, "success creating post");
+                        pbLoading.setVisibility(ProgressBar.VISIBLE);
+
                         callNextIntent(post.getPostID());
                     }
 
@@ -160,6 +168,7 @@ public class CreatePostFragment extends Fragment {
         btPost = (Button)v.findViewById(R.id.btPost);
         etCaption = (EditText)v.findViewById(R.id.etCaption);
         ivPreview.setImageBitmap(takenImage);
+        pbLoading = (ProgressBar)v.findViewById(R.id.pbLoading);
     }
 
     public void setPhotoPath(Uri photoPathUri){

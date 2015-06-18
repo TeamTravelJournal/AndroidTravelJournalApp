@@ -101,8 +101,15 @@
             android:textColor="#FFFFFF"
             android:id="@+id/btPost"
             android:layout_alignParentRight="true"
-            android:padding="5dp"
             android:minHeight="0dp" android:minWidth="0dp"
+            />
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/btPost"
             />
 
     </RelativeLayout>
