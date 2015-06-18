@@ -64,4 +64,9 @@ public class CreatePostActivity extends PostsListActivity{
             }
         }
     }
+
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
 }

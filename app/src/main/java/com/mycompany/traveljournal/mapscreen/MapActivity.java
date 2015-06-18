@@ -516,4 +516,9 @@ public class MapActivity extends ActionBarActivity implements
        //dropPinEffect(marker);
         }
     }
+
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
 }

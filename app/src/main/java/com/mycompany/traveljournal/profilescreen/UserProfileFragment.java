@@ -60,6 +60,7 @@ public class UserProfileFragment extends Fragment{
                 Intent i = new Intent(getActivity(), ProfileMapActivity.class);
                 i.putExtra("user_id", m_user.getId());
                 startActivity(i);
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
     }

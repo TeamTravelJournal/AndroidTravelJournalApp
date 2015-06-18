@@ -395,8 +395,6 @@ public class ParseClient implements JournalService {
     public void getLatestPosts(Date latestDate, int limit, final JournalCallBack<List<Post>> journalCallBack){
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         if(latestDate!=null) {
-            //if we pass a timestamp, query the posts older than timestamp
-            //otherwise query everything sorted by timestamp
             query.whereGreaterThan("createdAt", latestDate);
 
             query.orderByDescending("createdAt");
@@ -420,8 +418,6 @@ public class ParseClient implements JournalService {
         query.fromLocalDatastore();
         List<Post> resultPosts =  new ArrayList<>();
         if(latestDate!=null) {
-            //if we pass a timestamp, query the posts older than timestamp
-            //otherwise query everything sorted by timestamp
             query.whereGreaterThan("createdAt", latestDate);
 
             query.orderByDescending("createdAt");

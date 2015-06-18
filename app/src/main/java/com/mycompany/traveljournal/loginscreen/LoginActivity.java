@@ -83,5 +83,6 @@ public class LoginActivity extends ActionBarActivity {
             FacebookUtil.makeFBProfileRequest();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 }
