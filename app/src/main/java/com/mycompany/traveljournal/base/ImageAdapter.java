@@ -3,8 +3,10 @@ package com.mycompany.traveljournal.base;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -55,7 +57,6 @@ public class ImageAdapter extends PagerAdapter {
 
         if(cameraImage == null) {
             Picasso.with(context).load(images.get(position)).fit().centerCrop().placeholder(R.drawable.placeholderwide).into(imageView);
-            container.addView(imageView, 0);
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -65,6 +66,7 @@ public class ImageAdapter extends PagerAdapter {
                     context.startActivity(i);
                 }
             });
+            container.addView(imageView, 0);
         }
         else{
             imageView.setImageBitmap(cameraImage);
@@ -78,4 +80,7 @@ public class ImageAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         ((ViewPager) container).removeView((ImageView) object);
     }
+
+
+
 }
