@@ -2,9 +2,9 @@
 <resources>
 
     <style name="Theme.Travel_Light" parent="Theme.AppCompat.Light">
-        <item name="textSubheader">@style/text_subheader_on_light</item>
-        <item name="textLarge">@style/text_large_on_light</item>
-        <item name="textRegular">@style/text_regular_on_light</item>
+        <item name="textSubheader">@style/Text.SubHeader</item>
+        <item name="textLarge">@style/Text.Large</item>
+        <item name="textRegular">@style/Text</item>
         <item name="buttonDark">@style/button_dark</item>
         <item name="buttonLight">@style/button_light</item>
     </style>
