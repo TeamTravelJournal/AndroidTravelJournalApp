@@ -1,16 +1,13 @@
 package com.mycompany.traveljournal.mainscreen;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,33 +15,17 @@ import android.view.ViewGroup;
 
 import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnListViewOnScrollListener;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListFragment;
-import com.mycompany.traveljournal.common.MyAlarmReceiver;
+import com.mycompany.traveljournal.common.MyCustomReceiver;
 import com.mycompany.traveljournal.createscreen.CreatePostActivity;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mapscreen.MapActivity;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalCallBack;
-import com.mycompany.traveljournal.service.NewPostsService;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
@@ -57,18 +38,10 @@ public class MainPostFragment extends PostsListFragment {
     private final static String TAG = "MainPostFragmentDebug";
     private Date earliestTimeStamp = null;
     private Date latestDate;
-    private ResponseReceiver receiver;
-    SharedPreferences.Editor editor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        IntentFilter filter = new IntentFilter(ResponseReceiver.ACTION_RESP);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
-        receiver = new ResponseReceiver();
-        getActivity().registerReceiver(receiver, filter);
-        SharedPreferences mSettings = getActivity().getSharedPreferences("Settings", 0);
-        editor = mSettings.edit();
     }
 
     @Override
@@ -76,50 +49,55 @@ public class MainPostFragment extends PostsListFragment {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         setUpListeners();
         populateList();
-        scheduleAlarm();
         return view;
     }
 
-
-
-    public void scheduleAlarm() {
-        // Construct an intent that will execute the AlarmReceiver
-        Intent intent = new Intent(getActivity(), MyAlarmReceiver.class);
-        //intent.putExtra(NewPostsService.PARAM_IN_MSG, latestDate != null ? latestDate : "");
-        // Create a PendingIntent to be triggered when the alarm goes off
-        final PendingIntent pIntent = PendingIntent.getBroadcast(getActivity(), MyAlarmReceiver.REQUEST_CODE,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        // Setup periodic alarm every 100 seconds
-        long firstMillis = System.currentTimeMillis(); // first run of alarm is immediate
-        int intervalMillis = 100000; // 100 seconds
-        AlarmManager alarm = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        alarm.cancel(pIntent);
-        alarm.setInexactRepeating(AlarmManager.RTC, firstMillis, intervalMillis, pIntent);
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Register for the particular broadcast based on ACTION string
+        IntentFilter filter = new IntentFilter("com.mycompany.traveljournal.detailsscreen.MainPostFragment");
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(testReceiver, filter);
+        // or `registerReceiver(testReceiver, filter)` for a normal broadcast
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Unregister the listener when the application is paused
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(testReceiver);
+        // or `unregisterReceiver(testReceiver)` for a normal broadcast
+    }
 
-    public class ResponseReceiver extends BroadcastReceiver {
-        public static final String ACTION_RESP =
-                "com.mamlambo.intent.action.MESSAGE_PROCESSED";
-
+    // Define the callback for what to do when data is received
+    private BroadcastReceiver testReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String text = intent.getStringExtra(NewPostsService.PARAM_OUT_MSG);
 
-            //query from local dataStore
-            List<Post> resultPosts =  client.getLatestPostsFromLocal(latestDate);
-            if (resultPosts.size() > 0) {
-                posts.addAll(0, resultPosts);
-                latestDate = posts.get(0).getCreatedAt();
-                aPosts.notifyDataSetChanged();
-                editor.putString(NewPostsService.PARAM_IN_MSG, latestDate.toString());
-                editor.commit();
-                Toast.makeText(getActivity(), text + " new Posts.", Toast.LENGTH_LONG).show();
-                ivNewPosts.setVisibility(View.VISIBLE);
-            }
+            client.getLatestPosts(latestDate, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
+                @Override
+                public void onSuccess(List<Post> resultPosts) {
+                    Log.d(TAG, "success getting posts: " + resultPosts.toString());
+
+                    if (resultPosts.size() > 0) {
+                        posts.addAll(0, resultPosts);
+                        latestDate = posts.get(0).getCreatedAt();
+                        aPosts.notifyDataSetChanged();
+                        Toast.makeText(getActivity(), "New Posts.", Toast.LENGTH_LONG).show();
+                        ivNewPosts.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    Log.d(TAG, "Failed to get posts");
+                }
+
+            });
+
         }
-    }
+    };
+
 
     @Override
     public void setUpListeners() {
@@ -189,16 +167,10 @@ public class MainPostFragment extends PostsListFragment {
                     //TODO review code
                     if(posts.size()==0)
                     {
-                        unpinObjects();
                         if(resultPosts.size()>0)
                         {
                             latestDate = resultPosts.get(0).getCreatedAt();
-                            editor.putString(NewPostsService.PARAM_IN_MSG, latestDate.toString());
                         }
-                        else{
-                            editor.putString(NewPostsService.PARAM_IN_MSG, null);
-                        }
-                        editor.commit();
                     }
 
                     posts.addAll(resultPosts);
@@ -242,15 +214,6 @@ public class MainPostFragment extends PostsListFragment {
         }
     }
 
-    private void unpinObjects(){
-        //unpin local store
-        try {
-            ParseObject.unpinAll("POSTS_GROUP_NAME");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void refreshList() {
 
@@ -263,7 +226,6 @@ public class MainPostFragment extends PostsListFragment {
                     Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
-                    unpinObjects();
                     aPosts.clear();
                     posts.addAll(resultPosts);
 
@@ -272,14 +234,10 @@ public class MainPostFragment extends PostsListFragment {
                     {
                         earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
                         latestDate = posts.get(0).getCreatedAt();
-                        editor.putString(NewPostsService.PARAM_IN_MSG, latestDate.toString());
-                    }
-                    else{
-                        editor.putString(NewPostsService.PARAM_IN_MSG, null);
                     }
 
-                    editor.commit();
                     aPosts.notifyDataSetChanged();
+
                     if(swipeContainer!=null){
                         swipeContainer.setRefreshing(false);
                     }

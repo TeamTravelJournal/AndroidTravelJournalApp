@@ -117,7 +117,7 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                pbLoading.setVisibility(ProgressBar.VISIBLE);
+                //pbLoading.setVisibility(ProgressBar.VISIBLE);
                 ivPBGif.setVisibility(ImageView.VISIBLE);
 
                 btPost.setEnabled(false);
@@ -135,7 +135,7 @@ public class CreatePostFragment extends Fragment {
                     public void onSuccess(Post post) {
                         //post created, image upload and image url update is happening at the background
                         Log.d(TAG, "success creating post");
-                        pbLoading.setVisibility(ProgressBar.INVISIBLE);
+                        //pbLoading.setVisibility(ProgressBar.INVISIBLE);
 
                         callNextIntent(post.getPostID());
                     }
@@ -171,9 +171,9 @@ public class CreatePostFragment extends Fragment {
         btPost = (Button)v.findViewById(R.id.btPost);
         etCaption = (EditText)v.findViewById(R.id.etCaption);
         ivPreview.setImageBitmap(takenImage);
-        pbLoading = (ProgressBar)v.findViewById(R.id.pbLoading);
+        //pbLoading = (ProgressBar)v.findViewById(R.id.pbLoading);
         ivPBGif = (ImageView) v.findViewById(R.id.ivPBGif);
-        Glide.with(this).load(R.raw.brian).asGif().into(ivPBGif);
+        Glide.with(this).load(R.raw.simple).asGif().into(ivPBGif);
     }
 
     public void setPhotoPath(Uri photoPathUri){
