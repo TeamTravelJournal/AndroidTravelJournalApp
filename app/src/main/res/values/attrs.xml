@@ -2,8 +2,11 @@
 <resources>
 
     <attr name="textSubheader" format="reference" />
+    <attr name="textSubheaderOnDark" format="reference" />
     <attr name="textLarge" format="reference" />
+    <attr name="textLargeOnDark" format="reference" />
     <attr name="textRegular" format="reference" />
+    <attr name="textRegularOnDark" format="reference" />
     <attr name="buttonDark" format="reference" />
     <attr name="buttonLight" format="reference" />
 

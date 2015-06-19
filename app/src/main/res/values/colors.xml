@@ -6,7 +6,7 @@
     <color name="grey">#BDBDBD</color>
     <color name="transparent_grey">#80BDBDBD</color>
     <color name="dark_grey">#424242</color>
-    <color name="common_background">#505050</color>
+    <color name="common_background">@color/white</color>
 
 
     <!--Following 8 should be the only colors we use /-->

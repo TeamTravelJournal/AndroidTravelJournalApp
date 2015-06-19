@@ -3,8 +3,11 @@
 
     <style name="Theme.Travel_Light" parent="Theme.AppCompat.Light">
         <item name="textSubheader">@style/Text.SubHeader</item>
+        <item name="textSubheaderOnDark">@style/Text.SubHeader.OnDark</item>
         <item name="textLarge">@style/Text.Large</item>
+        <item name="textLargeOnDark">@style/Text.Large.OnDark</item>
         <item name="textRegular">@style/Text</item>
+        <item name="textRegularOnDark">@style/Text.OnDark</item>
         <item name="buttonDark">@style/button_dark</item>
         <item name="buttonLight">@style/button_light</item>
     </style>
