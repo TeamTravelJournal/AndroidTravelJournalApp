@@ -19,8 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
-import com.ToxicBakery.viewpager.transforms.FlipVerticalTransformer;
-import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.ImageAdapter;
 import com.mycompany.traveljournal.commentscreen.CommentActivity;
@@ -186,17 +184,6 @@ public class DetailFragment extends Fragment {
         tvLikes.setText(post.getLikes()+" Likes");
         tvName.setText(post.getParseUser().getName());
 
-        // Number of Comments
-        int numComments = post.getNumComments();
-        String numCommentText;
-        if (numComments == 1) {
-            numCommentText = numComments + " Comment";
-        } else {
-            numCommentText = numComments + " Comments";
-        }
-        tvNumComments.setText(numCommentText);
-
-
         // Default profile picture
         Picasso.with(getActivity()).load(R.drawable.icon_user_32)
                 .fit()
@@ -226,6 +213,19 @@ public class DetailFragment extends Fragment {
                 .into(ivStaticMap);
     }
 
+    private void populateNumComments(int numComments) {
+
+        // Number of Comments
+        String numCommentText;
+        if (numComments == 1) {
+            numCommentText = numComments + " Comment";
+        } else {
+            numCommentText = numComments + " Comments";
+        }
+        tvNumComments.setText(numCommentText);
+
+    }
+
     private void setToolbar() {
         if (toolbar != null) {
             ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
@@ -244,6 +244,7 @@ public class DetailFragment extends Fragment {
             public void onSuccess(List<Comment> comments) {
                 Log.wtf(TAG, "Got comments #="+comments.size());
                 addAllCommentsToList(comments);
+                populateNumComments(comments.size());
             }
 
             @Override
