@@ -68,6 +68,10 @@
         <item name="android:shadowColor">@color/primary_text_light</item>
     </style>
 
+    <style name="Text.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Backgrounds -->
     <style name="background_light">
         <item name="android:background">@android:drawable/dialog_holo_light_frame</item>
