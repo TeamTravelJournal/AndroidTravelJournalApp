@@ -1,6 +1,5 @@
 package com.mycompany.traveljournal.models;
 
-import com.google.android.gms.appindexing.Thing;
 import com.mycompany.traveljournal.helpers.Util;
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
@@ -63,10 +62,6 @@ public class Post extends ParseObject {
     public User getParseUser() {
         ParseUser parseUser = (ParseUser) getParseObject("parse_user");
         return Util.getUserFromParseUser(parseUser);
-    }
-
-    public int getNumComments() {
-        return getInt("num_comments");
     }
 
     public Post() {
