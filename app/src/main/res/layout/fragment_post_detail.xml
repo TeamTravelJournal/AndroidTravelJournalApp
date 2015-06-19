@@ -49,13 +49,13 @@
 
             <!-- Caption -->
             <TextView
+                style="?textRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvCaption"
                 android:layout_below="@+id/view_pager"
                 android:layout_marginRight="70dp"
                 android:layout_marginEnd="70dp"
-                android:textColor="#A6A6A6"
                 android:gravity="left"
                 android:paddingLeft="10dp"
                 android:layout_marginTop="10dp"
@@ -124,13 +124,13 @@
                 />
 
             <TextView
+                style="?textRegular"
                 android:id="@+id/tvNumComments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/ivComment"
                 android:layout_toEndOf="@+id/ivComment"
                 android:text="12 Comments"
-                android:textSize="16sp"
                 android:layout_alignBottom="@id/ivComment"
                 android:layout_marginLeft="10dp"
                 />
@@ -145,6 +145,7 @@
 
             <!-- Likes -->
             <TextView
+                style="?textRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvLikes"
@@ -153,7 +154,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp"
-                android:textColor="#A6A6A6"
                 android:gravity="center" />
         </RelativeLayout>
 
@@ -185,6 +185,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
             <TextView
+                style="?textLargeOnDark"
                 android:id="@+id/tvUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
