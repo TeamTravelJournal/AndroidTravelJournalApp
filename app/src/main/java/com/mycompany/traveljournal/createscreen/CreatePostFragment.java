@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.internal.cr;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -56,6 +57,7 @@ public class CreatePostFragment extends Fragment {
     String m_localPhotoPath;
     private final static String TAG = "CreatePostFragmentDebug";
     ProgressBar pbLoading;
+    ImageView ivPBGif;
 
     public static CreatePostFragment newInstance(){
         CreatePostFragment createPostFragment = new CreatePostFragment();
@@ -116,6 +118,7 @@ public class CreatePostFragment extends Fragment {
             public void onClick(View v) {
 
                 pbLoading.setVisibility(ProgressBar.VISIBLE);
+                ivPBGif.setVisibility(ImageView.VISIBLE);
 
                 btPost.setEnabled(false);
                 //PostCreator postCreator =  new PostCreator();
@@ -132,7 +135,7 @@ public class CreatePostFragment extends Fragment {
                     public void onSuccess(Post post) {
                         //post created, image upload and image url update is happening at the background
                         Log.d(TAG, "success creating post");
-                        pbLoading.setVisibility(ProgressBar.VISIBLE);
+                        pbLoading.setVisibility(ProgressBar.INVISIBLE);
 
                         callNextIntent(post.getPostID());
                     }
@@ -169,6 +172,8 @@ public class CreatePostFragment extends Fragment {
         etCaption = (EditText)v.findViewById(R.id.etCaption);
         ivPreview.setImageBitmap(takenImage);
         pbLoading = (ProgressBar)v.findViewById(R.id.pbLoading);
+        ivPBGif = (ImageView) v.findViewById(R.id.ivPBGif);
+        Glide.with(this).load(R.raw.brian).asGif().into(ivPBGif);
     }
 
     public void setPhotoPath(Uri photoPathUri){

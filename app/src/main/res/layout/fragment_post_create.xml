@@ -73,6 +73,17 @@
                 android:layout_marginTop="23dp"
                 />
 
+            <ImageView
+                android:id="@+id/ivPBGif"
+                android:visibility="invisible"
+                android:layout_toRightOf="@+id/ivPreview"
+                android:contentDescription="Gif"
+                android:scaleType="centerInside"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@+id/ivPreview"
+                />
 
         </RelativeLayout>
 
