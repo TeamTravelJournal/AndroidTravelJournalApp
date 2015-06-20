@@ -197,7 +197,7 @@ public abstract class PostsListFragment extends Fragment {
 
             @Override
             public void onFavourite(Post data) {
-
+                aPosts.notifyDataSetChanged();
             }
         });
 

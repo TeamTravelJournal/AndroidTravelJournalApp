@@ -122,5 +122,16 @@ public class Post extends ParseObject {
         return false;
     }
 
+    //fake like: not stored in backend
+    private boolean liked = false;
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+
 
 }
