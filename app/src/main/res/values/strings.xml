@@ -38,5 +38,6 @@
     <string name="title_activity_photo">PhotoActivity</string>
 
     <string name="search_hint">San Francisco</string>
+    <string name="welcome_message">Welcome to Travel Journal</string>
 
 </resources>
