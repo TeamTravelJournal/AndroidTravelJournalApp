@@ -77,6 +77,7 @@ public class CommentFragment extends Fragment {
         lvComments = (ListView) v.findViewById(R.id.lvComments);
         etAddComment = (EditText) v.findViewById(R.id.etAddComment);
         btnAddComment = (Button) v.findViewById(R.id.btnAddComment);
+        toolbar = (Toolbar) v.findViewById(R.id.toolbar);
     }
 
     public void setUpListeners() {
