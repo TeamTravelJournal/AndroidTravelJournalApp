@@ -56,7 +56,14 @@ public class ProfileActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(!user.getIsFollowed()){// action is to like
+                    user.setIsFollowed(true);
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.follow));
+                    //animateHearts(viewHolder);
+                }else{//action is to unlike
+                    user.setIsFollowed(false);
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.unfollow));
+                }
             }
         });
     }
@@ -75,6 +82,8 @@ public class ProfileActivity extends AppCompatActivity {
         ivCover.setImageResource(android.R.color.transparent);
         if(!"".equals(user.getCoverImageUrl()))
             Picasso.with(this).load(user.getCoverImageUrl()).into(ivCover);
+        //else
+            //Picasso.with(this).load(R.drawable.coffee).into(ivCover);
 
     }
 
