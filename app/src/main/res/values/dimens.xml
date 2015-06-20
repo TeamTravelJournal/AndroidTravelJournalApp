@@ -5,7 +5,7 @@
     <dimen name="footer_height">80dp</dimen>
     <dimen name="image_loader">10dp</dimen>
 
-    <dimen name="text_large_text_size">18sp</dimen>
+    <dimen name="text_large_text_size">22sp</dimen>
     <dimen name="text_subheader_text_size">16sp</dimen>
     <dimen name="text_regular_text_size">15sp</dimen>
     <dimen name="text_large_margin_top">40dp</dimen>
