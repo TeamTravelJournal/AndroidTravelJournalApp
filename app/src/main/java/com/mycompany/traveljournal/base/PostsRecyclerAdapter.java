@@ -1,15 +1,19 @@
 package com.mycompany.traveljournal.base;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
@@ -28,6 +32,7 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
     private List<Post> items;
     private PostListenerObj.PostListener listener;
     private Activity mContext;
+    private final static String TAG = "PostsRecyclerAdapter";
 
     // Assign the listener implementing events interface that will receive the events
     public void setPostObjListener(PostListenerObj.PostListener listener) {
@@ -42,6 +47,9 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
         ImageView ivStar;
         ImageView ivPost;
         TextView tvCaption;
+        ImageView ivHeartInside;
+        ImageView ivHeartOutside;
+        RelativeLayout rlPost;
 
         public SimpleItemViewHolder(View itemView, final Activity context) {
             super(itemView);
@@ -50,6 +58,9 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
             tvCaption = (TextView) itemView.findViewById(R.id.tvCaption);
             ivPost = (ImageView) itemView.findViewById(R.id.ivPost);
             ivStar = (ImageView) itemView.findViewById(R.id.ivStar);
+            ivHeartInside =(ImageView) itemView.findViewById(R.id.ivHeartInside);
+            ivHeartOutside =(ImageView) itemView.findViewById(R.id.ivHeartOutside);
+            rlPost =(RelativeLayout) itemView.findViewById(R.id.rlPost);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,16 +137,25 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
         }
 
         viewHolder.ivStar.setImageResource(android.R.color.transparent);
-        Picasso.with(viewHolder.tvCaption.getContext())
-                .load(R.drawable.icon_heart_white_mtrls)
-                .into(viewHolder.ivStar);
+
+        if(post.isLiked()){
+            Picasso.with(viewHolder.tvCaption.getContext())
+                    .load(R.drawable.icon_heart_accent)
+                    .into(viewHolder.ivStar);
+            viewHolder.ivStar.setAlpha(1.0f);
+        }else{
+            Picasso.with(viewHolder.tvCaption.getContext())
+                    .load(R.drawable.icon_heart_white)
+                    .into(viewHolder.ivStar);
+            viewHolder.ivStar.setAlpha(0.4f);
+        }
 
 
         setUpListeners(viewHolder, post);
 
     }
 
-    private void setUpListeners(SimpleItemViewHolder viewHolder, final Post post) {
+    private void setUpListeners(final SimpleItemViewHolder viewHolder, final Post post) {
 
         viewHolder.ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,9 +167,54 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
         viewHolder.ivStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Log.d(TAG, "clicked to " + post.getCaption());
+                if(post.isLiked()==false){// action is to like
+                    post.setLiked(true);
+                    animateHearts(viewHolder);
+                }else{//action is to unlike
+                    post.setLiked(false);
+                }
                 listener.onFavourite(post);
             }
         });
 
+        viewHolder.ivHeartOutside.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                Log.d(TAG, "clicked to " + post.getCaption());
+                post.setLiked(true);
+
+                animateHearts(viewHolder);
+                listener.onFavourite(post);
+
+                return true;
+            }
+        });
+
+    }
+
+    private void animateHearts(SimpleItemViewHolder viewHolderCurrent){
+
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+                ObjectAnimator.ofFloat(viewHolderCurrent.ivHeartInside, "alpha", 0.4f)
+                        .setDuration(1000),
+                ObjectAnimator.ofFloat(viewHolderCurrent.ivHeartOutside, "alpha", 0.2f)
+                        .setDuration(1000),
+                ObjectAnimator.ofFloat(viewHolderCurrent.ivHeartInside, "scaleX", 0.2f, 1.0f)
+                        .setDuration(1000),
+                ObjectAnimator.ofFloat(viewHolderCurrent.ivHeartInside, "scaleY", 0.2f, 1.0f)
+                        .setDuration(1000)
+        );
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(ObjectAnimator.ofFloat(viewHolderCurrent.ivHeartInside, "alpha", 0.0f)
+                        .setDuration(0),
+                ObjectAnimator.ofFloat(viewHolderCurrent.ivHeartOutside, "alpha", 0.0f)
+                        .setDuration(0));
+        AnimatorSet set3 = new AnimatorSet();
+        set3.playSequentially(set, animatorSet);
+        set3.start();
     }
 }
