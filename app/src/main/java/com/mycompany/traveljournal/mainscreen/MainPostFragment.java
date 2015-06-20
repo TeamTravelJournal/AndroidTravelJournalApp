@@ -142,7 +142,7 @@ public class MainPostFragment extends PostsListFragment {
                 .minHeaderTranslation(-headerHeight)
                 .build();
 
-        scrolls.addScrollListener(scrollListener1);
+        //scrolls.addScrollListener(scrollListener1);
 
         lvPosts.setOnScrollListener(scrolls);
     }
