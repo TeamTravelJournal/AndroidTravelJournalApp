@@ -1,5 +1,6 @@
 package com.mycompany.traveljournal.detailsscreen;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.mycompany.traveljournal.R;
@@ -102,8 +104,8 @@ public class DetailFragment extends Fragment {
         llComments = (LinearLayout) v.findViewById(R.id.llComments);
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
-
         viewPager.setPageTransformer(true, new CubeOutTransformer());
+
     }
 
     public void setUpListeners() {
@@ -176,7 +178,7 @@ public class DetailFragment extends Fragment {
             images.add("http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg");
             ImageAdapter adapter = new ImageAdapter(getActivity(), images, null);
             viewPager.setAdapter(adapter);
-        }
+         }
 
         tvCaption.setText(post.getCaption());
         tvLikes.setText(post.getLikes()+" Likes");
@@ -232,7 +234,7 @@ public class DetailFragment extends Fragment {
             // Set the home icon on toolbar
             ActionBar actionbar = ((ActionBarActivity) getActivity()).getSupportActionBar();
             actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
+            //actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
         }
     }
 

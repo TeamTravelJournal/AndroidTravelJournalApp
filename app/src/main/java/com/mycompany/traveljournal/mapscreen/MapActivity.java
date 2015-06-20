@@ -109,7 +109,7 @@ public class MapActivity extends ActionBarActivity implements
             // Set the home icon on toolbar
             ActionBar actionbar = getSupportActionBar();
             actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
+            //actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
         }
     }
 
