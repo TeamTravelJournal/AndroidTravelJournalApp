@@ -68,6 +68,10 @@
         <item name="android:shadowColor">@color/primary_text_light</item>
     </style>
 
+    <style name="Text.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Backgrounds -->
     <style name="background_light">
         <item name="android:background">@android:drawable/dialog_holo_light_frame</item>
@@ -87,12 +91,11 @@
     <!-- Buttons -->
     <style name="button_light" parent="Text.Large">
         <item name="android:background">@drawable/button_light</item>
-        <item name="android:layout_marginTop">@dimen/view_margin</item>
     </style>
 
     <style name="button_dark" parent="Text.Large.OnDark">
         <item name="android:background">@drawable/button_dark</item>
-        <item name="android:layout_marginTop">@dimen/view_margin</item>
+
     </style>
 
 </resources>

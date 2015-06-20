@@ -13,7 +13,7 @@
     <dimen name="white_background_padding">15dp</dimen>
     <dimen name="dark_background_padding">15dp</dimen>
     <dimen name="view_margin">15dp</dimen>
-    <dimen name="button_padding">20dp</dimen>
+    <dimen name="button_padding">10dp</dimen>
     <dimen name="button_corner_radius">30dp</dimen>
 
 </resources>
