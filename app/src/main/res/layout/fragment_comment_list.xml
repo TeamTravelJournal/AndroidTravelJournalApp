@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
+    <!-- Start on bottom -->
+    <RelativeLayout
+        android:id="@+id/rlAddComment"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="70dp">
+
+        <!-- Start with button on right -->
+        <Button
+            style="@style/button_dark"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/btnAddComment"
+            android:text="@string/button_add_comment"
+            />
+
+        <EditText
+            android:id="@+id/etAddComment"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/btnAddComment"
+            android:layout_toStartOf="@+id/btnAddComment"
+            android:hint="@string/add_comment_hint"
+            />
+
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/lvComments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="75dp">
+        android:paddingBottom="70dp"
+        android:layout_above="@+id/rlAddComment"
+        android:layout_alignParentTop="true"
+        >
     </ListView>
-    <EditText
-        android:id="@+id/etAddComment"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_marginRight="75dp"
-        android:layout_marginEnd="75dp"
-        android:layout_below="@id/lvComments"
-        android:layout_marginTop="-75dp"
-        android:hint="@string/add_comment_hint"
-        android:background="#1231fa"
-        />
-
-    <Button
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:text="@string/button_add_comment"
-        android:id="@+id/btnAddComment"
-        android:layout_alignTop="@+id/etAddComment"
-        android:layout_alignParentEnd="true" />
-
 
 </RelativeLayout>

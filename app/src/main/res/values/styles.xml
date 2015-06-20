@@ -91,12 +91,11 @@
     <!-- Buttons -->
     <style name="button_light" parent="Text.Large">
         <item name="android:background">@drawable/button_light</item>
-        <item name="android:layout_marginTop">@dimen/view_margin</item>
     </style>
 
     <style name="button_dark" parent="Text.Large.OnDark">
         <item name="android:background">@drawable/button_dark</item>
-        <item name="android:layout_marginTop">@dimen/view_margin</item>
+
     </style>
 
 </resources>
