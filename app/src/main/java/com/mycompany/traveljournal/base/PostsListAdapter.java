@@ -62,7 +62,6 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
             viewHolder.ivStar = (ImageView) convertView.findViewById(R.id.ivStar);
             viewHolder.ivHeartInside =(ImageView) convertView.findViewById(R.id.ivHeartInside);
             viewHolder.ivHeartOutside =(ImageView) convertView.findViewById(R.id.ivHeartOutside);
-            viewHolder.ivHeartOutside =(ImageView) convertView.findViewById(R.id.ivHeartOutside);
             viewHolder.rlPost =(RelativeLayout) convertView.findViewById(R.id.rlPost);
 
             convertView.setTag(viewHolder);
