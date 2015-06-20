@@ -1,21 +1,11 @@
 package com.mycompany.traveljournal.mainscreen;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
-import com.mycompany.traveljournal.createscreen.CreatePostFragment;
 import com.mycompany.traveljournal.datasource.ParseClient;
-import com.mycompany.traveljournal.detailsscreen.DetailActivity;
-import com.mycompany.traveljournal.profilescreen.ProfileActivity;
-import com.parse.ParseAnalytics;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 public class MainActivity extends PostsListActivity {
