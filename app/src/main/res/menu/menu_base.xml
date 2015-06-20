@@ -6,17 +6,17 @@
     <item android:id="@+id/action_search"
         android:orderInCategory="1"
         android:title="Search"
-        android:icon="@drawable/abc_btn_check_material"
+        android:icon="@drawable/icon_search_white_48"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
     <item android:id="@+id/action_mapview" android:orderInCategory="9" android:title="Map View"
-        android:icon="@drawable/abc_btn_radio_material"
+        android:icon="@drawable/icon_map_white_48"
         app:showAsAction="ifRoom"
         />
 
     <item android:id="@+id/action_profile" android:orderInCategory="12" android:title="Profile"
-        android:icon="@drawable/abc_btn_check_material"
+        android:icon="@drawable/icon_profile_white_48"
         app:showAsAction="ifRoom"
         />
 

@@ -448,7 +448,7 @@ public class MapActivity extends ActionBarActivity implements
                             Polyline polyline = map.addPolyline(new PolylineOptions()
                                     .add(currentPoint)
                                     .add(nextPoint)
-                                    .color(Color.CYAN)
+                                    .color(Color.MAGENTA)
                                     .width(12));
 
                             polylines.add(polyline);
