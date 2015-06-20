@@ -16,4 +16,7 @@
     <dimen name="button_padding">10dp</dimen>
     <dimen name="button_corner_radius">30dp</dimen>
 
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="detail_backdrop_height">256dp</dimen>
+
 </resources>

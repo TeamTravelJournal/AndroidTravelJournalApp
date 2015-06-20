@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnListViewOnScrollListener;
+import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListFragment;
 import com.mycompany.traveljournal.common.MyCustomReceiver;
@@ -128,16 +129,16 @@ public class MainPostFragment extends PostsListFragment {
         int footerHeight = getActivity().getResources().getDimensionPixelSize(R.dimen.footer_height);
         int headerHeight = getActivity().getResources().getDimensionPixelSize(R.dimen.footer_height);
 
-        QuickReturnListViewOnScrollListener scrollListener;
+        QuickReturnRecyclerViewOnScrollListener scrollListener;
 
-        scrollListener = new QuickReturnListViewOnScrollListener.Builder(QuickReturnViewType.FOOTER)
+        scrollListener = new QuickReturnRecyclerViewOnScrollListener.Builder(QuickReturnViewType.FOOTER)
                 .footer(mQuickReturnView)
                 .minFooterTranslation(footerHeight)
                 .build();
 
         scrolls.addScrollListener(scrollListener);
 
-        QuickReturnListViewOnScrollListener scrollListener1 = new QuickReturnListViewOnScrollListener.Builder(QuickReturnViewType.HEADER)
+        QuickReturnRecyclerViewOnScrollListener scrollListener1 = new QuickReturnRecyclerViewOnScrollListener.Builder(QuickReturnViewType.HEADER)
                 .header(toolbar)
                 .minHeaderTranslation(-headerHeight)
                 .build();
@@ -226,7 +227,8 @@ public class MainPostFragment extends PostsListFragment {
                     Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
-                    aPosts.clear();
+                    //aPosts.clear();
+                    posts.clear();
                     posts.addAll(resultPosts);
 
                     //TODO review code
@@ -262,7 +264,8 @@ public class MainPostFragment extends PostsListFragment {
                     Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
-                    aPosts.clear();
+                    //aPosts.clear();
+                    posts.clear();
                     posts.addAll(resultPosts);
                     if (posts.size() > 0) {
                         earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
@@ -297,7 +300,8 @@ public class MainPostFragment extends PostsListFragment {
                     Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
-                    aPosts.clear();
+                    //aPosts.clear();
+                    posts.clear();
                     posts.addAll(resultPosts);
                     earliestTimeStamp = null;
                     if (posts.size() > 0) {
@@ -321,7 +325,8 @@ public class MainPostFragment extends PostsListFragment {
                     Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
-                    aPosts.clear();
+                    //aPosts.clear();
+                    posts.clear();
                     posts.addAll(resultPosts);
                     earliestTimeStamp = null;
                     if (posts.size() > 0) {

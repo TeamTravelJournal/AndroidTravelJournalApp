@@ -9,6 +9,9 @@ import android.support.v4.util.Pair;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mycompany.traveljournal.R;
+import com.mycompany.traveljournal.common.EndlessRecyclerOnScrollListener;
 import com.mycompany.traveljournal.common.EndlessScrollListener;
 import com.mycompany.traveljournal.common.MultiScrollListener;
 import com.mycompany.traveljournal.common.PostListenerObj;
@@ -45,9 +49,9 @@ import java.util.ArrayList;
 public abstract class PostsListFragment extends Fragment {
 
     protected ArrayList<Post> posts;
-    protected ListView lvPosts;
+    protected RecyclerView lvPosts;
     protected SwipeRefreshLayout swipeContainer;
-    protected PostsListAdapter aPosts;
+    protected PostsRecyclerAdapter aPosts;
     protected MultiScrollListener scrolls;
     protected ImageView mQuickReturnView;
     protected String m_query;
@@ -55,6 +59,7 @@ public abstract class PostsListFragment extends Fragment {
     protected JournalService client;
     protected Toolbar toolbar;
     protected ImageView ivNewPosts;
+    protected LinearLayoutManager layoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -69,7 +74,7 @@ public abstract class PostsListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         posts = new ArrayList<>();
-        aPosts = new PostsListAdapter(getActivity(), posts);
+        aPosts = new PostsRecyclerAdapter(getActivity(), posts);
         setUpHasOptionsMenu();
         client = JournalApplication.getClient();
     }
@@ -127,15 +132,23 @@ public abstract class PostsListFragment extends Fragment {
     }
 
     public void setUpAdapter(){
+        // Setup layout manager for items
+        layoutManager = new LinearLayoutManager(getActivity());
+        // Control orientation of the items
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.scrollToPosition(0);
+        // Attach layout manager
+        lvPosts.setLayoutManager(layoutManager);
         lvPosts.setAdapter(aPosts);
+        lvPosts.setHasFixedSize(true);
     }
 
     public void setUpViews(View v){
-        lvPosts = (ListView)v.findViewById(R.id.lvPosts);
+        lvPosts = (RecyclerView )v.findViewById(R.id.lvPosts);
         swipeContainer = (SwipeRefreshLayout)v.findViewById(R.id.swipeContainer);
         mQuickReturnView = (ImageView)v.findViewById(R.id.quick_return_iv);
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
-        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ivNewPosts = (ImageView)v.findViewById(R.id.ivNewPosts);
     }
 
@@ -160,7 +173,7 @@ public abstract class PostsListFragment extends Fragment {
                 android.R.color.holo_red_light);
 
 
-        scrolls.addScrollListener(new EndlessScrollListener() {
+        /*scrolls.addScrollListener(new EndlessScrollListener() {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 // Triggered only when new data needs to be appended to the list
@@ -169,11 +182,18 @@ public abstract class PostsListFragment extends Fragment {
                 // or customLoadMoreDataFromApi(totalItemsCount);
                 populateList();
             }
+        });*/
+
+        scrolls.addScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                populateList();
+            }
         });
 
         lvPosts.setOnScrollListener(scrolls);
 
-        lvPosts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*lvPosts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Call detail page from here
@@ -187,7 +207,7 @@ public abstract class PostsListFragment extends Fragment {
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), p1, p2);
                 getActivity().startActivity(i, options.toBundle());
             }
-        });
+        });*/
 
         aPosts.setPostObjListener(new PostListenerObj.PostListener() {
             @Override
