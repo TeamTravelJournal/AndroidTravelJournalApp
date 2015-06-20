@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.ImageAdapter;
-import com.mycompany.traveljournal.commentscreen.CommentActivity;
 import com.mycompany.traveljournal.commentscreen.CommentsAdapter;
 import com.mycompany.traveljournal.helpers.BitmapScaler;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
@@ -64,6 +63,8 @@ public class DetailFragment extends Fragment {
     private LinearLayout llComments;
     JournalService client;
     private ArrayList<String> images = new ArrayList<>();
+
+    private OpenCommentsListenerInterface openCommentsListener;
 
     public static DetailFragment newInstance(String postId, String localPhotoPath) {
         DetailFragment detailFragment = new DetailFragment();
@@ -121,10 +122,7 @@ public class DetailFragment extends Fragment {
         ivComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), CommentActivity.class);
-                i.putExtra("post_id", postId);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                openCommentsListener.openCommentsScreen(postId);
             }
         });
 
@@ -306,6 +304,14 @@ public class DetailFragment extends Fragment {
                 .into(ivProfileImage);
 
         viewGroup.addView(commentDetailView);
+    }
+
+    public interface OpenCommentsListenerInterface {
+        public void openCommentsScreen(String postId);
+    }
+
+    public void setListener(OpenCommentsListenerInterface openCommentsListener) {
+        this.openCommentsListener = openCommentsListener;
     }
 
 }

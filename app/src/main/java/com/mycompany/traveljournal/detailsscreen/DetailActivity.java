@@ -1,5 +1,6 @@
 package com.mycompany.traveljournal.detailsscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -7,8 +8,9 @@ import android.view.MenuItem;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
+import com.mycompany.traveljournal.commentscreen.CommentActivity;
 
-public class DetailActivity extends PostsListActivity {
+public class DetailActivity extends PostsListActivity implements DetailFragment.OpenCommentsListenerInterface {
 
     private static final String TAG = "DetailActivity";
     private final String DETAIL_FRAGMENT_TAG = "detailPostFragment";
@@ -45,6 +47,7 @@ public class DetailActivity extends PostsListActivity {
     @Override
     public void setUpFragment() {
         detailFragment =  DetailFragment.newInstance(postId, localPhotoPath);
+        detailFragment.setListener(this);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flContainer, detailFragment, DETAIL_FRAGMENT_TAG);
         ft.commit();
@@ -52,5 +55,18 @@ public class DetailActivity extends PostsListActivity {
 
     public void setUpFragmentFromTag(){
         detailFragment = (DetailFragment)getSupportFragmentManager().findFragmentByTag(DETAIL_FRAGMENT_TAG);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void openCommentsScreen(String postId) {
+        Intent i = new Intent(DetailActivity.this, CommentActivity.class);
+        i.putExtra("post_id", postId);
+        startActivity(i);
+        this.overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 }
