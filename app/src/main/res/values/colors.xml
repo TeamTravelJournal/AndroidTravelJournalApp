@@ -22,4 +22,6 @@
     <color name="secondary_text">#727272</color>
     <color name="divider_color">#B6B6B6</color>
 
+    <color name="window_background">#FFF5F5F5</color>
+
 </resources>

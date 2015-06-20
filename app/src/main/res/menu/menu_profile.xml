@@ -3,4 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.mycompany.traveljournal.profilescreen.ProfileActivity">
 
+    <item android:id="@+id/action_mapview" android:orderInCategory="9" android:title="Map View"
+        android:icon="@drawable/abc_btn_radio_material"
+        app:showAsAction="ifRoom"
+        />
+
 </menu>

@@ -1,18 +1,11 @@
 <resources>
-    <style name="AppBaseTheme" parent="Theme.AppCompat">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
-    </style>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
+        <!--item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item-->
 
         <!-- specify enter and exit transitions -->
         <!-- options are: explode, slide, fade -->
