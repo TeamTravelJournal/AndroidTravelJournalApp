@@ -13,6 +13,7 @@ public class User implements Serializable{
     String profileImgUrl;
     String coverImageUrl;
     String id;
+    Boolean isFollowed = false;
 
     public void User(String name, String profileImgUrl, String covereImageUrl, String id){
         this.name = name;
@@ -25,6 +26,13 @@ public class User implements Serializable{
 
     }
 
+    public void setIsFollowed(Boolean isFollowed) {
+        this.isFollowed = isFollowed;
+    }
+
+    public Boolean getIsFollowed() {
+        return isFollowed;
+    }
     public String getId() {
         return id;
     }
