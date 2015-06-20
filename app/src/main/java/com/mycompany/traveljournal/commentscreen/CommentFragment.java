@@ -39,6 +39,7 @@ public class CommentFragment extends Fragment {
     private Button btnAddComment;
     protected JournalService client;
     private String commentText;
+    private NewCommentListenerInterface newCommentListener;
 
     public static CommentFragment newInstance(String postId) {
         CommentFragment commentFragment = new CommentFragment();
@@ -138,6 +139,8 @@ public class CommentFragment extends Fragment {
         // Clear the contents
         etAddComment.setText("");
 
+        newCommentListener.commentCreated();
+
         client.createComment(postId, commentText, new JournalCallBack<Comment>() {
             @Override
             public void onSuccess(Comment comment) {
@@ -168,5 +171,12 @@ public class CommentFragment extends Fragment {
         lvComments.smoothScrollToPosition(position);
     }
 
+    public interface NewCommentListenerInterface {
+        public void commentCreated();
+    }
+
+    public void setListener(NewCommentListenerInterface newCommentListener) {
+        this.newCommentListener = newCommentListener;
+    }
 
 }
