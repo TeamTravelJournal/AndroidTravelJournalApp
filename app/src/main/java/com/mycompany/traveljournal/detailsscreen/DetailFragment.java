@@ -276,7 +276,12 @@ public class DetailFragment extends Fragment {
     public void addAllCommentsToList(List<Comment> comments) {
         ViewGroup llComments = (ViewGroup) getActivity().findViewById(R.id.llComments);
 
-        for (int i = 0 ; i < numComments ; i++ ){
+        int numCommentsToShow = numComments;
+        if (comments.size() < numCommentsToShow) {
+            numCommentsToShow = comments.size();
+        }
+
+        for (int i = 0 ; i < numCommentsToShow ; i++ ){
             addSingleCommentToList(comments.get(i), llComments);
         }
     }
