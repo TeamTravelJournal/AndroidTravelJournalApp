@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -23,6 +22,7 @@ import android.widget.Toast;
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.ImageAdapter;
+import com.mycompany.traveljournal.base.TravelBaseFragment;
 import com.mycompany.traveljournal.commentscreen.CommentsAdapter;
 import com.mycompany.traveljournal.helpers.BitmapScaler;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DetailFragment extends Fragment {
+public class DetailFragment extends TravelBaseFragment {
 
     private final static String TAG = "DetailFragment";
     private final static int numComments = 3;
@@ -106,6 +106,7 @@ public class DetailFragment extends Fragment {
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
         viewPager.setPageTransformer(true, new CubeOutTransformer());
 
+        super.setUpViews(v);
     }
 
     public void setUpListeners() {
@@ -150,17 +151,22 @@ public class DetailFragment extends Fragment {
     }
 
     private void fetchPostAndPopulateViews() {
+
+        showProgress();
+
         client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
             public void onSuccess(Post post) {
                 m_post = post;
                 populateViews(post);
                 fetchAndPopulateComments(post);
+                hideProgress();
             }
 
             @Override
             public void onFailure(Exception e) {
                 Log.wtf(TAG, "Post not found with id " + postId);
+                hideProgress();
             }
 
         });
