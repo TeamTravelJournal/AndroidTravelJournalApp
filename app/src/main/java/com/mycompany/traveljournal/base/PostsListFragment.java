@@ -90,6 +90,7 @@ public abstract class PostsListFragment extends Fragment {
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setQueryHint(getResources().getString(R.string.search_hint));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -216,7 +217,7 @@ public abstract class PostsListFragment extends Fragment {
 
             @Override
             public void onFavourite(Post data) {
-
+                aPosts.notifyDataSetChanged();
             }
         });
 

@@ -66,19 +66,19 @@ public class ExampleSavePostToParse {
     /**
      * This method can be used to create fake posts
      */
-    public static void createPostComplete() {
+    private static void createPostComplete() {
 
         // Get sample byte Array
         // THIS REQUIRES THE ASYNC TASK
-        String imageUrl = "http://upload.wikimedia.org/wikipedia/commons/c/cd/Google_Campus2_cropped.jpg";
+        String imageUrl = "https://upload.wikimedia.org/wikipedia/commons/7/75/Pier_39_at_Night,_SF,_CA,_jjron_25.03.2012.jpg";
         byte[] imageBytes = getByteArrayFromUrl(imageUrl);
 
 
         // No Async task required
-        String caption = "At the Goog!";
+        String caption = "Pier 39";
         String description = "";
-        double latitude = 37.421828;
-        double longitude = -122.084889;
+        double latitude = 37.808296;
+        double longitude = -122.410069;
 
         JournalService client = JournalApplication.getClient();
         client.createPost(imageBytes, caption, description, latitude, longitude, new JournalCallBack<Post>() {

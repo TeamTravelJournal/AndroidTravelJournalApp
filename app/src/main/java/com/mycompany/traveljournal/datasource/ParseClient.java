@@ -20,7 +20,6 @@ import com.parse.ParseFacebookUtils;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
-import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -315,21 +314,6 @@ public class ParseClient implements JournalService {
                 } else {
                     journalCallBack.onFailure(e);
                 }
-            }
-        });
-
-
-        // Increment number of comments
-        getPostWithId(postId, new JournalCallBack<Post>() {
-            @Override
-            public void onSuccess(Post post) {
-                post.increment("num_comments");
-                post.saveInBackground();
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.wtf(TAG, "Failed to increment num_comments");
             }
         });
 

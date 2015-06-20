@@ -1,6 +1,5 @@
 package com.mycompany.traveljournal.models;
 
-import com.google.android.gms.appindexing.Thing;
 import com.mycompany.traveljournal.helpers.Util;
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
@@ -65,10 +64,6 @@ public class Post extends ParseObject {
         return Util.getUserFromParseUser(parseUser);
     }
 
-    public int getNumComments() {
-        return getInt("num_comments");
-    }
-
     public Post() {
 
     }
@@ -125,6 +120,17 @@ public class Post extends ParseObject {
         if (second.getPostID().equals(getPostID()))
             return true;
         return false;
+    }
+
+    //fake like: not stored in backend
+    private boolean liked = false;
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 
 

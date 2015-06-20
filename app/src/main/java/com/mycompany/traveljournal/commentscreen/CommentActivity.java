@@ -1,5 +1,6 @@
 package com.mycompany.traveljournal.commentscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -10,11 +11,12 @@ import android.view.MenuItem;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.datasource.ParseClient;
 
-public class CommentActivity extends ActionBarActivity {
+public class CommentActivity extends ActionBarActivity implements CommentFragment.NewCommentListenerInterface {
 
     private static final String TAG = "CommentActivity";
     String postId;
     ParseClient parseClient;
+    private boolean newCommentCreated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class CommentActivity extends ActionBarActivity {
             setUpFragment();
         }
 
+        newCommentCreated = false;
     }
 
 
@@ -59,13 +62,22 @@ public class CommentActivity extends ActionBarActivity {
 
     public void setUpFragment() {
         CommentFragment commentFragment =  CommentFragment.newInstance(postId);
+        commentFragment.setListener(this);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flContainer, commentFragment);
         ft.commit();
     }
 
     public void onBackPressed() {
+        Intent data = new Intent();
+        data.putExtra("new_comment_created", newCommentCreated);
+        setResult(RESULT_OK, data);
         finish();
         overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
+
+    @Override
+    public void commentCreated() {
+        newCommentCreated = true;
     }
 }

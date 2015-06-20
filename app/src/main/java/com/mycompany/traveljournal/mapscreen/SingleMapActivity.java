@@ -1,8 +1,11 @@
 package com.mycompany.traveljournal.mapscreen;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -35,10 +38,14 @@ public class SingleMapActivity extends ActionBarActivity {
     private String m_postID;
     private LatLng m_location;
 
+    private Toolbar toolbarForMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_activity);
+
+        setToolbar();
 
         m_postID = getIntent().getStringExtra("post_id");
         client = JournalApplication.getClient();
@@ -54,6 +61,18 @@ public class SingleMapActivity extends ActionBarActivity {
             });
         } else {
             Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setToolbar() {
+        toolbarForMap = (Toolbar) findViewById(R.id.toolbarmap);
+        if (toolbarForMap != null) {
+            setSupportActionBar(toolbarForMap);
+
+            // Set the home icon on toolbar
+            ActionBar actionbar = getSupportActionBar();
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
         }
     }
 
@@ -123,6 +142,18 @@ public class SingleMapActivity extends ActionBarActivity {
         //markers.add(marker);
         //markersToPosts.put(marker, post);
         Log.d(TAG, "Marked pin at point: " + point.toString());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void onBackPressed() {
