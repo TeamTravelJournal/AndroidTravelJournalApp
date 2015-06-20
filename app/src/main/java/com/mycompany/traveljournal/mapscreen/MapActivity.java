@@ -7,8 +7,11 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.animation.BounceInterpolator;
 import android.widget.Toast;
 
@@ -65,6 +68,7 @@ public class MapActivity extends ActionBarActivity implements
     private ArrayList<Marker> sortedMarkers = null;
     private ArrayList<Boolean> shown= null;
     private ArrayList<Polyline> polylines = null;
+    private Toolbar toolbarForMap;
 
     //private LatLng fixAddress = new LatLng(37.533278, -122.237933);//my redwood shores address
 
@@ -72,6 +76,8 @@ public class MapActivity extends ActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_activity);
+
+        setToolbar();
 
         m_query = getIntent().getStringExtra("query");
         m_location = Util.getLocationFromQuery(this, m_query);
@@ -92,6 +98,18 @@ public class MapActivity extends ActionBarActivity implements
             });
         } else {
             Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setToolbar() {
+        toolbarForMap = (Toolbar) findViewById(R.id.toolbarmap);
+        if (toolbarForMap != null) {
+            setSupportActionBar(toolbarForMap);
+
+            // Set the home icon on toolbar
+            ActionBar actionbar = getSupportActionBar();
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
         }
     }
 
@@ -515,6 +533,18 @@ public class MapActivity extends ActionBarActivity implements
             Log.d(TAG, "Marking pin for point: " + point.toString());
        //dropPinEffect(marker);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void onBackPressed() {
