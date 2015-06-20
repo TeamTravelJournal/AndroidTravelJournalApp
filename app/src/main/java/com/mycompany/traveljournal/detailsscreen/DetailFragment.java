@@ -239,7 +239,7 @@ public class DetailFragment extends Fragment {
     }
 
     private void fetchAndPopulateComments(Post post) {
-        client.getCommentsForPost(post.getPostID(), numComments, new JournalCallBack<List<Comment>>() {
+        client.getCommentsForPost(post.getPostID(), 1000, new JournalCallBack<List<Comment>>() {
             @Override
             public void onSuccess(List<Comment> comments) {
                 Log.wtf(TAG, "Got comments #="+comments.size());
@@ -276,7 +276,7 @@ public class DetailFragment extends Fragment {
     public void addAllCommentsToList(List<Comment> comments) {
         ViewGroup llComments = (ViewGroup) getActivity().findViewById(R.id.llComments);
 
-        for (int i = 0 ; i < comments.size() ; i++ ){
+        for (int i = 0 ; i < numComments ; i++ ){
             addSingleCommentToList(comments.get(i), llComments);
         }
     }
