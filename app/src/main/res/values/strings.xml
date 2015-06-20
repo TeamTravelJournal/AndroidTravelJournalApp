@@ -40,4 +40,7 @@
     <string name="search_hint">San Francisco</string>
     <string name="welcome_message">Welcome to Travel Journal</string>
 
+
+    <string name="progress_bar">This is a progress indicator</string>
+
 </resources>
