@@ -28,7 +28,7 @@
 
     <string name="facebook_app_id">993513677328878</string>
     <!--string name="facebook_app_id">1629757617260429</string-->
-    <string name="title_activity_comments">CommentsActivity</string>
+    <string name="title_activity_comments">Comments</string>
 
     <!-- Comments -->
     <string name="add_comment_hint">Write a Comment&#8230;</string>
@@ -39,5 +39,8 @@
 
     <string name="search_hint">San Francisco</string>
     <string name="welcome_message">Welcome to Travel Journal</string>
+
+
+    <string name="progress_bar">This is a progress indicator</string>
 
 </resources>
