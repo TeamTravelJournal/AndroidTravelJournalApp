@@ -314,4 +314,12 @@ public class DetailFragment extends Fragment {
         this.openCommentsListener = openCommentsListener;
     }
 
+    public void refreshComments() {
+        // Clear Existing Comments
+        ViewGroup llComments = (ViewGroup) getActivity().findViewById(R.id.llComments);
+        llComments.removeAllViews();
+
+        fetchAndPopulateComments(m_post);
+    }
+
 }

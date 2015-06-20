@@ -17,6 +17,7 @@ public class DetailActivity extends PostsListActivity implements DetailFragment.
     DetailFragment detailFragment;
     String postId;
     String localPhotoPath;
+    private final int REQUEST_CODE_OPEN_COMMENTS = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,13 @@ public class DetailActivity extends PostsListActivity implements DetailFragment.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_OPEN_COMMENTS) {
+            boolean newCommentCreated = data.getExtras().getBoolean("new_comment_created");
+            if (newCommentCreated) {
+                detailFragment.refreshComments();
+            }
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -66,7 +74,7 @@ public class DetailActivity extends PostsListActivity implements DetailFragment.
     public void openCommentsScreen(String postId) {
         Intent i = new Intent(DetailActivity.this, CommentActivity.class);
         i.putExtra("post_id", postId);
-        startActivity(i);
+        startActivityForResult(i, REQUEST_CODE_OPEN_COMMENTS);
         this.overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 }
