@@ -15,7 +15,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.TravelBaseFragment;
@@ -80,7 +79,7 @@ public class CommentFragment extends TravelBaseFragment {
         btnAddComment = (Button) v.findViewById(R.id.btnAddComment);
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
 
-        pb = (ProgressBar) v.findViewById(R.id.pbLoading);
+        super.setUpViews(v);
     }
 
     public void setUpListeners() {
