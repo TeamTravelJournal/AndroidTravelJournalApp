@@ -55,6 +55,7 @@ public class ImageAdapter extends PagerAdapter {
             imageView.setTransitionName("postImg");
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         //imageView.setImageResource(GalImages[position]);
+        imageView.setClickable(true);
 
         if(cameraImage == null) {
             Picasso.with(context).load(images.get(position)).fit().centerCrop().placeholder(R.drawable.placeholderwide).into(imageView);
