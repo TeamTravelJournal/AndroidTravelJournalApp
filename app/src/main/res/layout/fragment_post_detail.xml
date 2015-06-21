@@ -37,6 +37,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/view_pager"
+            android:background="@color/common_background"
             >
 
             <!-- Caption -->

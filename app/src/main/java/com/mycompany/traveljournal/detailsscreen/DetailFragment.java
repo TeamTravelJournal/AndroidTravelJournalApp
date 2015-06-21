@@ -84,13 +84,7 @@ public class DetailFragment extends TravelBaseFragment {
         setUpListeners();
         populateImageViewFromLocal();
         fetchPostAndPopulateViews();
-        setZ();
         return view;
-    }
-
-    // Set Z properties for parallax
-    private void setZ() {
-        viewPager.setZ(20f);
     }
 
     public void setUpViews(View v){
