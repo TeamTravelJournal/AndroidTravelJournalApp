@@ -97,7 +97,8 @@ public class MapActivity extends ActionBarActivity implements
                 }
             });
         } else {
-            Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Map fragment is null");
+            //Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -121,7 +122,7 @@ public class MapActivity extends ActionBarActivity implements
             map.setOnCameraChangeListener(this);
 
             // Map is ready
-            Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
             map.setMyLocationEnabled(true);
 
             //get current location
@@ -154,7 +155,8 @@ public class MapActivity extends ActionBarActivity implements
             locationService.connectClient();
 
         } else {
-            Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Map is null");
+            //Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
         }
     }
 

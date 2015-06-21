@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TravelJournal</string>
+    <string name="app_name">Travel Journal</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -39,5 +39,8 @@
 
     <string name="search_hint">San Francisco</string>
     <string name="welcome_message">Welcome to Travel Journal</string>
+    <string name="new_posts_message">New Posts</string>
+    <string name="map_long_click_hint">Long click to see travel route</string>
+
 
 </resources>

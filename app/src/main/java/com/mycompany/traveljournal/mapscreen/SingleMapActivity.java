@@ -1,11 +1,13 @@
 package com.mycompany.traveljournal.mapscreen;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.animation.BounceInterpolator;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -60,7 +62,8 @@ public class SingleMapActivity extends ActionBarActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Map fragment is null");
+            //Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -81,7 +84,8 @@ public class SingleMapActivity extends ActionBarActivity {
         if (map != null) {
 
             // Map is ready
-            Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Map is ready");
+            //Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
 
         client.getPostWithId(m_postID,new JournalCallBack<Post>() {
                 @Override
@@ -91,7 +95,7 @@ public class SingleMapActivity extends ActionBarActivity {
                         m_location = new LatLng(m_post.getLatitude(), m_post.getLongitude());
                         //make sure map camera goes to target location
                         setTargetLocation(m_location);
-                        putSinglePin(m_post);
+                        //putSinglePin(m_post);
                     }
                     else{
                         Log.d(TAG, "post is null");
@@ -104,7 +108,8 @@ public class SingleMapActivity extends ActionBarActivity {
             });
 
         } else {
-            Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Map is null");
+            //Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -112,7 +117,18 @@ public class SingleMapActivity extends ActionBarActivity {
 
         if(location!=null){
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, Util.ZOOM_HIGH);
-            map.animateCamera(cameraUpdate);
+            map.animateCamera(cameraUpdate, new GoogleMap.CancelableCallback() {
+                @Override
+                public void onFinish() {
+
+                    putSinglePin(m_post);
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+            });
         }
         else{
             Log.d(TAG, "location is null");
@@ -141,7 +157,42 @@ public class SingleMapActivity extends ActionBarActivity {
         //marker.showInfoWindow();
         //markers.add(marker);
         //markersToPosts.put(marker, post);
+
+        dropPinEffect(marker);
+
         Log.d(TAG, "Marked pin at point: " + point.toString());
+    }
+
+    private void dropPinEffect(final Marker marker) {
+        // Handler allows us to repeat a code block after a specified delay
+        final android.os.Handler handler = new android.os.Handler();
+        final long start = SystemClock.uptimeMillis();
+        final long duration = 1500;
+
+        // Use the bounce interpolator
+        final android.view.animation.Interpolator interpolator =
+                new BounceInterpolator();
+
+        // Animate marker with a bounce updating its position every 15ms
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - start;
+                // Calculate t for bounce based on elapsed time
+                float t = Math.max(
+                        1 - interpolator.getInterpolation((float) elapsed
+                                / duration), 0);
+                // Set the anchor
+                marker.setAnchor(0.5f, 1.0f + 14 * t);
+
+                if (t > 0.0) {
+                    // Post this event again 15ms from now.
+                    handler.postDelayed(this, 15);
+                } else { // done elapsing, show window
+                    marker.showInfoWindow();
+                }
+            }
+        });
     }
 
     @Override

@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -54,7 +55,8 @@ public abstract class PostsListFragment extends Fragment {
     protected LatLng m_location;
     protected JournalService client;
     protected Toolbar toolbar;
-    protected ImageView ivNewPosts;
+    //protected ImageView ivNewPosts;
+    protected TextView tvNewPosts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -135,8 +137,11 @@ public abstract class PostsListFragment extends Fragment {
         swipeContainer = (SwipeRefreshLayout)v.findViewById(R.id.swipeContainer);
         mQuickReturnView = (ImageView)v.findViewById(R.id.quick_return_iv);
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+        //toolbar.setLogo(R.drawable.ic_balloon);
+        toolbar.setTitle(" Travel Journal");
         ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
-        ivNewPosts = (ImageView)v.findViewById(R.id.ivNewPosts);
+        //ivNewPosts = (ImageView)v.findViewById(R.id.ivNewPosts);
+        tvNewPosts = (TextView)v.findViewById(R.id.tvNewPosts);
     }
 
     public void setUpListeners(){

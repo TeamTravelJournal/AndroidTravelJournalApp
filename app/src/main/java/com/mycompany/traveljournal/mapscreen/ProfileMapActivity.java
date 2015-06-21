@@ -89,7 +89,8 @@ public class ProfileMapActivity extends ActionBarActivity implements
                 }
             });
         } else {
-            Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Map fragment is null");
+            //Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -112,11 +113,13 @@ public class ProfileMapActivity extends ActionBarActivity implements
             map.setOnMapLongClickListener(this);
 
             // Map is ready
-            Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Map is ready");
+            //Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
             getPostsForUser();
 
         } else {
-            Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Map is null");
+            //Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -162,7 +165,24 @@ public class ProfileMapActivity extends ActionBarActivity implements
 
         if(location!=null){
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, Util.ZOOM_MEDIUM);
-            map.animateCamera(cameraUpdate);
+            map.animateCamera(cameraUpdate, new GoogleMap.CancelableCallback() {
+                @Override
+                public void onFinish() {
+
+                    final android.os.Handler handler = new android.os.Handler();
+                    handler.postDelayed(new Runnable() {
+                         @Override
+                         public void run() {
+                             Toast.makeText(ProfileMapActivity.this, R.string.map_long_click_hint, Toast.LENGTH_SHORT).show();
+                         }
+                    }, 3000);
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+            });
         }
     }
 

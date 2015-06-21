@@ -84,7 +84,8 @@ public class MainPostFragment extends PostsListFragment {
                         latestDate = posts.get(0).getCreatedAt();
                         aPosts.notifyDataSetChanged();
                         Toast.makeText(getActivity(), "New Posts.", Toast.LENGTH_LONG).show();
-                        ivNewPosts.setVisibility(View.VISIBLE);
+                        //ivNewPosts.setVisibility(View.VISIBLE);
+                        tvNewPosts.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -111,11 +112,11 @@ public class MainPostFragment extends PostsListFragment {
             }
         });
 
-        ivNewPosts.setOnClickListener(new View.OnClickListener() {
+        tvNewPosts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 lvPosts.smoothScrollToPosition(0);
-                ivNewPosts.setVisibility(View.GONE);
+                tvNewPosts.setVisibility(View.GONE);
             }
         });
     }
