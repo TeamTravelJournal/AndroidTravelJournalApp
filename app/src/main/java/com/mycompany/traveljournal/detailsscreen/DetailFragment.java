@@ -129,14 +129,6 @@ public class DetailFragment extends TravelBaseFragment {
             }
         });
 
-        /*ivPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), PhotoActivity.class);
-                i.putExtra("image_url", m_post.getImageUrl());
-                startActivity(i);
-            }
-        });*/
     }
 
     @Override
@@ -174,14 +166,21 @@ public class DetailFragment extends TravelBaseFragment {
 
 
     private void populateViews(Post post) {
-        //if(!imageViewLoaded)
-            //Picasso.with(getActivity()).load(post.getImageUrl()).placeholder(R.drawable.placeholderwide).into(ivPost);
         if(!imageViewLoaded) {
             images.add(post.getImageUrl());
             //TODO get hardcoded image list from parse
-            images.add("https://canadaalive.files.wordpress.com/2013/03/2789604382_1920dbcc87.jpg");
-            images.add("http://www.specialswallpaper.com/wp-content/uploads/2015/04/free_high_resolution_images_for_download-1.jpg");
-            images.add("http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg");
+            //images.add("https://canadaalive.files.wordpress.com/2013/03/2789604382_1920dbcc87.jpg");
+            //images.add("http://www.specialswallpaper.com/wp-content/uploads/2015/04/free_high_resolution_images_for_download-1.jpg");
+            //images.add("http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg");
+            if(post.getImage1Url() != null)
+                images.add(post.getImage1Url());
+
+            if(post.getImage2Url() != null)
+                images.add(post.getImage2Url());
+
+            if(post.getImage3Url() != null)
+                images.add(post.getImage3Url());
+
             ImageAdapter adapter = new ImageAdapter(getActivity(), images, null);
             viewPager.setAdapter(adapter);
          }
@@ -267,7 +266,6 @@ public class DetailFragment extends TravelBaseFragment {
             Bitmap takenImage1 = Util.rotateBitmapOrientation(localPhotoPath);
             int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
             Bitmap localImage = BitmapScaler.scaleToFitWidth(takenImage1, screenWidth);
-            //ivPost.setImageBitmap(localImage);
             ArrayList<String> fakeImg = new ArrayList<String>();
             fakeImg.add("");
 

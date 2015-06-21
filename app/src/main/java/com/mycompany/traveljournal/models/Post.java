@@ -55,6 +55,18 @@ public class Post extends ParseObject {
         return getString("image_url");
     }
 
+    public String getImage1Url() {
+        return getString("image_url1");
+    }
+
+    public String getImage2Url() {
+        return getString("image_url2");
+    }
+
+    public String getImage3Url() {
+        return getString("image_url3");
+    }
+
     /*public User getCreatedByUser() {
         return (User) getParseObject("created_by");
     }*/
