@@ -150,28 +150,41 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
             viewHolder.ivStar.setAlpha(0.4f);
         }
 
+        if(post.doesNeedAnimation()){//just favorited, do heart animation
+            Log.d(TAG, "do heart animation for " + post.getCaption());
+            post.setNeedsAnimation(false);
+            animateHearts(viewHolder);
+
+        }else{
+            Log.d(TAG, "no need for heart animation for " + post.getCaption());
+        }
 
         setUpListeners(viewHolder, post);
 
     }
 
-    private void setUpListeners(final SimpleItemViewHolder viewHolder, final Post post) {
+    private void setUpListeners(final SimpleItemViewHolder viewHolderCurrent, final Post post) {
 
-        viewHolder.ivProfile.setOnClickListener(new View.OnClickListener() {
+        viewHolderCurrent.ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onProfileClick(post);
             }
         });
 
-        viewHolder.ivStar.setOnClickListener(new View.OnClickListener() {
+        viewHolderCurrent.ivStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Log.d(TAG, "clicked to " + post.getCaption());
                 if(post.isLiked()==false){// action is to like
+
                     post.setLiked(true);
-                    animateHearts(viewHolder);
+                    post.setNeedsAnimation(true);
+
+                    Log.d(TAG, "view holder of post: " + viewHolderCurrent.tvCaption.getText());
+                    //viewHolderCurrent.ivHeartOutside.setAlpha(1.0f);
+
                 }else{//action is to unlike
                     post.setLiked(false);
                 }
@@ -179,23 +192,25 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
             }
         });
 
-        viewHolder.ivHeartOutside.setOnLongClickListener(new View.OnLongClickListener() {
+        viewHolderCurrent.ivHeartOutside.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 
                 Log.d(TAG, "clicked to " + post.getCaption());
                 post.setLiked(true);
+                post.setNeedsAnimation(true);
 
-                animateHearts(viewHolder);
+                Log.d(TAG, "view holder of post: " + viewHolderCurrent.tvCaption.getText());
                 listener.onFavourite(post);
 
                 return true;
             }
         });
-
     }
 
     private void animateHearts(SimpleItemViewHolder viewHolderCurrent){
+
+        Log.d(TAG, "view holder of post: " + viewHolderCurrent.tvCaption.getText());
 
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
