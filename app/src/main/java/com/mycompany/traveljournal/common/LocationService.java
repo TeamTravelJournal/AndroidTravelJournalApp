@@ -75,11 +75,11 @@ public class LocationService implements
         // Display the connection status
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location != null) {
-            Toast.makeText(context, "GPS location was found!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "GPS location was found!", Toast.LENGTH_SHORT).show();
             locationOnConnectListener.onLocationAvailable(location);
             startLocationUpdates();
         } else {
-            Toast.makeText(context, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -98,7 +98,7 @@ public class LocationService implements
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
         Log.d("DEBUG", msg);
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     /*

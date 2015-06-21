@@ -3,21 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.mycompany.traveljournal.base.PostsListActivity">
 
+    <!--item android:id="@+id/action_logo"
+        android:orderInCategory="1"
+        android:title="Travel Journal"
+        android:icon="@drawable/ic_airballoon_white_48dp"
+        app:showAsAction="always"
+        /-->
+
     <item android:id="@+id/action_search"
         android:orderInCategory="1"
         android:title="Search"
-        android:icon="@drawable/icon_search_white_48"
+        android:icon="@drawable/ic_magnify_white_48dp"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
-    <item android:id="@+id/action_mapview" android:orderInCategory="9" android:title="Map View"
-        android:icon="@drawable/icon_map_white_48"
-        app:showAsAction="ifRoom"
+    <item android:id="@+id/action_mapview"
+        android:orderInCategory="9"
+        android:title="Map View"
+        android:icon="@drawable/ic_map_marker_white_48dp"
+        app:showAsAction="always"
         />
 
-    <item android:id="@+id/action_profile" android:orderInCategory="12" android:title="Profile"
-        android:icon="@drawable/icon_profile_white_48"
-        app:showAsAction="ifRoom"
+    <item android:id="@+id/action_profile"
+        android:orderInCategory="12"
+        android:title="Profile"
+        android:icon="@drawable/ic_account_outline_white_48dp"
+        app:showAsAction="always"
         />
 
 </menu>

@@ -278,15 +278,19 @@ public class DetailFragment extends TravelBaseFragment {
     }
 
     public void addAllCommentsToList(List<Comment> comments) {
-        ViewGroup llComments = (ViewGroup) getActivity().findViewById(R.id.llComments);
+        if(getActivity()!=null){
+            ViewGroup llComments = (ViewGroup) getActivity().findViewById(R.id.llComments);
 
-        int numCommentsToShow = numComments;
-        if (comments.size() < numCommentsToShow) {
-            numCommentsToShow = comments.size();
-        }
+            int numCommentsToShow = numComments;
+            if (comments.size() < numCommentsToShow) {
+                numCommentsToShow = comments.size();
+            }
 
-        for (int i = 0 ; i < numCommentsToShow ; i++ ){
-            addSingleCommentToList(comments.get(i), llComments);
+            for (int i = 0 ; i < numCommentsToShow ; i++ ){
+                addSingleCommentToList(comments.get(i), llComments);
+            }
+        }else{
+            Log.d(TAG, "getActivity returns null");
         }
     }
 
