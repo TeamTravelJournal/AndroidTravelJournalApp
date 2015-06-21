@@ -84,26 +84,16 @@
         </RelativeLayout>
 
 
-        <!-- Counts -->
+
+
+        <!--      Counts         -->
         <RelativeLayout
             android:id="@+id/rlCounts"
             android:layout_marginTop="20dp"
             android:layout_below="@id/rlHeader"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <!-- Share -->
-            <ImageView
-                android:layout_width="@dimen/detail_count_icon_size"
-                android:layout_height="@dimen/detail_count_icon_size"
-                android:id="@+id/ivShare"
-                android:contentDescription="@string/detail_share_description"
-                android:src="@drawable/iconmonstr_share_icon_64"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                />
+            android:layout_height="wrap_content"
+            >
 
             <!-- Follow -->
             <ImageView
@@ -111,10 +101,12 @@
                 android:layout_height="@dimen/detail_count_icon_size"
                 android:id="@+id/ivFollow"
                 android:contentDescription="@string/detail_follow_description"
-                android:src="@drawable/iconmonstr_user_13_icon_64"
+                android:src="@drawable/iconmonstr_user_4_icon_64"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/ivShare"
-                android:layout_toEndOf="@+id/ivShare"
+                android:layout_toLeftOf="@+id/ivComment"
+                android:layout_toStartOf="@+id/ivComment"
+                android:layout_marginRight="30dp"
+                android:layout_marginEnd="30dp"
                 />
 
             <!-- Comment -->
@@ -123,9 +115,13 @@
                 android:layout_height="@dimen/detail_count_icon_size"
                 android:id="@+id/ivComment"
                 android:contentDescription="@string/detail_comment_description"
-                android:layout_toEndOf="@id/ivFollow"
                 android:layout_alignParentTop="true"
                 android:src="@drawable/ic_comment_outline"
+                android:layout_toLeftOf="@+id/tvNumComments"
+                android:layout_toStartOf="@+id/tvNumComments"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+
                 />
 
             <TextView
@@ -133,12 +129,27 @@
                 android:id="@+id/tvNumComments"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/detail_count_icon_size"
-                android:layout_toRightOf="@id/ivComment"
-                android:layout_toEndOf="@+id/ivComment"
-                android:text="12"
-                android:layout_alignParentTop="true"
+                android:text="10"
                 android:gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/ivCenter"
+                android:layout_toStartOf="@+id/ivCenter"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
                 />
+
+
+
+            <!-- Center line -->
+            <ImageView
+                android:id="@+id/ivCenter"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:visibility="invisible"
+                />
+            <!-- Center line -->
+
 
 
 
@@ -148,9 +159,12 @@
                 android:layout_height="@dimen/detail_count_icon_size"
                 android:id="@+id/ivLikes"
                 android:contentDescription="@string/detail_likes_description"
-                android:layout_toEndOf="@id/tvNumComments"
                 android:layout_alignParentTop="true"
                 android:src="@drawable/iconmonstr_favorite_icon_64"
+                android:layout_toRightOf="@+id/ivCenter"
+                android:layout_toEndOf="@+id/ivCenter"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 />
 
             <TextView
@@ -161,7 +175,22 @@
                 android:text="10"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/ivLikes"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:gravity="center" />
+
+            <!-- Share -->
+            <ImageView
+                android:layout_width="@dimen/detail_count_icon_size"
+                android:layout_height="@dimen/detail_count_icon_size"
+                android:id="@+id/ivShare"
+                android:contentDescription="@string/detail_share_description"
+                android:src="@drawable/iconmonstr_share_icon_64"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@id/tvLikes"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                />
 
         </RelativeLayout>
 
@@ -170,7 +199,9 @@
             android:orientation="vertical"
             android:layout_below="@+id/rlCounts"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
         </LinearLayout>
 
     <!--//Add Maps here -->
@@ -189,6 +220,7 @@
             android:padding="10dp"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
+            android:layout_marginTop="10dp"
             />
 
         <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
