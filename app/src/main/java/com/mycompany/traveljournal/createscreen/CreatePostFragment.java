@@ -36,6 +36,7 @@ import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
+import com.parse.ParseGeoPoint;
 
 import java.nio.ByteBuffer;
 
@@ -130,8 +131,10 @@ public class CreatePostFragment extends Fragment {
                 //double latitude = 37.421828;
                 //double longitude = -122.084889;
 
+                String city = Util.getCity(getActivity(), latLng);
+
                 //client.createPost(array, etCaption.getText().toString(), "", latitude, longitude, new JournalCallBack<Post>() {
-                client.createPost(array, etCaption.getText().toString(), "", latLng.latitude, latLng.longitude, new JournalCallBack<Post>() {
+                client.createPost(array, etCaption.getText().toString(), city, "", latLng.latitude, latLng.longitude, new JournalCallBack<Post>() {
                     @Override
                     public void onSuccess(Post post) {
                         //post created, image upload and image url update is happening at the background
