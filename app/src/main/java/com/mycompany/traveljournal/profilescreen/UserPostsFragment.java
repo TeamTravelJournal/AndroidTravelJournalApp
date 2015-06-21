@@ -62,6 +62,8 @@ public class UserPostsFragment extends PostsListFragment {
     @Override
     public void populateList() {
 
+        showProgress();
+
         client.getPostsForUser(userId, earliestTimeStamp, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
             @Override
             public void onSuccess(List<Post> resultPosts) {
@@ -73,12 +75,14 @@ public class UserPostsFragment extends PostsListFragment {
                     earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
                 }
                 aPosts.notifyDataSetChanged();
+                hideProgress();
             }
 
             @Override
             public void onFailure(Exception e) {
                 Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Failed to get posts");
+                hideProgress();
             }
         });
 

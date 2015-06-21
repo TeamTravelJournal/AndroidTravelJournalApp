@@ -26,6 +26,7 @@ import com.mycompany.traveljournal.datasource.ParseClient;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mapscreen.ProfileMapActivity;
 import com.mycompany.traveljournal.models.User;
+import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -53,19 +54,24 @@ public class ProfileActivity extends AppCompatActivity {
         if(savedInstanceState == null)
             setUpFragment();
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!user.getIsFollowed()){// action is to like
-                    user.setIsFollowed(true);
-                    fab.setImageDrawable(getResources().getDrawable(R.drawable.follow));
-                    //animateHearts(viewHolder);
-                }else{//action is to unlike
-                    user.setIsFollowed(false);
-                    fab.setImageDrawable(getResources().getDrawable(R.drawable.unfollow));
+        if(!ParseUser.getCurrentUser().getObjectId().equals(user.getId())) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!user.getIsFollowed()) {// action is to like
+                        user.setIsFollowed(true);
+                        fab.setImageDrawable(getResources().getDrawable(R.drawable.follow));
+                        //animateHearts(viewHolder);
+                    } else {//action is to unlike
+                        user.setIsFollowed(false);
+                        fab.setImageDrawable(getResources().getDrawable(R.drawable.unfollow));
+                    }
                 }
-            }
-        });
+            });
+        }
+        else{
+            //fab.setRippleColor(getResources().getColor(R.color.primary_color));
+        }
     }
 
     public void setData(){
