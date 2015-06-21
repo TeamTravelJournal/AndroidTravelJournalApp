@@ -4,7 +4,6 @@ package com.mycompany.traveljournal.commentscreen;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.mycompany.traveljournal.R;
+import com.mycompany.traveljournal.base.TravelBaseFragment;
 import com.mycompany.traveljournal.models.Comment;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
@@ -26,7 +26,7 @@ import com.mycompany.traveljournal.service.JournalService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentFragment extends Fragment {
+public class CommentFragment extends TravelBaseFragment {
     private final static String TAG = "CommentFragment";
     private String postId;
     private Toolbar toolbar;
@@ -77,6 +77,9 @@ public class CommentFragment extends Fragment {
         lvComments = (ListView) v.findViewById(R.id.lvComments);
         etAddComment = (EditText) v.findViewById(R.id.etAddComment);
         btnAddComment = (Button) v.findViewById(R.id.btnAddComment);
+        toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+
+        super.setUpViews(v);
     }
 
     public void setUpListeners() {
@@ -96,7 +99,7 @@ public class CommentFragment extends Fragment {
             // Set the home icon on toolbar
             ActionBar actionbar = ((ActionBarActivity) getActivity()).getSupportActionBar();
             actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
+            //actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
         }
     }
 
@@ -105,6 +108,8 @@ public class CommentFragment extends Fragment {
     }
 
     private void populateComments() {
+        showProgress();
+
         client.getCommentsForPost(postId, 1000, new JournalCallBack<List<Comment>>() {
             @Override
             public void onSuccess(List<Comment> comments) {
@@ -113,6 +118,7 @@ public class CommentFragment extends Fragment {
                 for (int i = 0 ; i < comments.size() ; i++) {
                     Log.v(TAG, comments.get(i).toString());
                 }
+                hideProgress();
 
             }
 
@@ -139,6 +145,8 @@ public class CommentFragment extends Fragment {
         // Clear the contents
         etAddComment.setText("");
 
+        showProgress();
+
         newCommentListener.commentCreated();
 
         client.createComment(postId, commentText, new JournalCallBack<Comment>() {
@@ -150,11 +158,14 @@ public class CommentFragment extends Fragment {
                 aComments.add(comment);
 
                 scrollToMostRecentComment();
+
+                hideProgress();
             }
 
             @Override
             public void onFailure(Exception e) {
-                Log.wtf(TAG, "Can't create comment, failed to get post with id " + postId);
+                Log.wtf(TAG, "Can't create comment");
+                hideProgress();
             }
         });
 

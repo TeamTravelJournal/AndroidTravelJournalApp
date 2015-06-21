@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/m_layout" android:background="#ffffff" android:padding="10dp">
@@ -82,14 +83,24 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <!--ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:id="@+id/ivCamera"
             android:layout_alignParentLeft="true"
             android:padding="5dp"
             android:src="@drawable/ic_action_edit_red"
-            />
+            /-->
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/ivCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="15dp"
+            app:borderWidth="0dp"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/camera" />
 
 
         <Button

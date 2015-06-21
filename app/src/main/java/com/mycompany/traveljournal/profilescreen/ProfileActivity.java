@@ -1,51 +1,105 @@
 package com.mycompany.traveljournal.profilescreen;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.datasource.ParseClient;
+import com.mycompany.traveljournal.helpers.Util;
+import com.mycompany.traveljournal.mapscreen.ProfileMapActivity;
 import com.mycompany.traveljournal.models.User;
+import com.squareup.picasso.Picasso;
 
-public class ProfileActivity extends ActionBarActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     UserPostsFragment userPostsFragment;
     User user;
-    private TextView tvName;
     private Toolbar toolbarForProfile;
+    private ImageView ivProfileImg;
+    private ImageView ivCover;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         user = (User) getIntent().getSerializableExtra("User");
-        tvName = (TextView) findViewById(R.id.tvUserName);
+        ivProfileImg = (ImageView) findViewById(R.id.ivProfileImage);
+        ivCover = (ImageView) findViewById(R.id.ivBannerImage);
         toolbarForProfile = (Toolbar) findViewById(R.id.toolbar1);
-        setToolbar();
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        UserProfileFragment userProfileFragment = (UserProfileFragment)getSupportFragmentManager().findFragmentById(R.id.userFragment);
-        userProfileFragment.setData(user);
+        setData();
+        setToolbar();
 
         if(savedInstanceState == null)
             setUpFragment();
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!user.getIsFollowed()){// action is to like
+                    user.setIsFollowed(true);
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.follow));
+                    //animateHearts(viewHolder);
+                }else{//action is to unlike
+                    user.setIsFollowed(false);
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.unfollow));
+                }
+            }
+        });
+    }
+
+    public void setData(){
+/*
+        if(!"".equals(user.getProfileImgUrl()))
+            Picasso.with(this).load(user.getProfileImgUrl())
+                    .fit()
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholderthumbnail)
+                    .transform(Util.getTransformation())
+                    .into(ivProfileImg);
+*/
+
+        ivCover.setImageResource(android.R.color.transparent);
+        if(!"".equals(user.getCoverImageUrl()))
+            Picasso.with(this).load(user.getCoverImageUrl()).into(ivCover);
+        //else
+            //Picasso.with(this).load(R.drawable.coffee).into(ivCover);
+
     }
 
     private void setToolbar() {
         if (toolbarForProfile != null) {
-            tvName.setText(user.getName());
             setSupportActionBar(toolbarForProfile);
-            //toolbar.setBackgroundColor(Color.parseColor(user.getProfileBackgroundColor()));
 
             // Set the home icon on toolbar
             ActionBar actionbar = getSupportActionBar();
             actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
+            //actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
+
+            CollapsingToolbarLayout collapsingToolbar =
+                    (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+            collapsingToolbar.setTitle(user.getName());
+            collapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary_color));
         }
     }
 
@@ -72,6 +126,11 @@ public class ProfileActivity extends ActionBarActivity {
                 finish();
                 overridePendingTransition(R.anim.left_in, R.anim.right_out);
                 return true;
+            case R.id.action_mapview:
+                Intent i = new Intent(this, ProfileMapActivity.class);
+                i.putExtra("user_id", user.getId());
+                startActivity(i);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
         }
 
         return super.onOptionsItemSelected(item);

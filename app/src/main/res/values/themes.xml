@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Travel_Light" parent="Theme.AppCompat.Light">
+    <style name="Theme.Travel_Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="textSubheader">@style/Text.SubHeader</item>
         <item name="textSubheaderOnDark">@style/Text.SubHeader.OnDark</item>
         <item name="textLarge">@style/Text.Large</item>

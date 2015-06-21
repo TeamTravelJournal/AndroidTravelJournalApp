@@ -18,7 +18,13 @@
 
         <!-- Post, caption, profile -->
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/rlHeader">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlHeader"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            >
 
             <!-- Post -->
             <!--ImageView
@@ -193,6 +199,16 @@
                 android:textSize="22sp"
                 android:layout_gravity="start"/>
         </android.support.v7.widget.Toolbar>
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:visibility="invisible"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
     </RelativeLayout>
 </ScrollView>

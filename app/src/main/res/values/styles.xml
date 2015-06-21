@@ -11,8 +11,8 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- Customize your theme here. -->
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
+        <!--item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item-->
 
         <!-- specify enter and exit transitions -->
         <!-- options are: explode, slide, fade -->

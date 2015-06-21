@@ -1,11 +1,11 @@
 package com.mycompany.traveljournal.detailsscreen;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -17,10 +17,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.ImageAdapter;
+import com.mycompany.traveljournal.base.TravelBaseFragment;
 import com.mycompany.traveljournal.commentscreen.CommentsAdapter;
 import com.mycompany.traveljournal.helpers.BitmapScaler;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
@@ -37,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DetailFragment extends Fragment {
+public class DetailFragment extends TravelBaseFragment {
 
     private final static String TAG = "DetailFragment";
     private final static int numComments = 3;
@@ -102,8 +104,9 @@ public class DetailFragment extends Fragment {
         llComments = (LinearLayout) v.findViewById(R.id.llComments);
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
-
         viewPager.setPageTransformer(true, new CubeOutTransformer());
+
+        super.setUpViews(v);
     }
 
     public void setUpListeners() {
@@ -126,14 +129,6 @@ public class DetailFragment extends Fragment {
             }
         });
 
-        /*ivPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), PhotoActivity.class);
-                i.putExtra("image_url", m_post.getImageUrl());
-                startActivity(i);
-            }
-        });*/
     }
 
     @Override
@@ -148,17 +143,22 @@ public class DetailFragment extends Fragment {
     }
 
     private void fetchPostAndPopulateViews() {
+
+        showProgress();
+
         client.getPostWithId(postId, new JournalCallBack<Post>() {
             @Override
             public void onSuccess(Post post) {
                 m_post = post;
                 populateViews(post);
                 fetchAndPopulateComments(post);
+                hideProgress();
             }
 
             @Override
             public void onFailure(Exception e) {
                 Log.wtf(TAG, "Post not found with id " + postId);
+                hideProgress();
             }
 
         });
@@ -166,17 +166,24 @@ public class DetailFragment extends Fragment {
 
 
     private void populateViews(Post post) {
-        //if(!imageViewLoaded)
-            //Picasso.with(getActivity()).load(post.getImageUrl()).placeholder(R.drawable.placeholderwide).into(ivPost);
         if(!imageViewLoaded) {
             images.add(post.getImageUrl());
             //TODO get hardcoded image list from parse
-            images.add("https://canadaalive.files.wordpress.com/2013/03/2789604382_1920dbcc87.jpg");
-            images.add("http://www.specialswallpaper.com/wp-content/uploads/2015/04/free_high_resolution_images_for_download-1.jpg");
-            images.add("http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg");
+            //images.add("https://canadaalive.files.wordpress.com/2013/03/2789604382_1920dbcc87.jpg");
+            //images.add("http://www.specialswallpaper.com/wp-content/uploads/2015/04/free_high_resolution_images_for_download-1.jpg");
+            //images.add("http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg");
+            if(post.getImage1Url() != null)
+                images.add(post.getImage1Url());
+
+            if(post.getImage2Url() != null)
+                images.add(post.getImage2Url());
+
+            if(post.getImage3Url() != null)
+                images.add(post.getImage3Url());
+
             ImageAdapter adapter = new ImageAdapter(getActivity(), images, null);
             viewPager.setAdapter(adapter);
-        }
+         }
 
         tvCaption.setText(post.getCaption());
         tvLikes.setText(post.getLikes()+" Likes");
@@ -232,7 +239,7 @@ public class DetailFragment extends Fragment {
             // Set the home icon on toolbar
             ActionBar actionbar = ((ActionBarActivity) getActivity()).getSupportActionBar();
             actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
+            //actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
         }
     }
 
@@ -259,7 +266,6 @@ public class DetailFragment extends Fragment {
             Bitmap takenImage1 = Util.rotateBitmapOrientation(localPhotoPath);
             int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
             Bitmap localImage = BitmapScaler.scaleToFitWidth(takenImage1, screenWidth);
-            //ivPost.setImageBitmap(localImage);
             ArrayList<String> fakeImg = new ArrayList<String>();
             fakeImg.add("");
 
