@@ -56,13 +56,15 @@ public class ProfileActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!user.getIsFollowed()){// action is to like
+                if(!user.getIsFollowed()){// currently not following: action is to follow
                     user.setIsFollowed(true);
-                    fab.setImageDrawable(getResources().getDrawable(R.drawable.follow));
-                    //animateHearts(viewHolder);
-                }else{//action is to unlike
-                    user.setIsFollowed(false);
+                    //change icon to unfollow
                     fab.setImageDrawable(getResources().getDrawable(R.drawable.unfollow));
+
+                }else{// currently following: action is to unfollow
+                    user.setIsFollowed(false);
+                    //change icon to follow
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.follow));
                 }
             }
         });
