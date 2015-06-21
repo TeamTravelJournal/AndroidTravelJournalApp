@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnListViewOnScrollListener;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
+import com.etiennelawlor.quickreturn.library.utils.QuickReturnUtils;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListFragment;
 import com.mycompany.traveljournal.common.MyCustomReceiver;
@@ -138,9 +139,11 @@ public class MainPostFragment extends PostsListFragment {
 
         scrolls.addScrollListener(scrollListener);
 
+        int indicatorHeight =  QuickReturnUtils.dp2px(getActivity(), 4);
+        int headerTranslation = -headerHeight + indicatorHeight;
         QuickReturnRecyclerViewOnScrollListener scrollListener1 = new QuickReturnRecyclerViewOnScrollListener.Builder(QuickReturnViewType.HEADER)
                 .header(toolbar)
-                .minHeaderTranslation(-headerHeight)
+                .minHeaderTranslation(headerTranslation)
                 .build();
 
         //scrolls.addScrollListener(scrollListener1);
