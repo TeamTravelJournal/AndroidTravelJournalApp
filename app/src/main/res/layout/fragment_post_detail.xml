@@ -95,8 +95,8 @@
 
             <!-- Share -->
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/detail_count_icon_size"
+                android:layout_height="@dimen/detail_count_icon_size"
                 android:id="@+id/ivShare"
                 android:contentDescription="@string/detail_share_description"
                 android:src="@drawable/iconmonstr_share_icon_64"
@@ -107,25 +107,24 @@
 
             <!-- Follow -->
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/detail_count_icon_size"
+                android:layout_height="@dimen/detail_count_icon_size"
                 android:id="@+id/ivFollow"
                 android:contentDescription="@string/detail_follow_description"
                 android:src="@drawable/iconmonstr_user_13_icon_64"
-                android:layout_below="@+id/ivShare"
-                android:layout_alignParentLeft="true"
-                android:layout_marginRight="15dp"
-                android:layout_marginEnd="15dp"/>
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/ivShare"
+                android:layout_toEndOf="@+id/ivShare"
+                />
 
             <!-- Comment -->
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/detail_count_icon_size"
+                android:layout_height="@dimen/detail_count_icon_size"
                 android:id="@+id/ivComment"
                 android:contentDescription="@string/detail_comment_description"
-                android:layout_below="@+id/ivFollow"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
+                android:layout_toEndOf="@id/ivFollow"
+                android:layout_alignParentTop="true"
                 android:src="@drawable/ic_comment_outline"
                 />
 
@@ -133,35 +132,46 @@
                 style="?textRegular"
                 android:id="@+id/tvNumComments"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/detail_count_icon_size"
                 android:layout_toRightOf="@id/ivComment"
                 android:layout_toEndOf="@+id/ivComment"
-                android:text="12 Comments"
-                android:layout_alignBottom="@id/ivComment"
-                android:layout_marginLeft="10dp"
+                android:text="12"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
                 />
 
-            <LinearLayout
-                android:id="@+id/llComments"
-                android:orientation="vertical"
-                android:layout_below="@+id/ivComment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </LinearLayout>
+
 
             <!-- Likes -->
+            <ImageView
+                android:layout_width="@dimen/detail_count_icon_size"
+                android:layout_height="@dimen/detail_count_icon_size"
+                android:id="@+id/ivLikes"
+                android:contentDescription="@string/detail_likes_description"
+                android:layout_toEndOf="@id/tvNumComments"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/iconmonstr_favorite_icon_64"
+                />
+
             <TextView
                 style="?textRegular"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/detail_count_icon_size"
                 android:id="@+id/tvLikes"
-                android:text="10 likes"
-                android:layout_below="@+id/llComments"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
+                android:text="10"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/ivLikes"
                 android:gravity="center" />
+
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/llComments"
+            android:orientation="vertical"
+            android:layout_below="@+id/rlCounts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </LinearLayout>
 
     <!--//Add Maps here -->
 
@@ -175,7 +185,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ivStaticMap"
-            android:layout_below="@+id/rlCounts"
+            android:layout_below="@+id/llComments"
             android:padding="10dp"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
