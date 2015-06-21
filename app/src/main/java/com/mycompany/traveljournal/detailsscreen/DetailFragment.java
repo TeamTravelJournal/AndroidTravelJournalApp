@@ -67,7 +67,6 @@ public class DetailFragment extends TravelBaseFragment {
     private ArrayList<String> images = new ArrayList<>();
 
     private OpenCommentsListenerInterface openCommentsListener;
-    private ImageView ivToolbarExtra;
 
     public static DetailFragment newInstance(String postId, String localPhotoPath) {
         DetailFragment detailFragment = new DetailFragment();
@@ -109,10 +108,6 @@ public class DetailFragment extends TravelBaseFragment {
 
         parallaxScrollView = (com.nirhart.parallaxscroll.views.ParallaxScrollView) v.findViewById(R.id.parallaxScrollView);
         tvName = (TextView) v.findViewById(R.id.tvName);
-
-        ivToolbarExtra = (ImageView) v.findViewById(R.id.ivToolbarExtra);
-        // put this in front of post image
-        ivToolbarExtra.setZ(-10f);
 
         super.setUpViews(v);
     }
