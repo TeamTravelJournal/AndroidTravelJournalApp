@@ -4,7 +4,7 @@
     tools:context="com.mycompany.traveljournal.profilescreen.ProfileActivity">
 
     <item android:id="@+id/action_mapview" android:orderInCategory="9" android:title="Map View"
-        android:icon="@drawable/abc_btn_radio_material"
+        android:icon="@drawable/ic_map_marker_white_48dp"
         app:showAsAction="ifRoom"
         />
 
