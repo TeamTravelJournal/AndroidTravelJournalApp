@@ -38,7 +38,6 @@ import java.util.List;
 public class MainPostFragment extends PostsListFragment {
 
     private final static String TAG = "MainPostFragmentDebug";
-    private Date earliestTimeStamp = null;
     private Date latestDate;
 
     @Override
@@ -156,9 +155,6 @@ public class MainPostFragment extends PostsListFragment {
     @Override
      public void populateList() {
 
-        /*if(m_query!=null){
-            m_location = Util.getLocationFromQuery(getActivity(), m_query);
-        }*/
         showProgress();
 
         if(m_location==null){
@@ -194,7 +190,6 @@ public class MainPostFragment extends PostsListFragment {
                     Log.d(TAG, "Failed to get posts");
                     hideProgress();
                 }
-
             });
 
         }else{

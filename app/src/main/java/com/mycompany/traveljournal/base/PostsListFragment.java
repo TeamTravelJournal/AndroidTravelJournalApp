@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +45,7 @@ import com.mycompany.traveljournal.wishlistscreen.WishListActivity;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by sjayaram on 6/4/2015.
@@ -63,6 +65,9 @@ public abstract class PostsListFragment extends Fragment {
     //protected ImageView ivNewPosts;
     protected TextView tvNewPosts;
     protected LinearLayoutManager layoutManager;
+    private final static String TAG = "PostsListFragment";
+    protected boolean recentMode = true;
+    protected Date earliestTimeStamp = null;
     protected ProgressBar pb;
 
     @Override
@@ -102,6 +107,7 @@ public abstract class PostsListFragment extends Fragment {
                 // perform query here
 
                 if(query != null && !"".equals(query)) {
+                    recentMode = false;
                     m_query = query;
                     m_location = Util.getLocationFromQuery(getActivity(), m_query);
                     Toast.makeText(getActivity(), "query " + query, Toast.LENGTH_SHORT).show();
@@ -116,6 +122,25 @@ public abstract class PostsListFragment extends Fragment {
             }
         });
 
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                Log.d(TAG, "on search expanded");
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                Log.d(TAG, "on search closed");
+                m_query = null;
+                m_location = null;
+                recentMode = true;
+                earliestTimeStamp = null;
+                posts.clear();
+                populateList();
+                return true;
+            }
+        });
     }
 
     @Override

@@ -58,6 +58,7 @@ public class CreatePostFragment extends Fragment {
     private final static String TAG = "CreatePostFragmentDebug";
     ProgressBar pbLoading;
     ImageView ivPBGif;
+    ImageView ivBGCreate;
 
     public static CreatePostFragment newInstance(){
         CreatePostFragment createPostFragment = new CreatePostFragment();
@@ -174,6 +175,8 @@ public class CreatePostFragment extends Fragment {
         //pbLoading = (ProgressBar)v.findViewById(R.id.pbLoading);
         ivPBGif = (ImageView) v.findViewById(R.id.ivPBGif);
         Glide.with(this).load(R.raw.simple).asGif().into(ivPBGif);
+        ivBGCreate = (ImageView) v.findViewById(R.id.ivBGCreate);
+
     }
 
     public void setPhotoPath(Uri photoPathUri){

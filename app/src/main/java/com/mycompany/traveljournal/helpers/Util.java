@@ -171,6 +171,29 @@ public class Util {
         return p1;
     }
 
+
+    // Usage:
+    // LatLng x = new LatLng(post.getLat(), post.getLong());
+    // post.setCity = getCity(x)
+    public static String getCity(Context context, LatLng point){
+        Geocoder geoCoder = new Geocoder(context, Locale.getDefault());
+        List<Address> list = null;
+        String result = "";
+
+        try {
+            list = geoCoder.getFromLocation(point.latitude, point.longitude, 1);
+            if (list != null & list.size() > 0) {
+                Address address = list.get(0);
+                result = address.getLocality();
+            }
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
     public static User getUserFromParseUser(ParseUser parseUser){
         User user = new User();
         try {
