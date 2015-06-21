@@ -52,10 +52,12 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
