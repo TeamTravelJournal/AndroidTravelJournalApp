@@ -84,6 +84,7 @@ public class ParseClient implements JournalService {
         ParseGeoPoint location = new ParseGeoPoint();
         location.setLatitude(latitude);
         location.setLongitude(longitude);
+        post.put("city", Util.getCity(latitude, longitude));
         post.put("location", location);
         post.put("parse_user", ParseUser.getCurrentUser());
         post.put("likes", 0);

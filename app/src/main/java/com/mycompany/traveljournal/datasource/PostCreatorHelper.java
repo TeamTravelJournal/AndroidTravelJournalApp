@@ -20,10 +20,9 @@ public class PostCreatorHelper {
     public void uploadAndAddImageToPost(String postID, byte[] imageInBytes) {
         ImageUploader uploader = new ImageUploader(postID, imageInBytes);
         uploader.upload();
-        sendPush(postID);
     }
 
-    private void sendPush(String postId){
+    public static void sendPush(String postId){
         JSONObject obj;
         try {
             obj = new JSONObject();

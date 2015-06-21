@@ -60,8 +60,21 @@ public class ImageUploader {
             public void onSuccess(Post post) {
                 post.put("image_url", imageUrl);
                 post.saveInBackground();
+
+                post.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Log.wtf(TAG, "done, setting image url on post successfully");
+                            PostCreatorHelper.sendPush(postId);
+                        } else {
+                            // There was a problem
+                            Log.wtf(TAG, "Problem uploading image to post ");
+                        }
+                    }
+                });
+
             }
-            @Override
             public void onFailure(Exception e) {
                 Log.wtf(TAG, "Post not found");
             }
