@@ -1,6 +1,5 @@
 package com.mycompany.traveljournal.detailsscreen;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.mycompany.traveljournal.R;
@@ -186,7 +184,7 @@ public class DetailFragment extends TravelBaseFragment {
          }
 
         tvCaption.setText(post.getCaption());
-        tvLikes.setText(post.getLikes()+" Likes");
+        tvLikes.setText(post.getLikes()+"");
         tvName.setText(post.getParseUser().getName());
 
         // Default profile picture
@@ -219,15 +217,7 @@ public class DetailFragment extends TravelBaseFragment {
     }
 
     private void populateNumComments(int numComments) {
-
-        // Number of Comments
-        String numCommentText;
-        if (numComments == 1) {
-            numCommentText = numComments + " Comment";
-        } else {
-            numCommentText = numComments + " Comments";
-        }
-        tvNumComments.setText(numCommentText);
+        tvNumComments.setText(numComments+"");
 
     }
 
