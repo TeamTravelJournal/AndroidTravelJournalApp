@@ -111,6 +111,7 @@
             android:textColor="#FFFFFF"
             android:id="@+id/btPost"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:minHeight="0dp" android:minWidth="0dp"
             />
 
@@ -130,8 +131,8 @@
             android:layout_centerInParent="true"
             android:contentDescription="Gif"
             android:scaleType="centerInside"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             />
 
     </RelativeLayout>

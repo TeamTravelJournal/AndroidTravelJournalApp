@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TravelJournal</string>
+    <string name="app_name">Travel Journal</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -21,6 +21,7 @@
     <string name="detail_share_description">Share this post</string>
     <string name="detail_follow_description">Follow the post\'s author</string>
     <string name="detail_star_description">Add this post to your wishlist</string>
+    <string name="detail_likes_description">Like this post</string>
     <string name="detail_comment_description">Comment on this post</string>
     <string name="title_activity_login">LoginActivity</string>
 
@@ -39,6 +40,9 @@
 
     <string name="search_hint">San Francisco</string>
     <string name="welcome_message">Welcome to Travel Journal</string>
+    <string name="new_posts_message">New Posts</string>
+    <string name="map_long_click_hint">Long click to see travel route</string>
+
 
 
     <string name="progress_bar">This is a progress indicator</string>

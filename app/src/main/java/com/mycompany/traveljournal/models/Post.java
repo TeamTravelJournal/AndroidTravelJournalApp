@@ -136,6 +136,7 @@ public class Post extends ParseObject {
 
     //fake like: not stored in backend
     private boolean liked = false;
+    private boolean needsAnimation = false;
 
     public boolean isLiked() {
         return liked;
@@ -145,5 +146,11 @@ public class Post extends ParseObject {
         this.liked = liked;
     }
 
+    public boolean doesNeedAnimation() {
+        return needsAnimation;
+    }
 
+    public void setNeedsAnimation(boolean needsAnimation) {
+        this.needsAnimation = needsAnimation;
+    }
 }
