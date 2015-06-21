@@ -1,86 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:scrollbars="none"
+<com.nirhart.parallaxscroll.views.ParallaxScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:parallax_factor="3.0"
+    tools:context=".MainActivity"
+    android:id="@+id/parallaxScrollView"
+    android:background="@color/common_background"
     >
-
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/common_background">
+        android:layout_height="match_parent">
 
-        <!-- Post, caption, profile -->
+        <!-- list of Post images -->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+
+        <!-- caption, profile -->
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rlHeader"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/view_pager"
             >
-
-            <!-- Post -->
-            <!--ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/ivPost"
-                android:transitionName="postImg"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                android:background="@color/material_blue_grey_800"
-                android:contentDescription="@string/detail_post_description"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" /-->
-
-            <!-- list of Post images -->
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
 
             <!-- Caption -->
             <TextView
                 style="?textLarge"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvCaption"
-                android:layout_below="@+id/view_pager"
-                android:layout_marginRight="70dp"
-                android:layout_marginEnd="70dp"
-                android:gravity="left"
-                android:paddingLeft="10dp"
+                android:gravity="center"
                 android:layout_marginTop="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
                 />
 
             <!-- Profile Image -->
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:id="@+id/ivProfile"
                 android:transitionName="profileImg"
                 android:contentDescription="@string/detail_profile_description"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_below="@+id/view_pager"
-                android:layout_marginTop="-20dp"
+                android:layout_below="@+id/tvCaption"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
                 />
+
+            <!-- Author User's name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvName"
+                style="?textRegular"
+                android:layout_below="@+id/ivProfile"
+                android:layout_centerHorizontal="true"
+                />
+
         </RelativeLayout>
 
 
@@ -253,4 +250,4 @@
             />
 
     </RelativeLayout>
-</ScrollView>
+</com.nirhart.parallaxscroll.views.ParallaxScrollView>
