@@ -99,7 +99,7 @@
                 android:layout_height="50dp"
                 android:id="@+id/ivShare"
                 android:contentDescription="@string/detail_share_description"
-                android:src="@drawable/ic_share"
+                android:src="@drawable/iconmonstr_share_icon_64"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
@@ -111,7 +111,7 @@
                 android:layout_height="50dp"
                 android:id="@+id/ivFollow"
                 android:contentDescription="@string/detail_follow_description"
-                android:src="@drawable/ic_arrow_down"
+                android:src="@drawable/iconmonstr_user_13_icon_64"
                 android:layout_below="@+id/ivShare"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="15dp"
@@ -126,7 +126,7 @@
                 android:layout_below="@+id/ivFollow"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:src="@drawable/speech_bubble"
+                android:src="@drawable/ic_comment_outline"
                 />
 
             <TextView
