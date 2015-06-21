@@ -99,7 +99,7 @@ public class CommentFragment extends TravelBaseFragment {
             // Set the home icon on toolbar
             ActionBar actionbar = ((ActionBarActivity) getActivity()).getSupportActionBar();
             actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
+            //actionbar.setHomeAsUpIndicator(R.drawable.ic_up_menu);
         }
     }
 
