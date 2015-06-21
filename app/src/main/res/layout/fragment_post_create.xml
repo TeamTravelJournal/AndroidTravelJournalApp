@@ -1,140 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/m_layout" android:background="#ffffff" android:padding="10dp">
-    <!-- The android:layout_weight="1" will cause the scrollview reduce its screen real estate
-         to allow the next RelativeLayout to be displayed.  -->
+    android:layout_height="match_parent">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/ivBGCreate"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:scrollbarStyle="outsideInset"
-        android:layout_weight="1"
-        android:id="@+id/m_scroll"
-        android:layout_height="fill_parent" >
+        android:scaleType="centerCrop"
+        android:alpha="0.3"
+        android:src="@drawable/machu"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+
+        />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/m_layout"
+        android:padding="10dp"
+        >
+        <!-- The android:layout_weight="1" will cause the scrollview reduce its screen real estate
+             to allow the next RelativeLayout to be displayed.  -->
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:scrollbarStyle="outsideInset"
+            android:layout_weight="1"
+            android:id="@+id/m_scroll"
+            android:layout_height="fill_parent" >
+
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/tvClose"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tvClose"
+                    android:text="New Trip" android:id="@+id/tvReplyTo"
+                    android:textColor="#A6A6A6"
+                    android:textAlignment="center"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/tvClose"
+                    android:background="#A6A6A6"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/ivProfile"
+                    android:layout_below="@+id/tvReplyTo"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="5dp"
+                    />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etCaption"
+                    android:textSize="14sp"
+                    android:layout_below="@+id/tvReplyTo"
+                    android:hint="Say something"
+                    android:layout_toRightOf="@+id/ivProfile"
+                    android:layout_marginTop="23dp"
+                    android:maxLength="140"
+                    android:inputType="text"
+                    android:textColor="#000000"
+                    android:textColorHint="#000000" />
+
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:id="@+id/ivPreview"
+                    android:layout_below="@+id/etCaption"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="23dp"
+                    />
+
+            </RelativeLayout>
+
+        </ScrollView>
 
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:id="@+id/tvClose"
-                android:layout_marginRight="10dp"/>
-
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/tvClose"
-                android:text="New Trip" android:id="@+id/tvReplyTo"
-                android:textColor="#A6A6A6"
-                android:textAlignment="center"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@+id/tvClose"
-                android:background="#A6A6A6"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
-
-            <ImageView
+            <!--ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/ivProfile"
-                android:layout_below="@+id/tvReplyTo"
+                android:id="@+id/ivCamera"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="23dp"
-                android:layout_marginRight="10dp"
                 android:padding="5dp"
+                android:src="@drawable/ic_action_edit_red"
+                /-->
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/ivCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="15dp"
+                app:borderWidth="0dp"
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/camera" />
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?buttonDark"
+                android:text="Post"
+                android:textColor="#FFFFFF"
+                android:id="@+id/btPost"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:minHeight="0dp" android:minWidth="0dp"
                 />
 
-            <EditText
-                android:layout_width="match_parent"
+            <!--ProgressBar
+                android:id="@+id/pbLoading"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/etCaption"
-                android:textSize="14sp"
-                android:layout_below="@+id/tvReplyTo"
-                android:hint="Say something"
-                android:layout_toRightOf="@+id/ivProfile"
-                android:layout_marginTop="23dp"
-                android:maxLength="140"
-                android:inputType="text"
-                android:textColor="#000000"
-                android:textColorHint="#000000" />
+                android:layout_toLeftOf="@+id/btPost"
+                /-->
 
             <ImageView
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:id="@+id/ivPreview"
-                android:layout_below="@+id/etCaption"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="23dp"
+                android:id="@+id/ivPBGif"
+                android:visibility="invisible"
+                android:layout_alignTop="@+id/btPost"
+                android:layout_toLeftOf="@+id/btPost"
+                android:layout_centerInParent="true"
+                android:contentDescription="Gif"
+                android:scaleType="centerInside"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 />
 
         </RelativeLayout>
 
-    </ScrollView>
+    </LinearLayout>
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-        <!--ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/ivCamera"
-            android:layout_alignParentLeft="true"
-            android:padding="5dp"
-            android:src="@drawable/ic_action_edit_red"
-            /-->
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/ivCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:padding="15dp"
-            app:borderWidth="0dp"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/camera" />
-
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?buttonDark"
-            android:text="Post"
-            android:textColor="#FFFFFF"
-            android:id="@+id/btPost"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:minHeight="0dp" android:minWidth="0dp"
-            />
-
-        <!--ProgressBar
-            android:id="@+id/pbLoading"
-            android:visibility="invisible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/btPost"
-            /-->
-
-        <ImageView
-            android:id="@+id/ivPBGif"
-            android:visibility="invisible"
-            android:layout_alignTop="@+id/btPost"
-            android:layout_toLeftOf="@+id/btPost"
-            android:layout_centerInParent="true"
-            android:contentDescription="Gif"
-            android:scaleType="centerInside"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            />
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>
