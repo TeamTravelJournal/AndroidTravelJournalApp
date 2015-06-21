@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
@@ -80,8 +81,10 @@ public class ExampleSavePostToParse {
         double latitude = 37.808296;
         double longitude = -122.410069;
 
+        String city =  "San Mateo";
+
         JournalService client = JournalApplication.getClient();
-        client.createPost(imageBytes, caption, description, latitude, longitude, new JournalCallBack<Post>() {
+        client.createPost(imageBytes, caption, city, description, latitude, longitude, new JournalCallBack<Post>() {
             @Override
             public void onSuccess(Post post) {
                 Log.d(TAG, "success creating post");

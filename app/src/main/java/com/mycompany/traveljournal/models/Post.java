@@ -47,6 +47,10 @@ public class Post extends ParseObject {
         return getInt("likes");
     }
 
+    public String getCity() {
+        return getString("city");
+    }
+
     public String getTripID() {
         return getString("trip_id");
     }

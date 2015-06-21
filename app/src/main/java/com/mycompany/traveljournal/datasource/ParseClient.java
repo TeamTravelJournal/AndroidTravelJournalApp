@@ -74,7 +74,7 @@ public class ParseClient implements JournalService {
     }
 
     //TODO
-    public void createPost(final byte[] imageBytes, String caption, String description, double latitude, double longitude, final JournalCallBack<Post> journalCallBack) {
+    public void createPost(final byte[] imageBytes, String caption, String city, String description, double latitude, double longitude, final JournalCallBack<Post> journalCallBack) {
         final PostCreatorHelper postCreator = new PostCreatorHelper();
 
         post = new Post();
@@ -84,6 +84,7 @@ public class ParseClient implements JournalService {
         ParseGeoPoint location = new ParseGeoPoint();
         location.setLatitude(latitude);
         location.setLongitude(longitude);
+        post.put("city", city);
         post.put("location", location);
         post.put("parse_user", ParseUser.getCurrentUser());
         post.put("likes", 0);
