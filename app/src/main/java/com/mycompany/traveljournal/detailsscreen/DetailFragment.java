@@ -58,6 +58,7 @@ public class DetailFragment extends TravelBaseFragment {
     private String localPhotoPath;
     private boolean imageViewLoaded = false;
     private ViewPager viewPager;
+    com.nirhart.parallaxscroll.views.ParallaxScrollView parallaxScrollView;
 
     private CommentsAdapter aComments;
     private LinearLayout llComments;
@@ -83,7 +84,13 @@ public class DetailFragment extends TravelBaseFragment {
         setUpListeners();
         populateImageViewFromLocal();
         fetchPostAndPopulateViews();
+        setZ();
         return view;
+    }
+
+    // Set Z properties for parallax
+    private void setZ() {
+        viewPager.setZ(20f);
     }
 
     public void setUpViews(View v){
@@ -103,6 +110,9 @@ public class DetailFragment extends TravelBaseFragment {
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
         viewPager.setPageTransformer(true, new CubeOutTransformer());
+
+        parallaxScrollView = (com.nirhart.parallaxscroll.views.ParallaxScrollView) v.findViewById(R.id.parallaxScrollView);
+        tvName = (TextView) v.findViewById(R.id.tvName);
 
         super.setUpViews(v);
     }
