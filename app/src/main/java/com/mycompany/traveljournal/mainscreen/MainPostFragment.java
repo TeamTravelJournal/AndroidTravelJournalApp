@@ -159,6 +159,7 @@ public class MainPostFragment extends PostsListFragment {
         /*if(m_query!=null){
             m_location = Util.getLocationFromQuery(getActivity(), m_query);
         }*/
+        showProgress();
 
         if(m_location==null){
 
@@ -184,12 +185,14 @@ public class MainPostFragment extends PostsListFragment {
                     }
 
                     aPosts.notifyDataSetChanged();
+                    hideProgress();
                 }
 
                 @Override
                 public void onFailure(Exception e){
                     Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
+                    hideProgress();
                 }
 
             });
@@ -207,13 +210,14 @@ public class MainPostFragment extends PostsListFragment {
                         earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
                     }
                     aPosts.notifyDataSetChanged();
+                    hideProgress();
                 }
 
                 @Override
                 public void onFailure(Exception e) {
                     Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
-
+                    hideProgress();
                 }
             });
         }
@@ -294,6 +298,7 @@ public class MainPostFragment extends PostsListFragment {
 
     @Override
     public void populateListOnSearch() {
+        showProgress();
 
         if(m_location==null){
 
@@ -312,11 +317,13 @@ public class MainPostFragment extends PostsListFragment {
                         earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
                     }
                     aPosts.notifyDataSetChanged();
+                    hideProgress();
                 }
                 @Override
                 public void onFailure(Exception e) {
                     Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
+                    hideProgress();
                 }
             });
 
@@ -337,12 +344,14 @@ public class MainPostFragment extends PostsListFragment {
                         earliestTimeStamp = posts.get(posts.size() - 1).getCreatedAt();
                     }
                     aPosts.notifyDataSetChanged();
+                    hideProgress();
                 }
 
                 @Override
                 public void onFailure(Exception e) {
                     Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
+                    hideProgress();
                 }
             });
         }

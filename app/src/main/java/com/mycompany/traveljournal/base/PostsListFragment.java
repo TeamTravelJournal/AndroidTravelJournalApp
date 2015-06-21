@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +63,7 @@ public abstract class PostsListFragment extends Fragment {
     //protected ImageView ivNewPosts;
     protected TextView tvNewPosts;
     protected LinearLayoutManager layoutManager;
+    protected ProgressBar pb;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -153,8 +155,20 @@ public abstract class PostsListFragment extends Fragment {
         //toolbar.setLogo(R.drawable.ic_balloon);
         toolbar.setTitle(" Travel Journal");
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        //ivNewPosts = (ImageView)v.findViewById(R.id.ivNewPosts);
         tvNewPosts = (TextView)v.findViewById(R.id.tvNewPosts);
+        pb = (ProgressBar) v.findViewById(R.id.pbLoading);
+    }
+
+    protected void showProgress() {
+        if (pb != null) {
+            pb.setVisibility(ProgressBar.VISIBLE);
+        }
+    }
+
+    protected void hideProgress() {
+        if (pb != null) {
+            pb.setVisibility(ProgressBar.INVISIBLE);
+        }
     }
 
     public void setUpListeners(){
