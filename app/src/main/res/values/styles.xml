@@ -30,6 +30,8 @@
         <item name="colorPrimaryDark">@color/dark_primary_color</item>
         <item name="colorAccent">@color/accent_color</item>
 
+        <item name="android:colorControlHighlight">@color/light_primary_color</item>
+
     </style>
 
 

@@ -29,7 +29,7 @@ public class FacebookUtil {
 
                             try {
                                 String fbId = jsonObject.getString("id").toString();
-                                String profile_img_url = "https://graph.facebook.com/" + fbId +"/picture?type=small";
+                                String profile_img_url = "https://graph.facebook.com/" + fbId +"/picture?type=large";
                                 updateParseUser(jsonObject.getString("name"), fbId, profile_img_url);
                             } catch (JSONException e) {
                                 Log.d(APP_TAG,
