@@ -12,6 +12,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -95,7 +98,7 @@ public class DetailFragment extends TravelBaseFragment {
         ivProfile = (ImageView) v.findViewById(R.id.ivProfile);
         //ivPost = (ImageView) v.findViewById(R.id.ivPost);
         tvCaption = (TextView) v.findViewById(R.id.tvCaption);
-        ivShare = (ImageView) v.findViewById(R.id.ivShare);
+        //ivShare = (ImageView) v.findViewById(R.id.ivShare);
         ivSharePhoto = (ImageView) v.findViewById(R.id.ivSharePhoto);
         ivFollow = (ImageView) v.findViewById(R.id.ivFollow);
         ivStar = (ImageView) v.findViewById(R.id.ivStar);
@@ -136,23 +139,44 @@ public class DetailFragment extends TravelBaseFragment {
             }
         });
 
-        ivShare.setOnClickListener(new View.OnClickListener() {
+        /*ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sharePost();
             }
-        });
+        });*/
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_detail, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                getActivity().supportFinishAfterTransition();
+                return true;
+            case R.id.action_share:
+                sharePost();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         postId = getArguments().getString("post_id", "");
         localPhotoPath = getArguments().getString("local_photo_path");
 
         Log.wtf(TAG, "post_id is : " + postId + " , local_photo_path is : " + localPhotoPath);
+
         client = JournalApplication.getClient();
     }
 
