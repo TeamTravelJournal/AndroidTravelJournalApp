@@ -125,6 +125,7 @@
             android:layout_below="@id/rlHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             >
 
             <!-- Follow -->
@@ -133,7 +134,7 @@
                 android:layout_height="@dimen/detail_count_icon_size"
                 android:id="@+id/ivFollow"
                 android:contentDescription="@string/detail_follow_description"
-                android:src="@drawable/iconmonstr_user_4_icon_64"
+                android:src="@drawable/follow_detail"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/ivComment"
                 android:layout_toStartOf="@+id/ivComment"
@@ -192,7 +193,7 @@
                 android:id="@+id/ivLikes"
                 android:contentDescription="@string/detail_likes_description"
                 android:layout_alignParentTop="true"
-                android:src="@drawable/iconmonstr_favorite_icon_64"
+                android:src="@drawable/unfavorite_detail"
                 android:layout_toRightOf="@+id/ivCenter"
                 android:layout_toEndOf="@+id/ivCenter"
                 android:layout_marginLeft="15dp"

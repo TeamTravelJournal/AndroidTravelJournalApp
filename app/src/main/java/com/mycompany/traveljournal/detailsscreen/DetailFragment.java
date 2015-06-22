@@ -32,6 +32,7 @@ import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
 import com.mycompany.traveljournal.models.Comment;
 import com.mycompany.traveljournal.models.Post;
+import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
@@ -52,7 +53,7 @@ public class DetailFragment extends TravelBaseFragment {
     private ImageView ivShare;
     private ImageView ivSharePhoto;
     private ImageView ivFollow;
-    private ImageView ivStar;
+    private ImageView ivLikes;
     private ImageView ivComment;
     private TextView tvLikes;
     private TextView tvName;
@@ -60,6 +61,7 @@ public class DetailFragment extends TravelBaseFragment {
 
     private ImageView ivStaticMap;
     private Post m_post;
+    private User m_user;
     private TextView tvNumComments;
     private String localPhotoPath;
     private boolean imageViewLoaded = false;
@@ -101,7 +103,7 @@ public class DetailFragment extends TravelBaseFragment {
         //ivShare = (ImageView) v.findViewById(R.id.ivShare);
         ivSharePhoto = (ImageView) v.findViewById(R.id.ivSharePhoto);
         ivFollow = (ImageView) v.findViewById(R.id.ivFollow);
-        ivStar = (ImageView) v.findViewById(R.id.ivStar);
+        ivLikes = (ImageView) v.findViewById(R.id.ivLikes);
         ivComment = (ImageView) v.findViewById(R.id.ivComment);
         tvLikes = (TextView) v.findViewById(R.id.tvLikes);
         tvName = (TextView) v.findViewById(R.id.tvUserName);
@@ -146,6 +148,37 @@ public class DetailFragment extends TravelBaseFragment {
             }
         });*/
 
+        ivFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!m_user.getIsFollowed()) {// currently not following: action is to follow
+                    m_user.setIsFollowed(true);
+                    //change icon to unfollow
+                    ivFollow.setImageDrawable(getResources().getDrawable(R.drawable.unfollow_detail));
+
+                } else {// currently following: action is to unfollow
+                    m_user.setIsFollowed(false);
+                    ivFollow.setImageDrawable(getResources().getDrawable(R.drawable.follow_detail));
+                }
+            }
+        });
+
+        ivLikes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(m_post.isLiked()){
+                    m_post.setLiked(false);
+                    ivLikes.setImageDrawable(getResources().getDrawable(R.drawable.unfavorite_detail));
+                    //tvLikes.setText(m_post.getLikes() - 1 + "");
+                }else{
+                    m_post.setLiked(true);
+                    ivLikes.setImageDrawable(getResources().getDrawable(R.drawable.favorite_detail));
+                    //tvLikes.setText(m_post.getLikes() + 1 + "");
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -188,6 +221,7 @@ public class DetailFragment extends TravelBaseFragment {
             @Override
             public void onSuccess(Post post) {
                 m_post = post;
+                m_user = post.getParseUser();
                 populateViews(post);
                 fetchAndPopulateComments(post);
                 hideProgress();
