@@ -23,6 +23,15 @@
             android:textColor="@color/white"
             android:textSize="22sp"
             android:layout_gravity="start"/>
+        <ImageView
+            android:id="@+id/ivShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_share"
+            android:layout_gravity="end"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            />
     </android.support.v7.widget.Toolbar>
 
 <!-- All other content -->
@@ -202,18 +211,6 @@
                 android:layout_marginStart="5dp"
                 android:gravity="center" />
 
-            <!-- Share -->
-            <ImageView
-                android:layout_width="@dimen/detail_count_icon_size"
-                android:layout_height="@dimen/detail_count_icon_size"
-                android:id="@+id/ivShare"
-                android:contentDescription="@string/detail_share_description"
-                android:src="@drawable/iconmonstr_share_icon_64"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@id/tvLikes"
-                android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
-                />
 
         </RelativeLayout>
 
