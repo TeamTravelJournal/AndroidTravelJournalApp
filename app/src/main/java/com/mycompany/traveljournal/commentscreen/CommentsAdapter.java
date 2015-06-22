@@ -54,7 +54,7 @@ public class CommentsAdapter extends ArrayAdapter<Comment>{
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.placeholderthumbnail)
-                .transform(Util.getTransformation())
+                .transform(Util.getTransformation(30))//give radius as half of the size of the image
                 .into(viewHolder.ivProfileImage);
 
         return convertView;

@@ -84,7 +84,7 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
 
         Picasso.with(getContext())
                 .load(R.drawable.icon_user_32)
-                .transform(Util.getTransformation())
+                .transform(Util.getTransformation(40))
                 .into(viewHolder.ivProfile);
 
         if(post.getParseUser()!=null)
@@ -94,7 +94,7 @@ public class PostsListAdapter extends ArrayAdapter<Post> {
                     .fit()
                     .centerCrop()
                     .placeholder(R.drawable.placeholderthumbnail)
-                    .transform(Util.getTransformation())
+                    .transform(Util.getTransformation(40))
                     .into(viewHolder.ivProfile);
         }
 

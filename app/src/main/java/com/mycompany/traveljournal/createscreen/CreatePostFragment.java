@@ -209,7 +209,7 @@ public class CreatePostFragment extends Fragment {
                     .fit()
                     .centerCrop()
                     .placeholder(R.drawable.placeholderthumbnail)
-                    .transform(Util.getTransformation())
+                    .transform(Util.getTransformation(40))
                     .into(ivProfile);
         }
     }

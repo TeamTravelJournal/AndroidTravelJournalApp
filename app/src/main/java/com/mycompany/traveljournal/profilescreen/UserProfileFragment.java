@@ -73,7 +73,7 @@ public class UserProfileFragment extends Fragment{
                     .fit()
                     .centerCrop()
                     .placeholder(R.drawable.placeholderthumbnail)
-                    .transform(Util.getTransformation())
+                    .transform(Util.getTransformation(40))
                     .into(ivProfileImg);
         if(!"".equals(user.getCoverImageUrl()))
             Picasso.with(getActivity()).load(user.getCoverImageUrl()).into(ivCover);

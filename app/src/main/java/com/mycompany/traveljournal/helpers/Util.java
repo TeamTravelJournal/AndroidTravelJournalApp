@@ -210,13 +210,16 @@ public class Util {
     }
 
     //rounded image view transformation suitable for profile view
-    public static Transformation getTransformation(){
+
+    //for radius, give half of the image size
+    //example: 60x60 profile image: give radius 30
+    public static Transformation getTransformation(int radius){
 
         //profile image round transformation
         Transformation transformation = new RoundedTransformationBuilder()
                 .borderColor(Color.WHITE)
                 .borderWidthDp(2)
-                .cornerRadiusDp(30)
+                .cornerRadiusDp(radius)
                 .oval(false)
                 .build();
         return transformation;
