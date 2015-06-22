@@ -128,10 +128,10 @@ public class CreatePostFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //pbLoading.setVisibility(ProgressBar.VISIBLE);
-                ivPBGif.setVisibility(ImageView.VISIBLE);
+                showProgress();
 
                 btPost.setEnabled(false);
+                btPost.setAlpha(0.5f);
                 //PostCreator postCreator =  new PostCreator();
                 //int bytes = takenImage.getByteCount();
                 //Toast.makeText(getActivity(), "After size 2 " + bytes,Toast.LENGTH_SHORT).show();
@@ -148,7 +148,7 @@ public class CreatePostFragment extends Fragment {
                     public void onSuccess(Post post) {
                         //post created, image upload and image url update is happening at the background
                         Log.d(TAG, "success creating post");
-                        //pbLoading.setVisibility(ProgressBar.INVISIBLE);
+                        hideProgress();
 
                         callNextIntent(post.getPostID());
                     }
@@ -193,9 +193,9 @@ public class CreatePostFragment extends Fragment {
         btPost = (Button)v.findViewById(R.id.btPost);
         etCaption = (EditText)v.findViewById(R.id.etCaption);
         ivPreview.setImageBitmap(takenImage);
-        //pbLoading = (ProgressBar)v.findViewById(R.id.pbLoading);
-        ivPBGif = (ImageView) v.findViewById(R.id.ivPBGif);
-        Glide.with(this).load(R.raw.simple).asGif().into(ivPBGif);
+        pbLoading = (ProgressBar)v.findViewById(R.id.pbLoading);
+        //ivPBGif = (ImageView) v.findViewById(R.id.ivPBGif);
+        //Glide.with(this).load(R.raw.simple).asGif().into(ivPBGif);
         ivBGCreate = (ImageView) v.findViewById(R.id.ivBGCreate);
         ivCross = (ImageView) v.findViewById(R.id.ivCross);
         ivProfile = (ImageView) v.findViewById(R.id.ivProfileImageCreate);
@@ -254,4 +254,16 @@ public class CreatePostFragment extends Fragment {
         locationService.connectClient();
     }
 
+    protected void showProgress() {
+        if (pbLoading != null) {
+            pbLoading.setVisibility(ProgressBar.VISIBLE);
+        }
+        //ivPBGif.setVisibility(ImageView.VISIBLE);
+    }
+
+    protected void hideProgress() {
+        if (pbLoading != null) {
+            pbLoading.setVisibility(ProgressBar.INVISIBLE);
+        }
+    }
 }

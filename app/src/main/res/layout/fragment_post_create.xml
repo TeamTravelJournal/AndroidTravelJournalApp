@@ -151,15 +151,16 @@
                 android:layout_centerVertical="true"
                 />
 
-            <!--ProgressBar
+            <ProgressBar
                 android:id="@+id/pbLoading"
                 android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/btPost"
-                /-->
+                android:layout_centerVertical="true"
+                />
 
-            <ImageView
+            <!--ImageView
                 android:id="@+id/ivPBGif"
                 android:visibility="invisible"
                 android:layout_alignTop="@+id/btPost"
@@ -169,7 +170,7 @@
                 android:scaleType="centerInside"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                />
+                /-->
 
         </RelativeLayout>
 
