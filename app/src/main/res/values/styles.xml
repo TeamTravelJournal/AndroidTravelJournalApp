@@ -95,11 +95,14 @@
     <!-- Buttons -->
     <style name="button_light" parent="Text.Large">
         <item name="android:background">@drawable/button_light</item>
+        <item name="android:minHeight">@dimen/button_min_height</item>
+        <item name="android:minWidth">@dimen/button_min_width</item>
     </style>
 
-    <style name="button_dark" parent="Text.Large.OnDark">
+    <style name="button_dark" parent="Text.SubHeader.OnDark">
         <item name="android:background">@drawable/button_dark</item>
-
+        <item name="android:minHeight">@dimen/button_min_height</item>
+        <item name="android:minWidth">@dimen/button_min_width</item>
     </style>
 
 </resources>

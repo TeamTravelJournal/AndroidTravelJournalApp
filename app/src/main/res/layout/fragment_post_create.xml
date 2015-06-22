@@ -134,7 +134,6 @@
                 android:id="@+id/btPost"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:minHeight="0dp" android:minWidth="0dp"
                 />
 
             <!--ProgressBar
