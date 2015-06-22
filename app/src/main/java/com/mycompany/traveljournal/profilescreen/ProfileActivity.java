@@ -92,6 +92,7 @@ public class ProfileActivity extends AppCompatActivity {
         ivCover.setImageResource(android.R.color.transparent);
         if(!"".equals(user.getCoverImageUrl()))
             Picasso.with(this).load(user.getCoverImageUrl()).into(ivCover);
+        //ivCover.setAlpha(0.1f);
         //else
             //Picasso.with(this).load(R.drawable.coffee).into(ivCover);
 
