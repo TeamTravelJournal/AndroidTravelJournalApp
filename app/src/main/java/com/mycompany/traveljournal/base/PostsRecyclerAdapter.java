@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.PostListenerObj;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
@@ -23,6 +24,7 @@ import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.models.Post;
 import com.squareup.picasso.Picasso;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,6 +52,7 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
         ImageView ivHeartInside;
         ImageView ivHeartOutside;
         RelativeLayout rlPost;
+        RelativeTimeTextView tvTime;
 
         public SimpleItemViewHolder(View itemView, final Activity context) {
             super(itemView);
@@ -61,6 +64,7 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
             ivHeartInside =(ImageView) itemView.findViewById(R.id.ivHeartInside);
             ivHeartOutside =(ImageView) itemView.findViewById(R.id.ivHeartOutside);
             rlPost =(RelativeLayout) itemView.findViewById(R.id.rlPost);
+            tvTime = (RelativeTimeTextView)itemView.findViewById(R.id.timestamp);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -122,7 +126,7 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
 
         Picasso.with(viewHolder.tvCaption.getContext())
                 .load(R.drawable.icon_user_32)
-                .transform(Util.getTransformation())
+                .transform(Util.getTransformation(40))
                 .into(viewHolder.ivProfile);
 
         if(post.getParseUser()!=null)
@@ -132,7 +136,7 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
                     .fit()
                     .centerCrop()
                     .placeholder(R.drawable.placeholderthumbnail)
-                    .transform(Util.getTransformation())
+                    .transform(Util.getTransformation(40))
                     .into(viewHolder.ivProfile);
         }
 
@@ -158,6 +162,8 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
         }else{
             Log.d(TAG, "no need for heart animation for " + post.getCaption());
         }
+
+        viewHolder.tvTime.setReferenceTime(post.getCreatedAt().getTime());
 
         setUpListeners(viewHolder, post);
 

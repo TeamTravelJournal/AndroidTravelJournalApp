@@ -232,7 +232,7 @@ public class DetailFragment extends TravelBaseFragment {
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.placeholderthumbnail)
-                .transform(Util.getTransformation())
+                .transform(Util.getTransformation(40))
                 .into(ivProfile);
 
         if(post.getParseUser()!=null) {
@@ -240,7 +240,7 @@ public class DetailFragment extends TravelBaseFragment {
                     .fit()
                     .centerCrop()
                     .placeholder(R.drawable.placeholderthumbnail)
-                    .transform(Util.getTransformation())
+                    .transform(Util.getTransformation(40))
                     .into(ivProfile);
         }
 
@@ -343,7 +343,7 @@ public class DetailFragment extends TravelBaseFragment {
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.placeholderthumbnail)
-                .transform(Util.getTransformation())
+                .transform(Util.getTransformation(30))//radius = half of image size
                 .into(ivProfileImage);
 
         viewGroup.addView(commentDetailView);

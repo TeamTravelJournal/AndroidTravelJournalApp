@@ -50,13 +50,13 @@
                     android:layout_marginRight="10dp"/-->
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:id="@+id/ivProfileImageCreate"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:padding="5dp"
+                    android:layout_margin="5dp"
                     />
 
                 <TextView android:layout_width="wrap_content"
@@ -151,15 +151,16 @@
                 android:layout_centerVertical="true"
                 />
 
-            <!--ProgressBar
+            <ProgressBar
                 android:id="@+id/pbLoading"
                 android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/btPost"
-                /-->
+                android:layout_centerVertical="true"
+                />
 
-            <ImageView
+            <!--ImageView
                 android:id="@+id/ivPBGif"
                 android:visibility="invisible"
                 android:layout_alignTop="@+id/btPost"
@@ -169,7 +170,7 @@
                 android:scaleType="centerInside"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                />
+                /-->
 
         </RelativeLayout>
 
