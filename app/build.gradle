@@ -39,5 +39,6 @@ dependencies {
     compile 'com.github.nirhart:parallaxscroll:1.0'
     compile 'com.android.support:support-v4:22.2.0'
     compile 'com.flaviofaria:kenburnsview:1.0.6'
+    compile 'com.github.curioustechizen.android-ago:library:1.3.0'
     compile project(':library');
 }

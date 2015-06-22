@@ -93,8 +93,8 @@
 
             <!-- Profile Image -->
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:id="@+id/ivProfile"
                 android:transitionName="profileImg"
                 android:contentDescription="@string/detail_profile_description"
