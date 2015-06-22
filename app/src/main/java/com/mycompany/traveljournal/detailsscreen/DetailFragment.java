@@ -3,6 +3,7 @@ package com.mycompany.traveljournal.detailsscreen;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -46,6 +47,7 @@ public class DetailFragment extends TravelBaseFragment {
     //private ImageView ivPost;
     private TextView tvCaption;
     private ImageView ivShare;
+    private ImageView ivSharePhoto;
     private ImageView ivFollow;
     private ImageView ivStar;
     private ImageView ivComment;
@@ -65,6 +67,7 @@ public class DetailFragment extends TravelBaseFragment {
     private LinearLayout llComments;
     JournalService client;
     private ArrayList<String> images = new ArrayList<>();
+    private boolean isShareEnabled = true;
 
     private OpenCommentsListenerInterface openCommentsListener;
 
@@ -93,6 +96,7 @@ public class DetailFragment extends TravelBaseFragment {
         //ivPost = (ImageView) v.findViewById(R.id.ivPost);
         tvCaption = (TextView) v.findViewById(R.id.tvCaption);
         ivShare = (ImageView) v.findViewById(R.id.ivShare);
+        ivSharePhoto = (ImageView) v.findViewById(R.id.ivSharePhoto);
         ivFollow = (ImageView) v.findViewById(R.id.ivFollow);
         ivStar = (ImageView) v.findViewById(R.id.ivStar);
         ivComment = (ImageView) v.findViewById(R.id.ivComment);
@@ -129,6 +133,13 @@ public class DetailFragment extends TravelBaseFragment {
             @Override
             public void onClick(View v) {
                 openCommentsListener.openCommentsScreen(postId);
+            }
+        });
+
+        ivShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharePost();
             }
         });
 
@@ -219,6 +230,9 @@ public class DetailFragment extends TravelBaseFragment {
                 + latitude + "," + longitude;
         Picasso.with(getActivity()).load(staticMapUrl)
                 .into(ivStaticMap);
+
+        //Load image into placeholder to enable image sharing
+        Picasso.with(getActivity()).load(m_post.getImageUrl()).into(ivSharePhoto);
     }
 
     private void populateNumComments(int numComments) {
@@ -325,6 +339,36 @@ public class DetailFragment extends TravelBaseFragment {
         llComments.removeAllViews();
 
         fetchAndPopulateComments(m_post);
+    }
+
+    // Mostly copied from http://guides.codepath.com/android/Sharing-Content-with-Intents
+    // Can be triggered by a view event such as a button press
+    //
+    // This requires the photo be loaded into an image view, hence the need for the invisible ivSharePhoto
+    //
+    public void sharePost() {
+        if (!isShareEnabled) {
+            return;
+        }
+        isShareEnabled = false;
+
+        // Get access to bitmap image from view
+        ImageView ivImage = (ImageView) getActivity().findViewById(R.id.ivSharePhoto);
+        // Get access to the URI for the bitmap
+        Uri bmpUri = Util.getLocalBitmapUri(ivImage);
+        if (bmpUri != null) {
+            // Construct a ShareIntent with link to image
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+            shareIntent.setType("image/*");
+            // Launch sharing dialog for image
+            startActivity(Intent.createChooser(shareIntent, "Share Image"));
+            isShareEnabled = true;
+        } else {
+            // ...sharing failed, handle error
+            isShareEnabled = true;
+        }
     }
 
 }
