@@ -209,6 +209,7 @@ public class Util {
         return user;
     }
 
+    //rounded image view transformation suitable for profile view
     public static Transformation getTransformation(){
 
         //profile image round transformation
@@ -216,6 +217,19 @@ public class Util {
                 .borderColor(Color.WHITE)
                 .borderWidthDp(2)
                 .cornerRadiusDp(30)
+                .oval(false)
+                .build();
+        return transformation;
+    }
+
+    // preview image transformation
+    public static Transformation getPreviewTransformation(){
+
+        //profile image round transformation
+        Transformation transformation = new RoundedTransformationBuilder()
+                .borderColor(Color.WHITE)
+                .borderWidthDp(2)
+                .cornerRadiusDp(10)
                 .oval(false)
                 .build();
         return transformation;

@@ -33,11 +33,15 @@ import com.mycompany.traveljournal.helpers.BitmapScaler;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.models.Post;
+import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.nio.ByteBuffer;
 
 /**
@@ -60,6 +64,9 @@ public class CreatePostFragment extends Fragment {
     ProgressBar pbLoading;
     ImageView ivPBGif;
     ImageView ivBGCreate;
+    ImageView ivProfile;
+    User m_currentUser;
+    ImageView ivCross;
 
     public static CreatePostFragment newInstance(){
         CreatePostFragment createPostFragment = new CreatePostFragment();
@@ -72,6 +79,8 @@ public class CreatePostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_create, container, false);
         client = JournalApplication.getClient();
+        m_currentUser = Util.getUserFromParseUser(ParseUser.getCurrentUser());
+
         setUpViews(view);
         setUpListeners();
         initLocationService();
@@ -151,6 +160,15 @@ public class CreatePostFragment extends Fragment {
                 });
             }
         });
+
+        ivCross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ivCross.setImageResource(android.R.color.transparent);
+                ivPreview.setImageResource(android.R.color.transparent);
+            }
+        });
     }
 
     public void callNextIntent(String postID){
@@ -179,7 +197,21 @@ public class CreatePostFragment extends Fragment {
         ivPBGif = (ImageView) v.findViewById(R.id.ivPBGif);
         Glide.with(this).load(R.raw.simple).asGif().into(ivPBGif);
         ivBGCreate = (ImageView) v.findViewById(R.id.ivBGCreate);
+        ivCross = (ImageView) v.findViewById(R.id.ivCross);
+        ivProfile = (ImageView) v.findViewById(R.id.ivProfileImageCreate);
 
+        ivProfile.setImageResource(android.R.color.transparent);
+
+        if(m_currentUser != null)
+        {
+            Picasso.with(getActivity())
+                    .load(m_currentUser.getProfileImgUrl())
+                    .fit()
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholderthumbnail)
+                    .transform(Util.getTransformation())
+                    .into(ivProfile);
+        }
     }
 
     public void setPhotoPath(Uri photoPathUri){
@@ -207,7 +239,9 @@ public class CreatePostFragment extends Fragment {
         //int bytes = takenImage.getByteCount();
         //Toast.makeText(getActivity(), "after size 1 " + bytes,Toast.LENGTH_SHORT).show();
         // Load the taken image into a preview
+
         ivPreview.setImageBitmap(takenImage);
+        ivCross.setImageResource(R.drawable.icon_cross_24);
     }
 
     public void initLocationService(){
