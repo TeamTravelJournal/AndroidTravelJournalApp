@@ -13,12 +13,16 @@
     <dimen name="white_background_padding">15dp</dimen>
     <dimen name="dark_background_padding">15dp</dimen>
     <dimen name="view_margin">15dp</dimen>
-    <dimen name="button_padding">10dp</dimen>
-    <dimen name="button_corner_radius">30dp</dimen>
+    <dimen name="button_padding">8dp</dimen>
+    <dimen name="button_RL_padding">12dp</dimen>
+    <dimen name="button_corner_radius">10dp</dimen>
 
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="detail_backdrop_height">256dp</dimen>
 
     <dimen name="detail_count_icon_size">30dp</dimen>
+
+    <dimen name="button_min_height">0dp</dimen>
+    <dimen name="button_min_width">0dp</dimen>
 
 </resources>

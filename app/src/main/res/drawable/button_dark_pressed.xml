@@ -10,8 +10,8 @@
 
     <padding
         android:bottom="@dimen/button_padding"
-        android:left="@dimen/button_padding"
-        android:right="@dimen/button_padding"
+        android:left="@dimen/button_RL_padding"
+        android:right="@dimen/button_RL_padding"
         android:top="@dimen/button_padding" />
 
     <corners android:radius="@dimen/button_corner_radius" />
