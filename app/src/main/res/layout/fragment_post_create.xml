@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:scaleType="centerCrop"
-        android:alpha="0.3"
+        android:alpha="0.2"
         android:src="@drawable/machu"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -43,57 +43,72 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                <!--TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:id="@+id/tvClose"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="10dp"/-->
 
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tvClose"
-                    android:text="New Trip" android:id="@+id/tvReplyTo"
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/ivProfileImageCreate"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="5dp"
+                    />
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ivProfileImageCreate"
+                    android:text="Create a new post"
+                    android:id="@+id/tvCreate"
                     android:textColor="#A6A6A6"
                     android:textAlignment="center"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_below="@+id/tvClose"
+                    android:id="@+id/border1"
+                    android:layout_toRightOf="@+id/ivProfileImageCreate"
+                    android:layout_below="@+id/tvCreate"
                     android:background="#A6A6A6"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"/>
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/ivProfile"
-                    android:layout_below="@+id/tvReplyTo"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginTop="23dp"
-                    android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/etCaption"
                     android:textSize="14sp"
-                    android:layout_below="@+id/tvReplyTo"
+                    android:layout_below="@+id/border1"
                     android:hint="Say something"
-                    android:layout_toRightOf="@+id/ivProfile"
-                    android:layout_marginTop="23dp"
+                    android:layout_toRightOf="@+id/ivProfileImageCreate"
+                    android:layout_marginTop="5dp"
                     android:maxLength="140"
                     android:inputType="text"
                     android:textColor="#000000"
                     android:textColorHint="#000000" />
 
                 <ImageView
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/ivPreview"
                     android:layout_below="@+id/etCaption"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="23dp"
+                    android:layout_marginTop="25dp"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ivCross"
+                    android:layout_toRightOf="@+id/ivPreview"
+                    android:layout_alignTop="@+id/ivPreview"
+                    android:layout_marginTop="-12dp"
+                    android:layout_marginLeft="-12dp"
+                    android:src="@drawable/icon_cross_24"
                     />
 
             </RelativeLayout>
