@@ -142,7 +142,7 @@ public class CreatePostFragment extends Fragment {
 
                 String city = Util.getCity(getActivity(), latLng);
 
-                //client.createPost(array, etCaption.getText().toString(), "", latitude, longitude, new JournalCallBack<Post>() {
+                //client.createPost(array, etCaption.getText().toString(), "", "", latitude, longitude, new JournalCallBack<Post>() {
                 client.createPost(array, etCaption.getText().toString(), city, "", latLng.latitude, latLng.longitude, new JournalCallBack<Post>() {
                     @Override
                     public void onSuccess(Post post) {
