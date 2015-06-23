@@ -101,6 +101,7 @@
                 style="?textRegular"
                 android:layout_below="@+id/tvCaption"
                 android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_map_marker_grey600_18dp"
                 />
 
             <!--Date-->
@@ -113,6 +114,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/secondary_text"
+                android:drawableLeft="@drawable/ic_clock_grey600_18dp"
                 />
 
             <!-- Profile Image -->
