@@ -49,11 +49,12 @@
                 android:layout_height="48dp"
                 android:layout_gravity="bottom"
                 app:layout_scrollFlags="enterAlways"
-                app:tabBackground="@color/primary_color"
                 app:tabGravity="center"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="@color/dark_primary_color" />
+                app:tabTextColor="@color/dark_primary_color"
+                app:tabIndicatorColor="@color/accent_color"
+                app:tabTextAppearance="@style/MyCustomTextAppearance"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

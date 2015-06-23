@@ -77,7 +77,7 @@
         android:textColorHighlight="@color/secondary_text"
         android:background="@drawable/oval_shape_dark_primary"
         android:gravity="center"
-        android:drawableLeft="@drawable/ic_arrow_up_24"
+        android:drawableLeft="@drawable/ic_arrow_up_bold_circle_outline_white_24dp"
         android:visibility="gone"
         android:drawablePadding="5dp"
         android:layout_below="@+id/toolbar"

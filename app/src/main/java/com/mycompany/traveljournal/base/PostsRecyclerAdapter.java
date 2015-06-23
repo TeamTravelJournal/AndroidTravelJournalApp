@@ -54,7 +54,7 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
         RelativeLayout rlPost;
         RelativeTimeTextView tvTime;
 
-        public SimpleItemViewHolder(View itemView, final Activity context) {
+        public SimpleItemViewHolder(View itemView, final Activity context, final PostListenerObj.PostListener listener) {
             super(itemView);
             rootView = itemView;
             ivProfile = (ImageView) itemView.findViewById(R.id.ivProfile);
@@ -81,6 +81,20 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
                     context.startActivity(i, options.toBundle());
                 }
             });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Post post = (Post)v.getTag();
+                    Log.d(TAG, "clicked to " + post.getCaption());
+                    post.setLiked(true);
+                    post.setNeedsAnimation(true);
+
+                    //Log.d(TAG, "view holder of post: " + viewHolderCurrent.tvCaption.getText());
+                    listener.onFavourite(post);
+                    return false;
+                }
+            });
         }
     }
 
@@ -102,7 +116,7 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
     public SimpleItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).
                 inflate(R.layout.item_post, viewGroup, false);
-        return new SimpleItemViewHolder(itemView, mContext);
+        return new SimpleItemViewHolder(itemView, mContext, listener);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -198,20 +212,6 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
             }
         });
 
-        viewHolderCurrent.ivHeartOutside.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                Log.d(TAG, "clicked to " + post.getCaption());
-                post.setLiked(true);
-                post.setNeedsAnimation(true);
-
-                Log.d(TAG, "view holder of post: " + viewHolderCurrent.tvCaption.getText());
-                listener.onFavourite(post);
-
-                return true;
-            }
-        });
     }
 
     private void animateHearts(SimpleItemViewHolder viewHolderCurrent){

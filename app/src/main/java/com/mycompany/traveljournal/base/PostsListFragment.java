@@ -177,7 +177,7 @@ public abstract class PostsListFragment extends Fragment {
         swipeContainer = (SwipeRefreshLayout)v.findViewById(R.id.swipeContainer);
         mQuickReturnView = (ImageView)v.findViewById(R.id.quick_return_iv);
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
-        //toolbar.setLogo(R.drawable.ic_balloon);
+        toolbar.setLogo(R.drawable.ic_airballoon_white_36dp);
         toolbar.setTitle(" Travel Journal");
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         tvNewPosts = (TextView)v.findViewById(R.id.tvNewPosts);
