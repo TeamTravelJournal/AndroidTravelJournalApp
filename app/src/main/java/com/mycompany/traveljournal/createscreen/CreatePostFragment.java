@@ -216,9 +216,10 @@ public class CreatePostFragment extends Fragment {
 
     public void setPhotoPath(Uri photoPathUri){
         m_localPhotoPath = photoPathUri.getPath();
+
         Bitmap takenImage1 = Util.rotateBitmapOrientation(photoPathUri.getPath());
         //int bytes1 = takenImage1.getByteCount();
-        //Toast.makeText(getActivity(), "Before size " + bytes1,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Before width " + takenImage1.getWidth() + " height " + takenImage1.getHeight() + " size " +  + bytes1, Toast.LENGTH_SHORT).show();
 
         int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
         // Resize a Bitmap maintaining aspect ratio based on screen width
@@ -237,7 +238,7 @@ public class CreatePostFragment extends Fragment {
         }
 
         //int bytes = takenImage.getByteCount();
-        //Toast.makeText(getActivity(), "after size 1 " + bytes,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Before width " + takenImage.getWidth() + " height " + takenImage.getHeight() + " size " +  + bytes, Toast.LENGTH_SHORT).show();
         // Load the taken image into a preview
 
         ivPreview.setImageBitmap(takenImage);

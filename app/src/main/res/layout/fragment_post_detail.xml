@@ -114,6 +114,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/secondary_text"
+                android:drawablePadding="1dp"
                 android:drawableLeft="@drawable/ic_clock_grey600_18dp"
                 />
 
