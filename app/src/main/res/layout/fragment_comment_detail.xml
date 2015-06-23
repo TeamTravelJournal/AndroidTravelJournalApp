@@ -15,7 +15,7 @@
         style="@style/Text.Bold"
         android:textColor="@color/black"
         android:id="@+id/tvName"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/comment_user_name"
         android:layout_toRightOf="@id/ivProfileImage"

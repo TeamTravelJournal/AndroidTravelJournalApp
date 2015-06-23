@@ -63,6 +63,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"/>
 
+
         <!-- caption, profile -->
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -125,6 +126,7 @@
             android:layout_below="@id/rlHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             >
 
             <!-- Follow -->
@@ -133,7 +135,7 @@
                 android:layout_height="@dimen/detail_count_icon_size"
                 android:id="@+id/ivFollow"
                 android:contentDescription="@string/detail_follow_description"
-                android:src="@drawable/iconmonstr_user_4_icon_64"
+                android:src="@drawable/follow_detail"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/ivComment"
                 android:layout_toStartOf="@+id/ivComment"
@@ -161,7 +163,7 @@
                 android:id="@+id/tvNumComments"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/detail_count_icon_size"
-                android:text="10"
+                android:text=" "
                 android:gravity="center"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/ivCenter"
@@ -192,7 +194,7 @@
                 android:id="@+id/ivLikes"
                 android:contentDescription="@string/detail_likes_description"
                 android:layout_alignParentTop="true"
-                android:src="@drawable/iconmonstr_favorite_icon_64"
+                android:src="@drawable/unfavorite_detail"
                 android:layout_toRightOf="@+id/ivCenter"
                 android:layout_toEndOf="@+id/ivCenter"
                 android:layout_marginLeft="15dp"
@@ -204,7 +206,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/detail_count_icon_size"
                 android:id="@+id/tvLikes"
-                android:text="10"
+                android:text=" "
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/ivLikes"
                 android:layout_marginLeft="5dp"
@@ -253,6 +255,37 @@
             android:layout_height="wrap_content"
             />
 
+        <!--animation-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view_pager"
+            android:layout_centerInParent="true"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivHeartInside"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_heart_blue_256"
+                android:alpha="0.0"
+                android:scaleX="0.4"
+                android:scaleY="0.4"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivHeartOutside"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_heart_blue_256"
+                android:alpha="0.0"
+                />
+
+        </RelativeLayout>
+
+
     </RelativeLayout>
 </com.nirhart.parallaxscroll.views.ParallaxScrollView>
 
@@ -263,33 +296,5 @@
         android:visibility="invisible"
         android:id="@+id/ivSharePhoto"
         />
-
-    <!--animation-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ivBigFollow"
-            android:layout_centerInParent="true"
-            android:src="@drawable/icon_large_follow"
-            android:alpha="0.0"
-            />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ivBigFollowInside"
-            android:layout_centerInParent="true"
-            android:src="@drawable/icon_large_follow"
-            android:alpha="0.0"
-            android:scaleX="0.4"
-            android:scaleY="0.4"
-            />
-
-    </RelativeLayout>
 
 </LinearLayout>
