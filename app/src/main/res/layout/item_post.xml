@@ -101,6 +101,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="15dp"
             android:textColor="@color/secondary_text"
+            android:drawableLeft="@drawable/ic_clock_grey600_18dp"
             />
 
         <TextView
@@ -111,6 +112,7 @@
             android:layout_alignBottom="@+id/timestamp"
             android:layout_toLeftOf="@+id/ivProfile"
             android:textColor="@color/secondary_text"
+            android:drawableLeft="@drawable/ic_map_marker_grey600_18dp"
             />
 
     </RelativeLayout>
