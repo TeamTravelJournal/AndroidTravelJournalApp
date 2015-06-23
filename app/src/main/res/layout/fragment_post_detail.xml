@@ -126,7 +126,7 @@
             android:layout_below="@id/rlHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:gravity="center"
             >
 
             <!-- Follow -->
@@ -141,6 +141,7 @@
                 android:layout_toStartOf="@+id/ivComment"
                 android:layout_marginRight="30dp"
                 android:layout_marginEnd="30dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
                 />
 
             <!-- Comment -->
@@ -166,8 +167,8 @@
                 android:text=" "
                 android:gravity="center"
                 android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/ivCenter"
-                android:layout_toStartOf="@+id/ivCenter"
+                android:layout_toLeftOf="@+id/ivLikes"
+                android:layout_toStartOf="@+id/ivLikes"
                 android:layout_marginRight="15dp"
                 android:layout_marginEnd="15dp"
                 />
@@ -175,13 +176,13 @@
 
 
             <!-- Center line -->
-            <ImageView
+            <!--ImageView
                 android:id="@+id/ivCenter"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:visibility="invisible"
-                />
+                /-->
             <!-- Center line -->
 
 
@@ -195,8 +196,8 @@
                 android:contentDescription="@string/detail_likes_description"
                 android:layout_alignParentTop="true"
                 android:src="@drawable/unfavorite_detail"
-                android:layout_toRightOf="@+id/ivCenter"
-                android:layout_toEndOf="@+id/ivCenter"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 />
