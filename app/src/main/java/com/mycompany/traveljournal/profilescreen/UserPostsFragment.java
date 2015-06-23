@@ -45,6 +45,7 @@ public class UserPostsFragment extends PostsListFragment {
         swipeContainer.setEnabled(false);
         scrolls.removeListener();
         toolbar.setVisibility(View.GONE);
+        lvPosts.setPadding(0,0,0,0);
         populateList();
         return v;
     }

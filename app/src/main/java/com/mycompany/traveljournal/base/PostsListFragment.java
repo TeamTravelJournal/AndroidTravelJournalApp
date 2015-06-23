@@ -21,6 +21,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,6 +34,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.EndlessRecyclerOnScrollListener;
 import com.mycompany.traveljournal.common.EndlessScrollListener;
+import com.mycompany.traveljournal.common.HidingScrollListener;
 import com.mycompany.traveljournal.common.MultiScrollListener;
 import com.mycompany.traveljournal.common.PostListenerObj;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
@@ -232,6 +235,23 @@ public abstract class PostsListFragment extends Fragment {
             @Override
             public void onLoadMore(int current_page) {
                 populateList();
+            }
+        });
+
+        scrolls.addScrollListener(new HidingScrollListener(getActivity()) {
+            @Override
+            public void onMoved(int distance) {
+                toolbar.setTranslationY(-distance);
+            }
+
+            @Override
+            public void onShow() {
+                toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+            }
+
+            @Override
+            public void onHide() {
+                toolbar.animate().translationY(-Util.getToolbarHeight(getActivity())).setInterpolator(new AccelerateInterpolator(2)).start();
             }
         });
 

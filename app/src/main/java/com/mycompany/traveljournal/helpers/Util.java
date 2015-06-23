@@ -3,6 +3,7 @@ package com.mycompany.traveljournal.helpers;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -24,6 +25,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.model.LatLng;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.ErrorDialogFragment;
 import com.mycompany.traveljournal.models.User;
 import com.parse.ParseUser;
@@ -57,6 +59,15 @@ public class Util {
         bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
         return byteArray;
+    }
+
+    public static int getToolbarHeight(Context context) {
+        final TypedArray styledAttributes = context.getTheme().obtainStyledAttributes(
+                new int[]{R.attr.actionBarSize});
+        int toolbarHeight = (int) styledAttributes.getDimension(0, 0);
+        styledAttributes.recycle();
+
+        return toolbarHeight;
     }
 
     private Boolean isNetworkAvailable(Context context) {
