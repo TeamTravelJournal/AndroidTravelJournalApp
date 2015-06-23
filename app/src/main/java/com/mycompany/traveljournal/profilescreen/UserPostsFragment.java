@@ -68,7 +68,7 @@ public class UserPostsFragment extends PostsListFragment {
         client.getPostsForUser(userId, earliestTimeStamp, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
             @Override
             public void onSuccess(List<Post> resultPosts) {
-                Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
                 posts.addAll(resultPosts);
@@ -81,7 +81,7 @@ public class UserPostsFragment extends PostsListFragment {
 
             @Override
             public void onFailure(Exception e) {
-                Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Failed to get posts");
                 hideProgress();
             }

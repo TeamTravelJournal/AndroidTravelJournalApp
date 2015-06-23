@@ -84,7 +84,8 @@ public class MainPostFragment extends PostsListFragment {
                         posts.addAll(0, resultPosts);
                         latestDate = posts.get(0).getCreatedAt();
                         aPosts.notifyDataSetChanged();
-                        Toast.makeText(getActivity(), "New Posts.", Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "New Posts.");
+                        //Toast.makeText(getActivity(), "New Posts.", Toast.LENGTH_LONG).show();
                         //ivNewPosts.setVisibility(View.VISIBLE);
                         tvNewPosts.setVisibility(View.VISIBLE);
                     }
@@ -163,7 +164,7 @@ public class MainPostFragment extends PostsListFragment {
             client.getRecentPosts(earliestTimeStamp, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
                 @Override
                 public void onSuccess(List<Post> resultPosts){
-                    Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
                     //TODO review code
@@ -186,7 +187,7 @@ public class MainPostFragment extends PostsListFragment {
 
                 @Override
                 public void onFailure(Exception e){
-                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
                     hideProgress();
                 }
@@ -197,7 +198,7 @@ public class MainPostFragment extends PostsListFragment {
             client.getPostsWithinMilesOrderByDate(earliestTimeStamp, Util.MAX_POST_SEARCH_DISTANCE, m_location.latitude, m_location.longitude, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
                 @Override
                 public void onSuccess(List<Post> resultPosts) {
-                    Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
                     posts.addAll(resultPosts);
@@ -210,7 +211,7 @@ public class MainPostFragment extends PostsListFragment {
 
                 @Override
                 public void onFailure(Exception e) {
-                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
                     hideProgress();
                 }
@@ -227,7 +228,7 @@ public class MainPostFragment extends PostsListFragment {
             client.getRecentPosts(null, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
                 @Override
                 public void onSuccess(List<Post> resultPosts) {
-                    Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
                     //aPosts.clear();
@@ -250,7 +251,7 @@ public class MainPostFragment extends PostsListFragment {
 
                 @Override
                 public void onFailure(Exception e) {
-                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
                     if(swipeContainer!=null){
                         swipeContainer.setRefreshing(false);
@@ -264,7 +265,7 @@ public class MainPostFragment extends PostsListFragment {
                 @Override
                 public void onSuccess(List<Post> resultPosts) {
 
-                    Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
                     //aPosts.clear();
@@ -281,7 +282,7 @@ public class MainPostFragment extends PostsListFragment {
 
                 @Override
                 public void onFailure(Exception e) {
-                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
                     if (swipeContainer != null) {
                         swipeContainer.setRefreshing(false);
@@ -301,7 +302,7 @@ public class MainPostFragment extends PostsListFragment {
             client.getRecentPosts(null, Util.LIMIT_POST, new JournalCallBack<List<Post>>() {
                 @Override
                 public void onSuccess(List<Post> resultPosts) {
-                    Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
                     //aPosts.clear();
@@ -316,7 +317,7 @@ public class MainPostFragment extends PostsListFragment {
                 }
                 @Override
                 public void onFailure(Exception e) {
-                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
                     hideProgress();
                 }
@@ -328,7 +329,7 @@ public class MainPostFragment extends PostsListFragment {
                 @Override
                 public void onSuccess(List<Post> resultPosts){
 
-                    Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "parse call successful", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "success getting posts: " + resultPosts.toString());
 
                     //aPosts.clear();
@@ -344,7 +345,7 @@ public class MainPostFragment extends PostsListFragment {
 
                 @Override
                 public void onFailure(Exception e) {
-                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
                     hideProgress();
                 }
