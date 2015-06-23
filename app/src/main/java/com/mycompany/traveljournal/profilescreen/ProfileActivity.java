@@ -1,29 +1,19 @@
 package com.mycompany.traveljournal.profilescreen;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.mycompany.traveljournal.R;
-import com.mycompany.traveljournal.datasource.ParseClient;
-import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mapscreen.ProfileMapActivity;
 import com.mycompany.traveljournal.models.User;
 import com.parse.ParseUser;
@@ -31,12 +21,14 @@ import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    UserPostsFragment userPostsFragment;
     User user;
     private Toolbar toolbarForProfile;
     private ImageView ivProfileImg;
     private ImageView ivCover;
     private FloatingActionButton fab;
+    private ViewPager viewPager;
+    ProfilePagerAdapter adapterViewPager;
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +39,12 @@ public class ProfileActivity extends AppCompatActivity {
         ivCover = (ImageView) findViewById(R.id.ivBannerImage);
         toolbarForProfile = (Toolbar) findViewById(R.id.toolbar1);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        viewPager = (ViewPager)findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         setData();
         setToolbar();
-
-        if(savedInstanceState == null)
-            setUpFragment();
+        setupViewPager(viewPager);
 
         if(!ParseUser.getCurrentUser().getObjectId().equals(user.getId())) {
             fab.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +59,6 @@ public class ProfileActivity extends AppCompatActivity {
                         user.setIsFollowed(false);
                         //change icon to follow
                         fab.setImageDrawable(getResources().getDrawable(R.drawable.follow));
-
                     }
                 }
             });
@@ -78,23 +69,30 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    private void setupViewPager(ViewPager viewPager) {
+        adapterViewPager = new ProfilePagerAdapter(getSupportFragmentManager(), this);
+        adapterViewPager.addFragment(UserPostsFragment.newInstance(user.getId()), "Posts");
+        adapterViewPager.addFragment(UserFollowersFragment.newInstance("following"), "Followers");
+        adapterViewPager.addFragment(UserFollowersFragment.newInstance("followers"), "Following");
+        viewPager.setAdapter(adapterViewPager);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
     public void setData(){
-/*
-        if(!"".equals(user.getProfileImgUrl()))
+
+        /*if(!"".equals(user.getProfileImgUrl()))
             Picasso.with(this).load(user.getProfileImgUrl())
                     .fit()
                     .centerCrop()
                     .placeholder(R.drawable.placeholderthumbnail)
                     .transform(Util.getTransformation())
-                    .into(ivProfileImg);
-*/
+                    .into(ivProfileImg);*/
 
         ivCover.setImageResource(android.R.color.transparent);
         if(!"".equals(user.getCoverImageUrl()))
             Picasso.with(this).load(user.getCoverImageUrl()).into(ivCover);
-        //ivCover.setAlpha(0.1f);
-        //else
-            //Picasso.with(this).load(R.drawable.coffee).into(ivCover);
+        else
+            Picasso.with(this).load(R.drawable.coffee).into(ivCover);
 
     }
 
@@ -110,17 +108,8 @@ public class ProfileActivity extends AppCompatActivity {
             CollapsingToolbarLayout collapsingToolbar =
                     (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
             collapsingToolbar.setTitle(user.getName());
-            collapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary_color));
+
         }
-    }
-
-    public void setUpFragment() {
-
-        userPostsFragment =  UserPostsFragment.newInstance(user.getId());
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.flContainer, userPostsFragment);
-        ft.commit();
-
     }
 
     @Override
