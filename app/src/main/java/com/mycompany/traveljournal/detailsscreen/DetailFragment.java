@@ -40,8 +40,10 @@ import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class DetailFragment extends TravelBaseFragment {
@@ -79,6 +81,8 @@ public class DetailFragment extends TravelBaseFragment {
     private OpenCommentsListenerInterface openCommentsListener;
     private ImageView ivHeartInside;
     private ImageView ivHeartOutside;
+    private TextView tvCity;
+    private TextView tvDate;
 
     public static DetailFragment newInstance(String postId, String localPhotoPath) {
         DetailFragment detailFragment = new DetailFragment();
@@ -124,6 +128,8 @@ public class DetailFragment extends TravelBaseFragment {
 
         ivHeartInside = (ImageView) v.findViewById(R.id.ivHeartInside);
         ivHeartOutside = (ImageView) v.findViewById(R.id.ivHeartOutside);
+        tvCity = (TextView) v.findViewById(R.id.tvCity);
+        tvDate = (TextView) v.findViewById(R.id.tvDate);
 
         super.setUpViews(v);
     }
@@ -274,6 +280,11 @@ public class DetailFragment extends TravelBaseFragment {
         tvCaption.setText(post.getCaption());
         tvLikes.setText(post.getLikes()+"");
         tvName.setText(post.getParseUser().getName());
+        tvCity.setText(post.getCity());
+        SimpleDateFormat format = new SimpleDateFormat("E, dd MMM yyyy", Locale.ENGLISH);
+        String date = format.format(post.getCreatedAt());
+
+        tvDate.setText(date);
 
         // Default profile picture
         Picasso.with(getActivity()).load(R.drawable.icon_user_32)

@@ -92,6 +92,29 @@
                 android:paddingRight="20dp"
                 />
 
+            <!--City-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvCity"
+                style="?textRegular"
+                android:layout_below="@+id/tvCaption"
+                android:layout_centerHorizontal="true"
+                />
+
+            <!--Date-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvDate"
+                android:layout_below="@+id/tvCity"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/secondary_text"
+                />
+
             <!-- Profile Image -->
             <ImageView
                 android:layout_width="80dp"
@@ -99,9 +122,9 @@
                 android:id="@+id/ivProfile"
                 android:transitionName="profileImg"
                 android:contentDescription="@string/detail_profile_description"
-                android:layout_below="@+id/tvCaption"
+                android:layout_below="@+id/tvDate"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 />
 
             <!-- Author User's name -->
