@@ -147,7 +147,7 @@
             android:value="@integer/google_play_services_version" />
 
         <!-- replace @drawable/push_icon with your push icon identifier -->
-        <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_action_edit_red"/>
+        <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_notif_airballoon"/>
 
     </application>
 

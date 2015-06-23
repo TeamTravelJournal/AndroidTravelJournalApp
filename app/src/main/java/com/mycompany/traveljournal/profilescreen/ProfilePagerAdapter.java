@@ -23,9 +23,9 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
     private Context context;
 
     private int[] imageResId = {
-            R.drawable.ic_magnify_white_48dp,
-            R.drawable.ic_map_marker_white_48dp,
-            R.drawable.icon_heart_white
+            R.drawable.posts,
+            R.drawable.ic_account_multiple_white_36dp,
+            R.drawable.ic_account_multiple_outline_white_36dp
     };
 
     public ProfilePagerAdapter(FragmentManager fm, Context context) {
@@ -50,13 +50,13 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        /*Drawable image = context.getResources().getDrawable(imageResId[position]);
+        Drawable image = context.getResources().getDrawable(imageResId[position]);
         image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
         SpannableString sb = new SpannableString(" ");
         ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
         sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return sb;*/
-        return mFragmentTitles.get(position);
+        return sb;
+        //return mFragmentTitles.get(position);
     }
 }
 

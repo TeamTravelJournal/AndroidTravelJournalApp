@@ -105,11 +105,12 @@ public class MyCustomReceiver extends BroadcastReceiver {
 
 
         Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.ic_action_edit_red);
+                R.drawable.ic_notif_airballoon);
 
         Notification noti =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_notif_airballoon)
+                        .setLargeIcon(largeIcon)
                         .setContentTitle("Travel notification")
                         .setContentText(title).setAutoCancel(true)
                         .setContentIntent(pIntent).build();
