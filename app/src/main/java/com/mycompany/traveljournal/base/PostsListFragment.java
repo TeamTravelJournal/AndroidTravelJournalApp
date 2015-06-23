@@ -113,7 +113,8 @@ public abstract class PostsListFragment extends Fragment {
                     recentMode = false;
                     m_query = query;
                     m_location = Util.getLocationFromQuery(getActivity(), m_query);
-                    Toast.makeText(getActivity(), "query " + query, Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "query " + query);
+                    //Toast.makeText(getActivity(), "query " + query, Toast.LENGTH_SHORT).show();
                     populateListOnSearch();
                 }
                 return true;

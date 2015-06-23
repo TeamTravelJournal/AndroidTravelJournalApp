@@ -1,6 +1,7 @@
 package com.mycompany.traveljournal.wishlistscreen;
 
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.mycompany.traveljournal.R;
@@ -23,7 +24,7 @@ public class WishListActivity extends PostsListActivity {
 
         getSupportActionBar().hide();
 
-        Toast.makeText(this, "Inside", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Inside", Toast.LENGTH_SHORT).show();
 
         wishListPostsFragment =  new WishListPostsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
