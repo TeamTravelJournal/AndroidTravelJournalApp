@@ -53,6 +53,7 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
         ImageView ivHeartOutside;
         RelativeLayout rlPost;
         RelativeTimeTextView tvTime;
+        TextView tvCity;
 
         public SimpleItemViewHolder(View itemView, final Activity context, final PostListenerObj.PostListener listener) {
             super(itemView);
@@ -64,7 +65,8 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
             ivHeartInside =(ImageView) itemView.findViewById(R.id.ivHeartInside);
             ivHeartOutside =(ImageView) itemView.findViewById(R.id.ivHeartOutside);
             rlPost =(RelativeLayout) itemView.findViewById(R.id.rlPost);
-            tvTime = (RelativeTimeTextView)itemView.findViewById(R.id.timestamp);
+            tvTime = (RelativeTimeTextView) itemView.findViewById(R.id.timestamp);
+            tvCity = (TextView) itemView.findViewById(R.id.tvCity);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -178,6 +180,7 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
         }
 
         viewHolder.tvTime.setReferenceTime(post.getCreatedAt().getTime());
+        viewHolder.tvCity.setText(post.getCity());
 
         setUpListeners(viewHolder, post);
 
