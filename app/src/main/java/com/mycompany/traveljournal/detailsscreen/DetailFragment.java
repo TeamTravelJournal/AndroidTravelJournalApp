@@ -1,5 +1,7 @@
 package com.mycompany.traveljournal.detailsscreen;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -73,6 +75,8 @@ public class DetailFragment extends TravelBaseFragment {
     private boolean isShareEnabled = true;
 
     private OpenCommentsListenerInterface openCommentsListener;
+    private ImageView ivHeartInside;
+    private ImageView ivHeartOutside;
 
     public static DetailFragment newInstance(String postId, String localPhotoPath) {
         DetailFragment detailFragment = new DetailFragment();
@@ -116,6 +120,9 @@ public class DetailFragment extends TravelBaseFragment {
         parallaxScrollView = (com.nirhart.parallaxscroll.views.ParallaxScrollView) v.findViewById(R.id.parallaxScrollView);
         tvName = (TextView) v.findViewById(R.id.tvName);
 
+        ivHeartInside = (ImageView) v.findViewById(R.id.ivHeartInside);
+        ivHeartOutside = (ImageView) v.findViewById(R.id.ivHeartOutside);
+
         super.setUpViews(v);
     }
 
@@ -145,6 +152,8 @@ public class DetailFragment extends TravelBaseFragment {
                 sharePost();
             }
         });*/
+
+
 
     }
 
@@ -393,6 +402,29 @@ public class DetailFragment extends TravelBaseFragment {
             // ...sharing failed, handle error
             isShareEnabled = true;
         }
+    }
+
+    private void animateHearts(){
+
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+                ObjectAnimator.ofFloat(ivHeartInside, "alpha", 0.4f)
+                        .setDuration(1000),
+                ObjectAnimator.ofFloat(ivHeartOutside, "alpha", 0.2f)
+                        .setDuration(1000),
+                ObjectAnimator.ofFloat(ivHeartInside, "scaleX", 0.2f, 1.0f)
+                        .setDuration(1000),
+                ObjectAnimator.ofFloat(ivHeartInside, "scaleY", 0.2f, 1.0f)
+                        .setDuration(1000)
+        );
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(ObjectAnimator.ofFloat(ivHeartInside, "alpha", 0.0f)
+                        .setDuration(0),
+                ObjectAnimator.ofFloat(ivHeartOutside, "alpha", 0.0f)
+                        .setDuration(0));
+        AnimatorSet set3 = new AnimatorSet();
+        set3.playSequentially(set, animatorSet);
+        set3.start();
     }
 
 }

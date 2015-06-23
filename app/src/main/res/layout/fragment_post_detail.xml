@@ -264,4 +264,32 @@
         android:id="@+id/ivSharePhoto"
         />
 
+    <!--animation-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivBigFollow"
+            android:layout_centerInParent="true"
+            android:src="@drawable/icon_large_follow"
+            android:alpha="0.0"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivBigFollowInside"
+            android:layout_centerInParent="true"
+            android:src="@drawable/icon_large_follow"
+            android:alpha="0.0"
+            android:scaleX="0.4"
+            android:scaleY="0.4"
+            />
+
+    </RelativeLayout>
+
 </LinearLayout>
