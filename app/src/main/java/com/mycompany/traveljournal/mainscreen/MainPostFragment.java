@@ -187,7 +187,7 @@ public class MainPostFragment extends PostsListFragment {
 
                 @Override
                 public void onFailure(Exception e){
-                    //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
                     hideProgress();
                 }
@@ -211,7 +211,7 @@ public class MainPostFragment extends PostsListFragment {
 
                 @Override
                 public void onFailure(Exception e) {
-                    //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
                     hideProgress();
                 }
@@ -251,7 +251,7 @@ public class MainPostFragment extends PostsListFragment {
 
                 @Override
                 public void onFailure(Exception e) {
-                    //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
                     if(swipeContainer!=null){
                         swipeContainer.setRefreshing(false);
@@ -282,7 +282,7 @@ public class MainPostFragment extends PostsListFragment {
 
                 @Override
                 public void onFailure(Exception e) {
-                    //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
                     if (swipeContainer != null) {
                         swipeContainer.setRefreshing(false);
@@ -317,7 +317,7 @@ public class MainPostFragment extends PostsListFragment {
                 }
                 @Override
                 public void onFailure(Exception e) {
-                    //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
                     hideProgress();
                 }
@@ -345,7 +345,7 @@ public class MainPostFragment extends PostsListFragment {
 
                 @Override
                 public void onFailure(Exception e) {
-                    //Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "parse call failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Failed to get posts");
                     hideProgress();
                 }
