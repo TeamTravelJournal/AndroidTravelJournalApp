@@ -63,6 +63,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"/>
 
+
         <!-- caption, profile -->
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -162,7 +163,7 @@
                 android:id="@+id/tvNumComments"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/detail_count_icon_size"
-                android:text="10"
+                android:text=" "
                 android:gravity="center"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/ivCenter"
@@ -205,7 +206,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/detail_count_icon_size"
                 android:id="@+id/tvLikes"
-                android:text="10"
+                android:text=" "
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/ivLikes"
                 android:layout_marginLeft="5dp"
@@ -253,6 +254,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
+
+        <!--animation-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view_pager"
+            android:layout_centerInParent="true"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivHeartInside"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_heart_blue_256"
+                android:alpha="0.0"
+                android:scaleX="0.4"
+                android:scaleY="0.4"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivHeartOutside"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_heart_blue_256"
+                android:alpha="0.0"
+                />
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 </com.nirhart.parallaxscroll.views.ParallaxScrollView>

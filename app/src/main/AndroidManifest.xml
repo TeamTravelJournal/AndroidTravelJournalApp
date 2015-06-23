@@ -86,11 +86,11 @@
 
         <activity
             android:name=".mapscreen.SingleMapActivity"
-            android:label="@string/title_activity_single_map" >
+            android:label="" >
         </activity>
         <activity
             android:name=".mapscreen.ProfileMapActivity"
-            android:label="@string/title_activity_profile_map" >
+            android:label="" >
         </activity>
         <activity
             android:name=".commentscreen.CommentActivity"
