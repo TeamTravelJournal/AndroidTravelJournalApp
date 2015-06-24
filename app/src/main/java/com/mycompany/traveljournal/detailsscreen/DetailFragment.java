@@ -260,7 +260,7 @@ public class DetailFragment extends TravelBaseFragment {
                 m_post = post;
                 m_user = post.getParseUser();
                 populateViews(post);
-                fetchAndPopulateComments(post);
+                fetchAndPopulateComments(post, false);
                 hideProgress();
             }
 
@@ -353,18 +353,29 @@ public class DetailFragment extends TravelBaseFragment {
         }
     }
 
-    private void fetchAndPopulateComments(Post post) {
+    private void fetchAndPopulateComments(Post post, final boolean showProgress) {
+        if (showProgress) {
+            showProgress();
+        }
+
         client.getCommentsForPost(post.getPostID(), 1000, new JournalCallBack<List<Comment>>() {
             @Override
             public void onSuccess(List<Comment> comments) {
                 Log.wtf(TAG, "Got comments #="+comments.size());
                 addAllCommentsToList(comments);
                 populateNumComments(comments.size());
+
+                if (showProgress) {
+                    hideProgress();
+                }
             }
 
             @Override
             public void onFailure(Exception e) {
                 Log.wtf(TAG, "Failed to get comments:"+e.toString());
+                if (showProgress) {
+                    hideProgress();
+                }
             }
         });
     }
@@ -390,6 +401,9 @@ public class DetailFragment extends TravelBaseFragment {
     public void addAllCommentsToList(List<Comment> comments) {
         if(getActivity()!=null){
             ViewGroup llComments = (ViewGroup) getActivity().findViewById(R.id.llComments);
+
+            // Remove existing comments before proceeding
+            llComments.removeAllViews();
 
             int numCommentsToShow = numComments;
             int numComments = comments.size();
@@ -448,7 +462,7 @@ public class DetailFragment extends TravelBaseFragment {
         //ViewGroup llComments = (ViewGroup) getActivity().findViewById(R.id.llComments);
         //llComments.removeAllViews();
 
-        //fetchAndPopulateComments(m_post);
+        fetchAndPopulateComments(m_post, true);
 
         //Update number of comments
         Log.wtf(TAG, "refreshing comments, adding "+numNewComments);
