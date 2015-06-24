@@ -22,6 +22,7 @@ import com.mycompany.traveljournal.models.Comment;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,37 +139,42 @@ public class CommentFragment extends TravelBaseFragment {
             return;
         }
 
-        Log.wtf(TAG, "Creating a comment="+commentText);
+        //Add comment locally
+        addCommentLocally(commentText);
+
         // Hide the keyboard
         hideSoftKeyboard(v);
 
         // Clear the contents
         etAddComment.setText("");
 
-        showProgress();
-
+        // Tell listener that a comment was created
         newCommentListener.commentCreated();
 
         client.createComment(postId, commentText, new JournalCallBack<Comment>() {
             @Override
             public void onSuccess(Comment comment) {
                 Log.wtf(TAG, "Yay! Created comment "+comment.getBody());
-
-                // Add the comment to the adapter
-                aComments.add(comment);
-
-                scrollToMostRecentComment();
-
-                hideProgress();
             }
 
             @Override
             public void onFailure(Exception e) {
                 Log.wtf(TAG, "Can't create comment");
-                hideProgress();
             }
         });
 
+    }
+
+    private void addCommentLocally(String body) {
+
+        Comment comment = new Comment();
+
+        comment.put("post_id", postId);
+        comment.put("parse_user", ParseUser.getCurrentUser());
+        comment.put("body", body);
+        aComments.add(comment);
+
+        scrollToMostRecentComment();
     }
 
     private void hideSoftKeyboard(View view){
