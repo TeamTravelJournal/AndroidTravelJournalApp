@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.mapscreen.ProfileMapActivity;
 import com.mycompany.traveljournal.models.User;

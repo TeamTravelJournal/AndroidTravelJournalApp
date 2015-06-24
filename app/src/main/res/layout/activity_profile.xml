@@ -2,6 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -69,7 +70,7 @@
         app:borderWidth="0dp"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/follow"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed"/>
+        app:layout_behavior="com.mycompany.traveljournal.common.ScrollAwareFABBehavior"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
