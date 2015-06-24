@@ -62,8 +62,12 @@ public class DetailActivity extends PostsListActivity implements DetailFragment.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_OPEN_COMMENTS) {
             boolean newCommentCreated = data.getExtras().getBoolean("new_comment_created");
+            int numNewComments = data.getExtras().getInt("num_new_comments");
             if (newCommentCreated) {
-                detailFragment.refreshComments();
+                Log.wtf(TAG, "refreshing comments with "+numNewComments);
+                detailFragment.refreshComments(numNewComments);
+            } else {
+                Log.wtf(TAG, "no new comments");
             }
         }
 
