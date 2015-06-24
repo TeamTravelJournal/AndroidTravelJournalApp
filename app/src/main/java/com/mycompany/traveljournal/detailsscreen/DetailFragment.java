@@ -544,11 +544,18 @@ public class DetailFragment extends TravelBaseFragment {
 
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
-                ObjectAnimator.ofFloat(ivSadFaceOutside, "alpha", 1.0f)
+                ObjectAnimator.ofFloat(ivSadFaceInside, "alpha", 0.4f)
+                        .setDuration(1000),
+                ObjectAnimator.ofFloat(ivSadFaceOutside, "alpha", 0.2f)
+                        .setDuration(1000),
+                ObjectAnimator.ofFloat(ivSadFaceInside, "scaleX", 0.2f, 1.0f)
+                        .setDuration(1000),
+                ObjectAnimator.ofFloat(ivSadFaceInside, "scaleY", 0.2f, 1.0f)
                         .setDuration(1000)
         );
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(
+        animatorSet.playTogether(ObjectAnimator.ofFloat(ivSadFaceInside, "alpha", 0.0f)
+                        .setDuration(0),
                 ObjectAnimator.ofFloat(ivSadFaceOutside, "alpha", 0.0f)
                         .setDuration(0));
         AnimatorSet set3 = new AnimatorSet();
