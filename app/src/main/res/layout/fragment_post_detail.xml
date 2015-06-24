@@ -101,7 +101,7 @@
                 style="?textRegular"
                 android:layout_below="@+id/tvCaption"
                 android:layout_centerHorizontal="true"
-                android:drawableLeft="@drawable/ic_map_marker_grey600_18dp"
+                android:drawableLeft="@drawable/ic_map_marker_cyan"
                 />
 
             <!--Date-->
@@ -140,9 +140,70 @@
                 android:layout_centerHorizontal="true"
                 />
 
+            <!--animation smiley-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/ivProfile"
+                android:layout_alignTop="@+id/ivProfile"
+                android:layout_alignBottom="@+id/ivProfile"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ivSmileyInside"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_anim_smiley_128"
+                    android:alpha="0.0"
+                    android:scaleX="0.4"
+                    android:scaleY="0.4"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ivSmileyOutside"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_anim_smiley_128"
+                    android:alpha="0.0"
+                    />
+
+            </RelativeLayout>
+
+            <!--animation sad face-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ivProfile"
+                android:layout_alignTop="@+id/ivProfile"
+                android:layout_alignBottom="@+id/ivProfile"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ivSadFaceInside"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_anim_sad_128"
+                    android:alpha="0.0"
+                    android:scaleX="0.4"
+                    android:scaleY="0.4"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ivSadFaceOutside"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_anim_sad_128"
+                    android:alpha="0.0"
+                    />
+
+            </RelativeLayout>
+
+
         </RelativeLayout>
-
-
 
 
         <!--      Counts         -->
@@ -163,11 +224,25 @@
                 android:contentDescription="@string/detail_follow_description"
                 android:src="@drawable/follow_detail"
                 android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/tvNumFollowers"
+                android:layout_toStartOf="@+id/tvNumFollowers"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                />
+
+            <TextView
+                style="?textRegular"
+                android:id="@+id/tvNumFollowers"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/detail_count_icon_size"
+                android:text=" "
+                android:gravity="center"
+                android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/ivComment"
                 android:layout_toStartOf="@+id/ivComment"
-                android:layout_marginRight="30dp"
-                android:layout_marginEnd="30dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
                 />
 
             <!-- Comment -->
@@ -180,6 +255,8 @@
                 android:src="@drawable/ic_comment_outline"
                 android:layout_toLeftOf="@+id/tvNumComments"
                 android:layout_toStartOf="@+id/tvNumComments"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginEnd="5dp"
 
@@ -311,7 +388,6 @@
                 />
 
         </RelativeLayout>
-
 
     </RelativeLayout>
 </com.nirhart.parallaxscroll.views.ParallaxScrollView>

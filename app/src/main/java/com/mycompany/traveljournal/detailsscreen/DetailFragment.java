@@ -83,6 +83,11 @@ public class DetailFragment extends TravelBaseFragment {
     private ImageView ivHeartOutside;
     private TextView tvCity;
     private TextView tvDate;
+    private ImageView ivSmileyInside;
+    private ImageView ivSmileyOutside;
+    private ImageView ivSadFaceInside;
+    private ImageView ivSadFaceOutside;
+    private TextView tvNumFollowers;
 
     public static DetailFragment newInstance(String postId, String localPhotoPath) {
         DetailFragment detailFragment = new DetailFragment();
@@ -130,6 +135,11 @@ public class DetailFragment extends TravelBaseFragment {
         ivHeartOutside = (ImageView) v.findViewById(R.id.ivHeartOutside);
         tvCity = (TextView) v.findViewById(R.id.tvCity);
         tvDate = (TextView) v.findViewById(R.id.tvDate);
+        ivSmileyInside = (ImageView) v.findViewById(R.id.ivSmileyInside);
+        ivSmileyOutside = (ImageView) v.findViewById(R.id.ivSmileyOutside);
+        ivSadFaceInside = (ImageView) v.findViewById(R.id.ivSadFaceInside);
+        ivSadFaceOutside = (ImageView) v.findViewById(R.id.ivSadFaceOutside);
+        tvNumFollowers = (TextView) v.findViewById(R.id.tvNumFollowers);
 
         super.setUpViews(v);
     }
@@ -164,14 +174,21 @@ public class DetailFragment extends TravelBaseFragment {
         ivFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!m_user.getIsFollowed()) {// currently not following: action is to follow
+                if (!m_user.getIsFollowed()) {
+                    // currently not following: action is to follow
                     m_user.setIsFollowed(true);
                     //change icon to unfollow
                     ivFollow.setImageDrawable(getResources().getDrawable(R.drawable.unfollow_detail));
+                    //increment follower count
+                    tvNumFollowers.setText(Integer.parseInt(tvNumFollowers.getText().toString()) + 1 + "");
+                    animateSmiley();
 
-                } else {// currently following: action is to unfollow
+                } else {
+                    // currently following: action is to unfollow
                     m_user.setIsFollowed(false);
                     ivFollow.setImageDrawable(getResources().getDrawable(R.drawable.follow_detail));
+                    tvNumFollowers.setText(Integer.parseInt(tvNumFollowers.getText().toString()) - 1 + "");
+                    animateSad();
                 }
             }
         });
@@ -279,11 +296,12 @@ public class DetailFragment extends TravelBaseFragment {
 
         tvCaption.setText(post.getCaption());
         tvLikes.setText(post.getLikes()+"");
+        tvNumFollowers.setText("3");
         tvName.setText(post.getParseUser().getName());
         tvCity.setText(post.getCity());
+
         SimpleDateFormat format = new SimpleDateFormat("E, dd MMM yyyy", Locale.ENGLISH);
         String date = format.format(post.getCreatedAt());
-
         tvDate.setText(date);
 
         // Default profile picture
@@ -486,4 +504,46 @@ public class DetailFragment extends TravelBaseFragment {
         set3.start();
     }
 
+    private void animateSmiley(){
+
+        Log.d(TAG, "starting smiley animation");
+
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+                ObjectAnimator.ofFloat(ivSmileyInside, "alpha", 0.4f)
+                        .setDuration(1000),
+                ObjectAnimator.ofFloat(ivSmileyOutside, "alpha", 0.2f)
+                        .setDuration(1000),
+                ObjectAnimator.ofFloat(ivSmileyInside, "scaleX", 0.2f, 1.0f)
+                        .setDuration(1000),
+                ObjectAnimator.ofFloat(ivSmileyInside, "scaleY", 0.2f, 1.0f)
+                        .setDuration(1000)
+        );
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(ObjectAnimator.ofFloat(ivSmileyInside, "alpha", 0.0f)
+                        .setDuration(0),
+                ObjectAnimator.ofFloat(ivSmileyOutside, "alpha", 0.0f)
+                        .setDuration(0));
+        AnimatorSet set3 = new AnimatorSet();
+        set3.playSequentially(set, animatorSet);
+        set3.start();
+    }
+
+    private void animateSad(){
+
+        Log.d(TAG, "starting sad animation");
+
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+                ObjectAnimator.ofFloat(ivSadFaceOutside, "alpha", 1.0f)
+                        .setDuration(1000)
+        );
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(
+                ObjectAnimator.ofFloat(ivSadFaceOutside, "alpha", 0.0f)
+                        .setDuration(0));
+        AnimatorSet set3 = new AnimatorSet();
+        set3.playSequentially(set, animatorSet);
+        set3.start();
+    }
 }
