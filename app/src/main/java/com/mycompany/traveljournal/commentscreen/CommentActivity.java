@@ -17,6 +17,7 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
     String postId;
     ParseClient parseClient;
     private boolean newCommentCreated;
+    private int numNewComments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
         }
 
         newCommentCreated = false;
+        numNewComments = 0;
     }
 
 
@@ -73,6 +75,7 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
     public void onBackPressed() {
         Intent data = new Intent();
         data.putExtra("new_comment_created", newCommentCreated);
+        data.putExtra("num_new_comments", numNewComments);
         setResult(RESULT_OK, data);
         finish();
         overridePendingTransition(R.anim.left_in, R.anim.right_out);
@@ -81,5 +84,6 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
     @Override
     public void commentCreated() {
         newCommentCreated = true;
+        numNewComments += 1;
     }
 }

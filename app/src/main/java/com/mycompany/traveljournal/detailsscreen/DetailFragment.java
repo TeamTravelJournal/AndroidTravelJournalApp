@@ -434,12 +434,19 @@ public class DetailFragment extends TravelBaseFragment {
         this.openCommentsListener = openCommentsListener;
     }
 
-    public void refreshComments() {
+    public void refreshComments(int numNewComments) {
         // Clear Existing Comments
-        ViewGroup llComments = (ViewGroup) getActivity().findViewById(R.id.llComments);
-        llComments.removeAllViews();
+        //ViewGroup llComments = (ViewGroup) getActivity().findViewById(R.id.llComments);
+        //llComments.removeAllViews();
 
-        fetchAndPopulateComments(m_post);
+        //fetchAndPopulateComments(m_post);
+
+        //Update number of comments
+        Log.wtf(TAG, "refreshing comments, adding "+numNewComments);
+
+        int numComments = Integer.parseInt(tvNumComments.getText().toString());
+        numComments += numNewComments;
+        tvNumComments.setText(numComments+"");
     }
 
     // Mostly copied from http://guides.codepath.com/android/Sharing-Content-with-Intents
