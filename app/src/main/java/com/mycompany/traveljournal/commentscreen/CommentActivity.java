@@ -72,6 +72,7 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
         ft.commit();
     }
 
+    @Override
     public void onBackPressed() {
         Intent data = new Intent();
         data.putExtra("new_comment_created", newCommentCreated);
@@ -79,6 +80,7 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
         setResult(RESULT_OK, data);
         finish();
         overridePendingTransition(R.anim.left_in, R.anim.right_out);
+        super.onBackPressed();
     }
 
     @Override
