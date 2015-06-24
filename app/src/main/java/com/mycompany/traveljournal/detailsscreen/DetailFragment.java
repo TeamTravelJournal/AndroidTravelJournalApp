@@ -392,13 +392,22 @@ public class DetailFragment extends TravelBaseFragment {
             ViewGroup llComments = (ViewGroup) getActivity().findViewById(R.id.llComments);
 
             int numCommentsToShow = numComments;
-            if (comments.size() < numCommentsToShow) {
-                numCommentsToShow = comments.size();
+            int numComments = comments.size();
+            if (numComments < numCommentsToShow) {
+
+                // Show subset of comments
+                numCommentsToShow = numComments;
+                for (int i = 0 ; i < numCommentsToShow ; i++ ){
+                    addSingleCommentToList(comments.get(i), llComments);
+                }
+            } else {
+
+                // Show max number of comments
+                for (int i = numComments - numCommentsToShow ; i < numComments ; i++ ){
+                    addSingleCommentToList(comments.get(i), llComments);
+                }
             }
 
-            for (int i = 0 ; i < numCommentsToShow ; i++ ){
-                addSingleCommentToList(comments.get(i), llComments);
-            }
         }else{
             Log.d(TAG, "getActivity returns null");
         }

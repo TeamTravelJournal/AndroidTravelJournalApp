@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.datasource.ParseClient;
 
+import java.util.ArrayList;
+
 public class CommentActivity extends ActionBarActivity implements CommentFragment.NewCommentListenerInterface {
 
     private static final String TAG = "CommentActivity";
@@ -18,6 +20,7 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
     ParseClient parseClient;
     private boolean newCommentCreated;
     private int numNewComments;
+    private ArrayList<String> newComments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
 
         newCommentCreated = false;
         numNewComments = 0;
+        newComments = new ArrayList<>();
     }
 
 
@@ -56,8 +60,7 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                doneWithActivity();
                 return true;
         }
 
@@ -72,7 +75,13 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
         ft.commit();
     }
 
+    @Override
     public void onBackPressed() {
+        doneWithActivity();
+        super.onBackPressed();
+    }
+
+    private void doneWithActivity() {
         Intent data = new Intent();
         data.putExtra("new_comment_created", newCommentCreated);
         data.putExtra("num_new_comments", numNewComments);
@@ -82,8 +91,9 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
     }
 
     @Override
-    public void commentCreated() {
+    public void commentCreated(String body) {
         newCommentCreated = true;
         numNewComments += 1;
+        newComments.add(body);
     }
 }

@@ -149,7 +149,7 @@ public class CommentFragment extends TravelBaseFragment {
         etAddComment.setText("");
 
         // Tell listener that a comment was created
-        newCommentListener.commentCreated();
+        newCommentListener.commentCreated(commentText);
 
         client.createComment(postId, commentText, new JournalCallBack<Comment>() {
             @Override
@@ -189,7 +189,7 @@ public class CommentFragment extends TravelBaseFragment {
     }
 
     public interface NewCommentListenerInterface {
-        public void commentCreated();
+        public void commentCreated(String body);
     }
 
     public void setListener(NewCommentListenerInterface newCommentListener) {
