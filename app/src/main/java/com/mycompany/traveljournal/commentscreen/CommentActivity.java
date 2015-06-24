@@ -60,8 +60,7 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                doneWithActivity();
                 return true;
         }
 
@@ -78,13 +77,17 @@ public class CommentActivity extends ActionBarActivity implements CommentFragmen
 
     @Override
     public void onBackPressed() {
+        doneWithActivity();
+        super.onBackPressed();
+    }
+
+    private void doneWithActivity() {
         Intent data = new Intent();
         data.putExtra("new_comment_created", newCommentCreated);
         data.putExtra("num_new_comments", numNewComments);
         setResult(RESULT_OK, data);
         finish();
         overridePendingTransition(R.anim.left_in, R.anim.right_out);
-        super.onBackPressed();
     }
 
     @Override
