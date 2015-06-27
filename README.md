@@ -84,19 +84,30 @@ Other:
 * [x] Show progress bar for network calls
 
 
-**Optional**
+**To-Do**
+* [ ] Photo can be chosen from gallery to create post 
+* [ ] 3D image integration like yelp’s monocle 
+* [ ] Log out
+* [ ] Direct messages so users can get travel tips from each other
+* [ ] Reviews - integration with Yelp or TripAdvisor
+
+**Extension**
 * [ ] Users can login via email with a custom username and password
 * [ ] Nice video/intro when logging in for first time  
-* [ ] Photo can be chosen from gallery to create post 
-* [ ] See random(or popular) posts on timeline
-* [ ] Invite friends and contacts
-* [ ] Add Posts/Trips to your Wish list
+* [ ] See Popular posts on timeline
+* [ ] Auto create collage and trips from your gallery by grouping location and date and time.
+* [ ] Add Video
+* [ ] Adding filters to images like instagram
+* [ ] Invite contacts and facebook friends to the app
+* [ ] Google Street view/earth like integration
+* [ ] Local caching/ prefetching for offline use and faster UI
 * [ ] Update your journey while offline and sync it when you have the Internet connection.
+* [ ] More explicit trip creation
 * [ ] Posts are organized in trips
   * [ ] Can add posts to trips
   * [ ] Browse trips on timeline
   * [ ] Browse trips on map
-
+* [ ] Add Posts/Trips to your Wish list
 
 
 ## WireFrames
