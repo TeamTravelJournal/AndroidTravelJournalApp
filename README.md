@@ -62,11 +62,13 @@ Detail Page of a Post:
 * [x] Parallax effect
 * [x] Last 3 comments can be seen on detail page
 
-Comments Page: Reached by clicking into coments icon on detail page
+Comments Page
+* [x] Reached by clicking into coments icon on detail page
 * [x] Shows all comments for the post along with profile picture and user name
 * [x] Ability to add a new comment and see the new comments immediately on comments page and detail page
 
-Creation: Reached by clicking on FAB on timeline, easy to use design
+Creation
+* [x] Reached by clicking on FAB on timeline, easy to use design
 * [x] Contains caption
 * [x] Location from gps
 * [x] Photo from camera
