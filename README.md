@@ -118,7 +118,7 @@ Wireframes can be found [here](https://github.com/TeamTravelJournal/AndroidTrave
 
 Sprint-3: June 24th 2015
 
-<img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_3.gif' title='Sprint 3 Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_3_01.gif' title='Sprint 3 Walkthrough' width='' alt='Video Walkthrough' />
 
 Sprint-2: June 17th 2015
 
