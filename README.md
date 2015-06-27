@@ -10,13 +10,6 @@ Login
 * [x] Users can login via Facebook
 * [x] Ken Burns effect
 
-Creation: Reached by clicking on FAB on timeline, easy to use design
-* [x] Contains caption
-* [x] Location from gps
-* [x] Photo from camera
-* [x] User is directed to Detail Page upon creation of post
-* [x] User can click cross icon to remove the photo and click to camera icon to take another one
-
 Browse posts: 3 ways to find travel content
 * [x] Browse recent content: timeline
 * [x] Browse nearby content: map
@@ -72,6 +65,13 @@ Detail Page of a Post:
 Comments Page: Reached by clicking into coments icon on detail page
 * [x] Shows all comments for the post along with profile picture and user name
 * [x] Ability to add a new comment and see the new comments immediately on comments page and detail page
+
+Creation: Reached by clicking on FAB on timeline, easy to use design
+* [x] Contains caption
+* [x] Location from gps
+* [x] Photo from camera
+* [x] User is directed to Detail Page upon creation of post
+* [x] User can click cross icon to remove the photo and click to camera icon to take another one
 
 Other:
 * [x] Push notification: User gets a notification when a new post is added
