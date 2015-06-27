@@ -88,10 +88,10 @@ Other:
 * [ ] Photo can be chosen from gallery to create post 
 * [ ] 3D image integration like yelp’s monocle 
 * [ ] Log out
-* [ ] Direct messages so users can get travel tips from each other
+* [ ] Direct messages/chat so users can get travel tips from each other
 * [ ] Reviews - integration with Yelp or TripAdvisor
 
-**Extension**
+**Possible Extensions**
 * [ ] Users can login via email with a custom username and password
 * [ ] Nice video/intro when logging in for first time  
 * [ ] See Popular posts on timeline
