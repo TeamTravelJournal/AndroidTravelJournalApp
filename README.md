@@ -8,7 +8,7 @@ Time spent: **X** hours spent in total
 
 Login
 * [x] Users can login via Facebook
-* [x] Ken Burns effect on login page
+* [x] Ken Burns effect
 
 Creation: Reached by clicking on FAB on timeline, easy to use design
 * [x] Contains caption
