@@ -31,4 +31,11 @@
         app:showAsAction="always"
         />
 
+    <item android:id="@+id/action_logout"
+        android:orderInCategory="12"
+        android:title="LogOut"
+        android:icon="@drawable/ic_account_outline_white_48dp"
+        app:showAsAction="collapseActionView"
+        />
+
 </menu>

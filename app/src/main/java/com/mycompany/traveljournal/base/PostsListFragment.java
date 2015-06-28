@@ -39,12 +39,14 @@ import com.mycompany.traveljournal.common.MultiScrollListener;
 import com.mycompany.traveljournal.common.PostListenerObj;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 import com.mycompany.traveljournal.helpers.Util;
+import com.mycompany.traveljournal.loginscreen.LoginActivity;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.profilescreen.ProfileActivity;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalService;
 import com.mycompany.traveljournal.wishlistscreen.WishListActivity;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -153,6 +155,11 @@ public abstract class PostsListFragment extends Fragment {
 
         if(id == R.id.action_profile){
             executeProfileIntent(client.getCurrentUser());
+        }
+        if(id == R.id.action_logout){
+            ParseUser.logOut();
+            Intent i = new Intent(getActivity(), LoginActivity.class);
+            getActivity().startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
