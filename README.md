@@ -120,6 +120,10 @@ Sprint-3: June 24th 2015
 
 <img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_3_01.gif' title='Sprint 3 Walkthrough' width='' alt='Video Walkthrough' />
 
+Login Page and notifications:
+
+<img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_3_02.gif' title='Sprint 3 Walkthrough-Cont' width='' alt='Video Walkthrough' />
+
 Sprint-2: June 17th 2015
 
 <img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_2.gif' title='Sprint 2 Walkthrough' width='' alt='Video Walkthrough' />
