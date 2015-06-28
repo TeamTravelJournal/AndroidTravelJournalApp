@@ -90,6 +90,8 @@ Other:
 * [ ] Log out
 * [ ] Direct messages/chat so users can get travel tips from each other
 * [ ] Reviews - integration with Yelp or TripAdvisor
+* [ ] Fix out of memory issues/crashes while post creation
+* [ ] Fix crash when app is closed.
 
 **Possible Extensions**
 * [ ] Users can login via email with a custom username and password
