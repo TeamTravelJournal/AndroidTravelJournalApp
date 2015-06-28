@@ -155,7 +155,7 @@ public class MyCustomReceiver extends BroadcastReceiver {
         Notification noti =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_notif_airballoon)
-                        .setLargeIcon(largeIcon)
+                        //.setLargeIcon(largeIcon)
                         .setContentTitle("Travel Message")
                         .setContentText(title).setAutoCancel(true)
                         .setContentIntent(pIntent).build();
