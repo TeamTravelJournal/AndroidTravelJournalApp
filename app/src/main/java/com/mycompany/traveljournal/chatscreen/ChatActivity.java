@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mapscreen.ProfileMapActivity;
@@ -44,14 +46,46 @@ public class ChatActivity extends AppCompatActivity {
     private ChatListAdapter mAdapter;
     protected JournalService client;
     private Toolbar toolbar;
+    protected ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        setUpViews();
         startWithCurrentUser();
         client = JournalApplication.getClient();
         loadMessages();
+    }
+
+    public void setUpViews() {
+        pb = (ProgressBar) findViewById(R.id.pbLoading);
+        etMessage = (EditText) findViewById(R.id.etMessage);
+        btSend = (Button) findViewById(R.id.btSend);
+        lvChat = (ListView) findViewById(R.id.lvChat);
+        mMessages = new ArrayList();
+        mAdapter = new ChatListAdapter(ChatActivity.this, sUserId, mMessages);
+        lvChat.setAdapter(mAdapter);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            // Set the home icon on toolbar
+            ActionBar actionbar = getSupportActionBar();
+            actionbar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    protected void showProgress() {
+        if (pb != null) {
+            pb.setVisibility(ProgressBar.VISIBLE);
+        }
+    }
+
+    protected void hideProgress() {
+        if (pb != null) {
+            pb.setVisibility(ProgressBar.INVISIBLE);
+        }
     }
 
     // Get the userId from the cached currentUser object
@@ -85,20 +119,6 @@ public class ChatActivity extends AppCompatActivity {
 
     // Setup message field and posting
     private void setupMessagePosting() {
-        etMessage = (EditText) findViewById(R.id.etMessage);
-        btSend = (Button) findViewById(R.id.btSend);
-        lvChat = (ListView) findViewById(R.id.lvChat);
-        mMessages = new ArrayList();
-        mAdapter = new ChatListAdapter(ChatActivity.this, sUserId, mMessages);
-        lvChat.setAdapter(mAdapter);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            // Set the home icon on toolbar
-            ActionBar actionbar = getSupportActionBar();
-            actionbar.setDisplayHomeAsUpEnabled(true);
-        }
 
         btSend.setOnClickListener(new View.OnClickListener() {
 
@@ -166,6 +186,7 @@ public class ChatActivity extends AppCompatActivity {
     // Query messages from Parse so we can load them into the chat adapter
     private void loadMessages() {
         // Construct query to execute
+        showProgress();
         client.receiveMessage(MAX_CHAT_MESSAGES_TO_SHOW, new JournalCallBack<List<Message>>(){
 
             @Override
@@ -174,11 +195,13 @@ public class ChatActivity extends AppCompatActivity {
                 mMessages.addAll(messages);
                 mAdapter.notifyDataSetChanged(); // update adapter
                 lvChat.invalidate(); // redraw listview
+                hideProgress();
             }
 
             @Override
             public void onFailure(Exception e) {
                 Log.d("message", "Error receiving message: " + e.getMessage());
+                hideProgress();
             }
 
         });
