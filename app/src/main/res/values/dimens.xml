@@ -27,4 +27,7 @@
     <dimen name="button_min_height">0dp</dimen>
     <dimen name="button_min_width">0dp</dimen>
 
+    <dimen name="blue_sub_action_button_size">64dp</dimen>
+    <dimen name="blue_sub_action_button_content_margin">16dp</dimen>
+
 </resources>

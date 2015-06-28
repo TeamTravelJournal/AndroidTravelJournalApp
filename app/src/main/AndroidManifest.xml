@@ -51,7 +51,8 @@
         <activity
             android:name=".profilescreen.ProfileActivity"
             android:label=""
-            android:parentActivityName=".mainscreen.MainActivity" >
+            android:parentActivityName=".mainscreen.MainActivity"
+            android:launchMode="singleTop" >
         </activity>
         <activity
             android:name=".createscreen.CreatePostActivity"
@@ -64,6 +65,13 @@
             android:launchMode="singleTop"
             android:parentActivityName=".mainscreen.MainActivity" >
         </activity>
+        <activity
+            android:name=".chatscreen.ChatActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:parentActivityName=".profilescreen.ProfileActivity">
+        </activity>
+
         <activity
             android:name=".mapscreen.MapActivity"
             android:label="" >
@@ -116,6 +124,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
                 <action android:name="SEND_PUSH" />
+                <action android:name="SEND_MESSAGE_PUSH" />
             </intent-filter>
         </receiver>
         <receiver android:name="com.parse.GcmBroadcastReceiver"

@@ -16,6 +16,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.mycompany.traveljournal.R;
+import com.mycompany.traveljournal.chatscreen.ChatActivity;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 
 import org.json.JSONException;
@@ -29,6 +30,9 @@ import java.util.List;
  */
 public class MyCustomReceiver extends BroadcastReceiver {
     private static final String TAG = "MyCustomReceiver";
+
+    public static final String intentMessageAction = "SEND_MESSAGE_PUSH";
+
     public static final String intentAction = "SEND_PUSH";
     //public static final String activityAction = "com.mycompany.traveljournal.detailsscreen.MainPostFragment";
 
@@ -45,7 +49,9 @@ public class MyCustomReceiver extends BroadcastReceiver {
     private void processPush(Context context, Intent intent) {
         String action = intent.getAction();
         Log.d(TAG, "got action " + action );
-        if (intentAction.equals(action))
+
+        //Push new posts
+        if (intentAction.equals(action) || intentMessageAction.equals(action))
         {
             String channel = intent.getExtras().getString("com.parse.Channel");
             try {
@@ -56,6 +62,7 @@ public class MyCustomReceiver extends BroadcastReceiver {
                 String postID = "";
                 String title = "";
                 String userId = "";
+                String profileImg = "";
 
                 while (itr.hasNext()) {
                     String key = (String) itr.next();
@@ -65,6 +72,9 @@ public class MyCustomReceiver extends BroadcastReceiver {
                     }
                     if (key.equals("userId")) {
                         userId = json.getString(key);
+                    }
+                    if (key.equals("profileImg")) {
+                        profileImg = json.getString(key);
                     }
                     if (key.equals("customdata")) {
                         postID = json.getString(key);
@@ -78,12 +88,22 @@ public class MyCustomReceiver extends BroadcastReceiver {
 
                 if(componentInfo.getPackageName().equalsIgnoreCase("com.mycompany.traveljournal")){
                     //Activity Running
-                    triggerBroadcastToActivity(context);
+                    if (intentAction.equals(action)) {
+                        triggerBroadcastToActivity(context);
+                    }
+                    else if(intentMessageAction.equals(action)){
+                        triggerBroadcastToChatActivity(context, postID, userId, profileImg);
+                    }
                 }
                 else{
                     //Activity Not Running
                     //Generate Notification
-                    createNotification(context, title, postID);
+                    if (intentAction.equals(action)) {
+                        createNotification(context, title, postID);
+                    }
+                    else if(intentMessageAction.equals(action)){
+                        createMessageNotification(context, title, userId);
+                    }
                 }
 
 
@@ -120,6 +140,31 @@ public class MyCustomReceiver extends BroadcastReceiver {
         mNotificationManager.notify(45, noti);
     }
 
+    private void createMessageNotification(Context context, String title, String datavalue) {
+
+        Intent i = new Intent(context, ChatActivity.class);
+        i.putExtra("post_id", datavalue);
+        int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
+        int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
+        PendingIntent pIntent = PendingIntent.getActivity(context, requestID, i, flags);
+
+
+        Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.ic_notif_airballoon);
+
+        Notification noti =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.ic_notif_airballoon)
+                        .setLargeIcon(largeIcon)
+                        .setContentTitle("Travel Message")
+                        .setContentText(title).setAutoCancel(true)
+                        .setContentIntent(pIntent).build();
+
+        NotificationManager mNotificationManager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(45, noti);
+    }
+
     // Handle push notification by invoking activity directly
     private void launchSomeActivity(Context context, String datavalue) {
         Intent pupInt = new Intent(context, DetailActivity.class);
@@ -132,6 +177,14 @@ public class MyCustomReceiver extends BroadcastReceiver {
     // to which the activity subscribes to
     private void triggerBroadcastToActivity(Context context) {
         Intent in = new Intent("com.mycompany.traveljournal.detailsscreen.MainPostFragment");
+        LocalBroadcastManager.getInstance(context).sendBroadcast(in);
+    }
+
+    private void triggerBroadcastToChatActivity(Context context, String message, String userId, String profileImg) {
+        Intent in = new Intent("com.mycompany.traveljournal.chatscreen.ChatActivity");
+        in.putExtra("message", message);
+        in.putExtra("userId", userId);
+        in.putExtra("profileImg", profileImg);
         LocalBroadcastManager.getInstance(context).sendBroadcast(in);
     }
 }

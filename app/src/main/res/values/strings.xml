@@ -34,6 +34,7 @@
     <!-- Comments -->
     <string name="add_comment_hint">Write a Comment&#8230;</string>
     <string name="button_add_comment">Add</string>
+    <string name="button_send_chat">Send</string>
     <string name="comment_user_name">My Name Here</string>
     <string name="comment_body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed leo odio. Mauris eu nibh sollicitudin, blandit nulla nec, pharetra ante.</string>
     <string name="title_activity_photo">PhotoActivity</string>
@@ -43,7 +44,10 @@
     <string name="new_posts_message">New Posts</string>
     <string name="map_long_click_hint">Long click to see travel route</string>
 
-
+    <string name="message_hint">Say anything</string>
+    <string name="send">Send</string>
+    <string name="profile_me">My Profile Pic</string>
+    <string name="profile_other">Other profile pic</string>
 
     <string name="progress_bar">This is a progress indicator</string>
 
