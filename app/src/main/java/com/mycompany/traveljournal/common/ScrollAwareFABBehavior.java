@@ -1,5 +1,7 @@
 package com.mycompany.traveljournal.common;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.os.Build;
 import android.support.design.widget.CoordinatorLayout;
@@ -13,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 
+import com.google.android.gms.internal.de;
 import com.mycompany.traveljournal.R;
 
 /**

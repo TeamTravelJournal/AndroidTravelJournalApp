@@ -5,9 +5,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.facebook.FacebookSdk;
+import com.mycompany.traveljournal.common.MyCustomReceiver;
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.models.Comment;
 import com.mycompany.traveljournal.models.Like;
+import com.mycompany.traveljournal.models.Message;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalCallBack;
@@ -20,9 +22,13 @@ import com.parse.ParseFacebookUtils;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,6 +70,7 @@ public class ParseClient implements JournalService {
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Like.class);
         ParseObject.registerSubclass(Comment.class);
+        ParseObject.registerSubclass(Message.class);
 
         Parse.initialize(context, "ZFoSsZ6iQBe1CvJaNqio6V0nmlN4V7U4VzboX4J4", "0GDxAZahVe7ibC6pqiMNK6n91fYoh7HRfxXLo5TK");
         ParseUser.enableRevocableSessionInBackground();
@@ -415,6 +422,70 @@ public class ParseClient implements JournalService {
         }
 
         return resultPosts;
+    }
+
+    public void createMessage(String post, String userId, final JournalCallBack journalCallBack)
+    {
+        Message message = new Message();
+        message.put("userId", userId);
+        message.put("body", post);
+        message.put("parse_user", ParseUser.getCurrentUser());
+        message.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null)
+                    journalCallBack.onSuccess(new Object());
+            }
+        });
+    }
+
+    public void receiveMessage(int limit, final JournalCallBack<List<Message>> journalCallBack){
+
+        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+        // Configure limit and sort order
+        query.setLimit(limit);
+        query.orderByAscending("createdAt");
+        query.include("parse_user");
+        // Execute query to fetch all messages from Parse asynchronously
+        // This is equivalent to a SELECT query with SQL
+        query.findInBackground(new FindCallback<Message>() {
+            public void done(List<Message> messages, ParseException e) {
+                if (e == null) {
+                    journalCallBack.onSuccess(messages);
+                } else {
+                    Log.d("message", "Error: " + e.getMessage());
+                    journalCallBack.onFailure(e);
+                }
+            }
+        });
+
+    }
+
+
+    public void sendPushMessage(String message, String toUserId, String profileImg){
+        JSONObject obj;
+        try {
+            obj = new JSONObject();
+            obj.put("content", "New message send by " + Util.getUserFromParseUser(ParseUser.getCurrentUser()).getName());
+            obj.put("action", MyCustomReceiver.intentMessageAction);
+            obj.put("customdata", message);
+            obj.put("profileImg", profileImg);
+            obj.put("userId", ParseUser.getCurrentUser().getObjectId());
+
+            ParsePush push = new ParsePush();
+            ParseQuery query = ParseInstallation.getQuery();
+
+            // Push the notification to Android users
+            query.whereEqualTo("deviceType", "android");
+            query.whereNotEqualTo("user", ParseUser.getCurrentUser());
+
+            push.setQuery(query);
+            push.setData(obj);
+            push.sendInBackground();
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+        }
     }
 
 }
