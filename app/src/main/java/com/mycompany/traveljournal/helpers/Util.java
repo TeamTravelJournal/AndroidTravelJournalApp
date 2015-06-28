@@ -3,6 +3,7 @@ package com.mycompany.traveljournal.helpers;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -130,13 +131,43 @@ public class Util {
         return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
     }
 
-    public static Bitmap rotateBitmapOrientation(String file) {
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    public static Bitmap rotateBitmapOrientation(String file, int reqWidth, int reqHeight) {
         // Create and configure BitmapFactory
-        BitmapFactory.Options bounds = new BitmapFactory.Options();
-        bounds.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(file, bounds);
         BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(file, opts);
+
+        // Calculate inSampleSize
+        opts.inSampleSize = calculateInSampleSize(opts, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        opts.inJustDecodeBounds = false;
+
         Bitmap bm = BitmapFactory.decodeFile(file, opts);
+
         // Read EXIF Data
         ExifInterface exif = null;
         try {
@@ -153,7 +184,7 @@ public class Util {
         // Rotate Bitmap
         Matrix matrix = new Matrix();
         matrix.setRotate(rotationAngle, (float) bm.getWidth() / 2, (float) bm.getHeight() / 2);
-        Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bounds.outWidth, bounds.outHeight, matrix, true);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, opts.outWidth, opts.outHeight, matrix, true);
         // Return result
         return rotatedBitmap;
     }
