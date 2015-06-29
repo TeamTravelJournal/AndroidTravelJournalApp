@@ -412,9 +412,25 @@ public class DetailFragment extends TravelBaseFragment {
             Bitmap selectedImage=null;
             try{
                 File file = new File(galleryPhotoPath);
-                Uri uri = Uri.parse("content:/" + galleryPhotoPath);
+                Uri uri = Uri.fromFile(file);
+                //Uri uri = Uri.parse("content:/" + galleryPhotoPath);
 
-                selectedImage = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), uri);
+                Bitmap selectedImage1 = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), uri);
+
+                int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
+                int width = selectedImage1.getWidth();
+                int height = selectedImage1.getHeight();
+                Log.d(TAG, "selected image width: " + width + ", height: " + height);
+                if(width > height){
+                    Log.d(TAG, "wide image");
+                    //Following screenWidth is coming bigger than we expect
+                    // that is why we use smaller than to width to scale
+                    selectedImage = BitmapScaler.scaleToFitWidth(selectedImage1, screenWidth/2);
+                }else{
+                    Log.d(TAG, "tall image");
+                    selectedImage = BitmapScaler.scaleToFitWidth(selectedImage1, screenWidth/3);
+                }
+
             }catch(IOException e){
                 Log.d(TAG, "IOException: " + e.getMessage());
                 e.printStackTrace();

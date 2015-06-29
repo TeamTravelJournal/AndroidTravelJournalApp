@@ -37,8 +37,8 @@ public class CreatePostActivity extends PostsListActivity{
 
     @Override
     public void setUpFragment() {
-        //setUpCameraIntent();
-        onPickPhoto();
+        setUpCameraIntent();
+        //onPickPhoto();
         createPostFragment =  CreatePostFragment.newInstance();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flContainer, createPostFragment, CREATE_FRAGMENT_TAG);
