@@ -1,9 +1,11 @@
 package com.mycompany.traveljournal.createscreen;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -42,6 +44,7 @@ import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
@@ -57,9 +60,12 @@ public class CreatePostFragment extends Fragment {
     Button btPost;
     Bitmap takenImage;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    public final static int PICK_PHOTO_CODE = 1046;
     public String photoFileName = "photo.jpg";
     JournalService client;
     String m_localPhotoPath;
+    String m_galleryPhotoPath;
+    Bitmap selectedImage;
     private final static String TAG = "CreatePostFragmentDebug";
     ProgressBar pbLoading;
     ImageView ivPBGif;
@@ -67,6 +73,7 @@ public class CreatePostFragment extends Fragment {
     ImageView ivProfile;
     User m_currentUser;
     ImageView ivCross;
+    ImageView ivGallery;
 
     public static CreatePostFragment newInstance(){
         CreatePostFragment createPostFragment = new CreatePostFragment();
@@ -124,6 +131,13 @@ public class CreatePostFragment extends Fragment {
             }
         });
 
+        ivGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPickPhoto();
+            }
+        });
+
         btPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,15 +149,31 @@ public class CreatePostFragment extends Fragment {
                 //PostCreator postCreator =  new PostCreator();
                 //int bytes = takenImage.getByteCount();
                 //Toast.makeText(getActivity(), "After size 2 " + bytes,Toast.LENGTH_SHORT).show();
-                byte[] array = Util.getByteArrayFromBitmap(takenImage);
+                byte[] array;
+
+                //loc is current location
+                LatLng loc = latLng;
+
+                if(m_localPhotoPath!=null){//camera image
+                    array = Util.getByteArrayFromBitmap(takenImage);
+                }else{//gallery image
+                    array = Util.getByteArrayFromBitmap(selectedImage);
+                    //latlng should be retrieved from the image
+                    LatLng tmp = Util.getLatLngFromImage(m_galleryPhotoPath);
+                    if(tmp!=null){
+                        loc = tmp;
+                    }else{
+                        Log.d(TAG, "LatLng from gallery image is null");
+                    }
+                }
 
                 //double latitude = 37.421828;
                 //double longitude = -122.084889;
 
-                String city = Util.getCity(getActivity(), latLng);
+                String city = Util.getCity(getActivity(), loc);
 
                 //client.createPost(array, etCaption.getText().toString(), "", "", latitude, longitude, new JournalCallBack<Post>() {
-                client.createPost(array, etCaption.getText().toString(), city, "", latLng.latitude, latLng.longitude, new JournalCallBack<Post>() {
+                client.createPost(array, etCaption.getText().toString(), city, "", loc.latitude, loc.longitude, new JournalCallBack<Post>() {
                     @Override
                     public void onSuccess(Post post) {
                         //post created, image upload and image url update is happening at the background
@@ -175,6 +205,8 @@ public class CreatePostFragment extends Fragment {
         Intent i = new Intent(getActivity(), DetailActivity.class);
         i.putExtra("post_id", postID);
         i.putExtra("local_photo_path", m_localPhotoPath);
+        i.putExtra("gallery_photo_path", m_galleryPhotoPath);
+
         startActivity(i);
         getActivity().finish();
     }
@@ -187,9 +219,18 @@ public class CreatePostFragment extends Fragment {
         getActivity().startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
+    // Trigger gallery selection for a photo
+    public void onPickPhoto() {
+        // Create intent for picking a photo from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // Bring up gallery to select a photo
+        getActivity().startActivityForResult(intent, PICK_PHOTO_CODE);
+    }
+
     public void setUpViews(View v){
         ivPreview = (ImageView) v.findViewById(R.id.ivPreview);
         ivCamera = (ImageView) v.findViewById(R.id.ivCamera);
+        ivGallery = (ImageView) v.findViewById(R.id.ivGallery);
         btPost = (Button)v.findViewById(R.id.btPost);
         etCaption = (EditText)v.findViewById(R.id.etCaption);
         ivPreview.setImageBitmap(takenImage);
@@ -214,8 +255,9 @@ public class CreatePostFragment extends Fragment {
         }
     }
 
-    public void setPhotoPath(Uri photoPathUri){
+    public void setPhotoPathForCameraImage(Uri photoPathUri){
         m_localPhotoPath = photoPathUri.getPath();
+        m_galleryPhotoPath = null;
         int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
         int screenHeight = DeviceDimensionsHelper.getDisplayHeight(getActivity());
 
@@ -245,6 +287,58 @@ public class CreatePostFragment extends Fragment {
 
         ivPreview.setImageBitmap(takenImage);
         ivCross.setImageResource(R.drawable.icon_cross_24);
+    }
+
+    public void setPhotoPathForGalleryImage(Uri photoPathUri){
+
+        if (photoPathUri.getScheme().toString().compareTo("content")==0)
+        {
+            Cursor cursor = this.getActivity().getContentResolver().query(photoPathUri, null, null, null, null);
+            if (cursor.moveToFirst())
+            {
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);//Instead of "MediaStore.Images.Media.DATA" can be used "_data"
+                Uri filePathUri = Uri.parse(cursor.getString(column_index));
+                String file_name = filePathUri.getLastPathSegment().toString();
+                String file_path=filePathUri.getPath();
+                Log.d(TAG, "File Name & PATH are:"+file_name+"\n"+file_path);
+                m_galleryPhotoPath = file_path;
+                //Toast.makeText(getActivity(),"File Name & PATH are:"+file_name+"\n"+file_path, Toast.LENGTH_LONG).show();
+            }
+        }
+
+        m_localPhotoPath = null;
+
+        try{
+            Bitmap selectedImage1 = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), photoPathUri);
+
+            int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
+            // Resize a Bitmap maintaining aspect ratio based on screen width
+
+            int width = selectedImage1.getWidth();
+            int height = selectedImage1.getHeight();
+            Log.d(TAG, "selected image width: " + width + ", height: " + height);
+            if(width > height){
+                Log.d(TAG, "wide image");
+                //Following screenWidth is coming bigger than we expect
+                // that is why we use smaller than to width to scale
+                selectedImage = BitmapScaler.scaleToFitWidth(selectedImage1, screenWidth/2);
+            }else{
+                Log.d(TAG, "tall image");
+                selectedImage = BitmapScaler.scaleToFitWidth(selectedImage1, screenWidth/3);
+            }
+
+        }catch(IOException e){
+            Log.d(TAG, "IOException: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        if(selectedImage!=null){
+            ivPreview.setImageBitmap(selectedImage);
+            ivCross.setImageResource(R.drawable.icon_cross_24);
+        }
+        else{
+            Log.d(TAG, "Selected image is null");
+        }
     }
 
     public void initLocationService(){

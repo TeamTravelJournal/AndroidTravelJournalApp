@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -40,6 +41,8 @@ import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +71,7 @@ public class DetailFragment extends TravelBaseFragment {
     private User m_user;
     private TextView tvNumComments;
     private String localPhotoPath;
+    private String galleryPhotoPath;
     private boolean imageViewLoaded = false;
     private ViewPager viewPager;
     com.nirhart.parallaxscroll.views.ParallaxScrollView parallaxScrollView;
@@ -89,11 +93,12 @@ public class DetailFragment extends TravelBaseFragment {
     private ImageView ivSadFaceOutside;
     private TextView tvNumFollowers;
 
-    public static DetailFragment newInstance(String postId, String localPhotoPath) {
+    public static DetailFragment newInstance(String postId, String localPhotoPath, String galleryPhotoPath) {
         DetailFragment detailFragment = new DetailFragment();
         Bundle args = new Bundle();
         args.putString("post_id", postId);
         args.putString("local_photo_path", localPhotoPath);
+        args.putString("gallery_photo_path", galleryPhotoPath);
         detailFragment.setArguments(args);
         return detailFragment;
     }
@@ -244,8 +249,9 @@ public class DetailFragment extends TravelBaseFragment {
 
         postId = getArguments().getString("post_id", "");
         localPhotoPath = getArguments().getString("local_photo_path");
+        galleryPhotoPath = getArguments().getString("gallery_photo_path");
 
-        Log.wtf(TAG, "post_id is : " + postId + " , local_photo_path is : " + localPhotoPath);
+        Log.wtf(TAG, "post_id is : " + postId + " , local_photo_path is : " + localPhotoPath + ", gallery photo path is : " + galleryPhotoPath);
 
         client = JournalApplication.getClient();
     }
@@ -398,8 +404,49 @@ public class DetailFragment extends TravelBaseFragment {
             ImageAdapter adapter = new ImageAdapter(getActivity(), fakeImg , localImage);
             viewPager.setAdapter(adapter);
             imageViewLoaded = true;
+        }
+        else if(galleryPhotoPath!=null) {
+
+            Log.d(TAG, "gallery_photo_path : " + galleryPhotoPath);
+
+            Bitmap selectedImage=null;
+            try{
+                File file = new File(galleryPhotoPath);
+                Uri uri = Uri.fromFile(file);
+                //Uri uri = Uri.parse("content:/" + galleryPhotoPath);
+
+                Bitmap selectedImage1 = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), uri);
+
+                int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
+                int width = selectedImage1.getWidth();
+                int height = selectedImage1.getHeight();
+                Log.d(TAG, "selected image width: " + width + ", height: " + height);
+                if(width > height){
+                    Log.d(TAG, "wide image");
+                    //Following screenWidth is coming bigger than we expect
+                    // that is why we use smaller than to width to scale
+                    selectedImage = BitmapScaler.scaleToFitWidth(selectedImage1, screenWidth/2);
+                }else{
+                    Log.d(TAG, "tall image");
+                    selectedImage = BitmapScaler.scaleToFitWidth(selectedImage1, screenWidth/3);
+                }
+
+            }catch(IOException e){
+                Log.d(TAG, "IOException: " + e.getMessage());
+                e.printStackTrace();
+            }
+            if(selectedImage!=null){
+
+                ArrayList<String> fakeImg = new ArrayList<String>();
+                fakeImg.add("");
+                ImageAdapter adapter = new ImageAdapter(getActivity(), fakeImg , selectedImage);
+                viewPager.setAdapter(adapter);
+                imageViewLoaded = true;
+            }else{
+                Log.d(TAG, "selected image is null");
+            }
         }else{
-            Log.d(TAG, "local photo path is null");
+            Log.d(TAG, "local/gallery photo path is null");
         }
     }
 

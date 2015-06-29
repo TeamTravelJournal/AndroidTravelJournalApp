@@ -49,6 +49,8 @@ public class Util {
     public static final int MAX_POST_SEARCH_DISTANCE = 15;
     public static final int ZOOM_HIGH=17;
     public static final int ZOOM_MEDIUM=10;
+    public static final String TAG = "Util";
+
     /*
      * Define a request code to send to Google Play services This code is
      * returned in Activity.onActivityResult
@@ -305,5 +307,52 @@ public class Util {
             e.printStackTrace();
         }
         return bmpUri;
+    }
+
+    public static LatLng getLatLngFromImage(String imageFile){
+
+        String exif = "Exif: " + imageFile;
+        LatLng location = null;
+        try {
+            ExifInterface exifInterface = new ExifInterface(imageFile);
+
+            exif += "\nIMAGE_LENGTH: " + exifInterface.getAttribute(ExifInterface.TAG_IMAGE_LENGTH);
+            exif += "\nIMAGE_WIDTH: " + exifInterface.getAttribute(ExifInterface.TAG_IMAGE_WIDTH);
+            exif += "\n DATETIME: " + exifInterface.getAttribute(ExifInterface.TAG_DATETIME);
+            exif += "\n TAG_MAKE: " + exifInterface.getAttribute(ExifInterface.TAG_MAKE);
+            exif += "\n TAG_MODEL: " + exifInterface.getAttribute(ExifInterface.TAG_MODEL);
+            exif += "\n TAG_ORIENTATION: " + exifInterface.getAttribute(ExifInterface.TAG_ORIENTATION);
+            exif += "\n TAG_WHITE_BALANCE: " + exifInterface.getAttribute(ExifInterface.TAG_WHITE_BALANCE);
+            exif += "\n TAG_FOCAL_LENGTH: " + exifInterface.getAttribute(ExifInterface.TAG_FOCAL_LENGTH);
+            exif += "\n TAG_FLASH: " + exifInterface.getAttribute(ExifInterface.TAG_FLASH);
+            exif += "\nGPS related:";
+            exif += "\n TAG_GPS_DATESTAMP: " + exifInterface.getAttribute(ExifInterface.TAG_GPS_DATESTAMP);
+            exif += "\n TAG_GPS_TIMESTAMP: " + exifInterface.getAttribute(ExifInterface.TAG_GPS_TIMESTAMP);
+            exif += "\n TAG_GPS_LATITUDE: " + exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
+            exif += "\n TAG_GPS_LATITUDE_REF: " + exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF);
+            exif += "\n TAG_GPS_LONGITUDE: " + exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+            exif += "\n TAG_GPS_LONGITUDE_REF: " + exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF);
+            exif += "\n TAG_GPS_PROCESSING_METHOD: " + exifInterface.getAttribute(ExifInterface.TAG_GPS_PROCESSING_METHOD);
+
+            Log.d(TAG, "Exif: " + exif);
+
+            float[] latLong = new float[2];
+            if (exifInterface.getLatLong(latLong)) {
+                // latLong[0] holds the Latitude value now.
+                // latLong[1] holds the Longitude value now.
+                location = new LatLng(latLong[0],latLong[1]);
+                Log.d(TAG, location.toString());
+            }
+            else {
+                // Latitude and Longitude were not included in the Exif data.
+                Log.d(TAG, "no latlng data on image exif");
+            }
+
+        }catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            Log.d(TAG, "IOException " + e.getMessage());
+        }
+        return location;
     }
 }
