@@ -228,14 +228,14 @@ public class CreatePostFragment extends Fragment {
     public void setPhotoPathForCameraImage(Uri photoPathUri){
         m_localPhotoPath = photoPathUri.getPath();
         m_galleryPhotoPath = null;
+        int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
+        int screenHeight = DeviceDimensionsHelper.getDisplayHeight(getActivity());
 
-        Bitmap takenImage1 = Util.rotateBitmapOrientation(photoPathUri.getPath());
+        Bitmap takenImage1 = Util.rotateBitmapOrientation(photoPathUri.getPath(), screenWidth/3, screenHeight/3);
         //int bytes1 = takenImage1.getByteCount();
         //Toast.makeText(getActivity(), "Before width " + takenImage1.getWidth() + " height " + takenImage1.getHeight() + " size " +  + bytes1, Toast.LENGTH_SHORT).show();
 
-        int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
         // Resize a Bitmap maintaining aspect ratio based on screen width
-
         int width = takenImage1.getWidth();
         int height = takenImage1.getHeight();
         Log.d(TAG, "taken image width: " + width + ", height: " + height);
@@ -248,6 +248,8 @@ public class CreatePostFragment extends Fragment {
             Log.d(TAG, "tall image");
             takenImage = BitmapScaler.scaleToFitWidth(takenImage1, screenWidth/3);
         }
+
+        takenImage1 = null;
 
         //int bytes = takenImage.getByteCount();
         //Toast.makeText(getActivity(), "Before width " + takenImage.getWidth() + " height " + takenImage.getHeight() + " size " +  + bytes, Toast.LENGTH_SHORT).show();

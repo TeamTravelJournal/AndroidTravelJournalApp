@@ -390,11 +390,16 @@ public class DetailFragment extends TravelBaseFragment {
         if(localPhotoPath!=null) {
 
             Log.d(TAG, "local_photo_path : " + localPhotoPath);
-            Bitmap takenImage1 = Util.rotateBitmapOrientation(localPhotoPath);
             int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
+            int screenHeight = DeviceDimensionsHelper.getDisplayHeight(getActivity());
+
+            Bitmap takenImage1 = Util.rotateBitmapOrientation(localPhotoPath, screenWidth/3, screenHeight/3);
+
             Bitmap localImage = BitmapScaler.scaleToFitWidth(takenImage1, screenWidth);
             ArrayList<String> fakeImg = new ArrayList<String>();
             fakeImg.add("");
+
+            takenImage1 = null;
 
             ImageAdapter adapter = new ImageAdapter(getActivity(), fakeImg , localImage);
             viewPager.setAdapter(adapter);

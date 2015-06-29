@@ -38,14 +38,22 @@
 
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/lvChat"
+    <!--ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/rlAddComment"
-        android:layout_below="@+id/toolbar"
-        >
-    </ListView>
+        android:scrollbarStyle="outsideInset"
+        android:id="@+id/m_scroll"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/toolbar"-->
+
+            <ListView
+                android:id="@+id/lvChat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/rlAddComment"
+                android:layout_below="@+id/toolbar">
+            </ListView>
+
+    <!--/ScrollView-->
 
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"

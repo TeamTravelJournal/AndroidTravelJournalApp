@@ -24,5 +24,20 @@ public class BitmapScaler
         return Bitmap.createScaledBitmap(b, (int) (b.getWidth() * factor), height, true);
     }
 
+    public static int scaledHeight(Bitmap b, int width)
+    {
+        float factor = width / (float) b.getWidth();
+        return (int) (b.getHeight() * factor);
+    }
+
+
+    // Scale and maintain aspect ratio given a desired height
+    // BitmapScaler.scaleToFitHeight(bitmap, 100);
+    public static int scaledWidth(Bitmap b, int height)
+    {
+        float factor = height / (float) b.getHeight();
+        return (int) (b.getWidth() * factor);
+    }
+
     // ...
 }
