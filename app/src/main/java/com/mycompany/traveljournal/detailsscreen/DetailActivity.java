@@ -17,6 +17,7 @@ public class DetailActivity extends PostsListActivity implements DetailFragment.
     DetailFragment detailFragment;
     String postId;
     String localPhotoPath;
+    String galleryPhotoPath;
     private final int REQUEST_CODE_OPEN_COMMENTS = 123;
 
     @Override
@@ -25,7 +26,8 @@ public class DetailActivity extends PostsListActivity implements DetailFragment.
         // Get Post ID
         postId = getIntent().getStringExtra("post_id");
         localPhotoPath = getIntent().getStringExtra("local_photo_path");
-
+        galleryPhotoPath = getIntent().getStringExtra("gallery_photo_path");
+        
         if (postId == null) {
             Log.wtf(TAG, "Using default post id");
             postId = "8nxq1SkIUo";
@@ -47,7 +49,7 @@ public class DetailActivity extends PostsListActivity implements DetailFragment.
 
     @Override
     public void setUpFragment() {
-        detailFragment =  DetailFragment.newInstance(postId, localPhotoPath);
+        detailFragment =  DetailFragment.newInstance(postId, localPhotoPath, galleryPhotoPath);
         detailFragment.setListener(this);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flContainer, detailFragment, DETAIL_FRAGMENT_TAG);

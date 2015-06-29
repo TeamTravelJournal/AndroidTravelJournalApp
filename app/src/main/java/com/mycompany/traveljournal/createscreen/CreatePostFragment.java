@@ -42,6 +42,7 @@ import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
@@ -60,6 +61,8 @@ public class CreatePostFragment extends Fragment {
     public String photoFileName = "photo.jpg";
     JournalService client;
     String m_localPhotoPath;
+    String m_galleryPhotoPath;
+    Bitmap selectedImage;
     private final static String TAG = "CreatePostFragmentDebug";
     ProgressBar pbLoading;
     ImageView ivPBGif;
@@ -135,7 +138,13 @@ public class CreatePostFragment extends Fragment {
                 //PostCreator postCreator =  new PostCreator();
                 //int bytes = takenImage.getByteCount();
                 //Toast.makeText(getActivity(), "After size 2 " + bytes,Toast.LENGTH_SHORT).show();
-                byte[] array = Util.getByteArrayFromBitmap(takenImage);
+                byte[] array;
+
+                if(m_localPhotoPath!=null){//camera image
+                    array = Util.getByteArrayFromBitmap(takenImage);
+                }else{//gallery image
+                    array = Util.getByteArrayFromBitmap(selectedImage);
+                }
 
                 //double latitude = 37.421828;
                 //double longitude = -122.084889;
@@ -175,6 +184,8 @@ public class CreatePostFragment extends Fragment {
         Intent i = new Intent(getActivity(), DetailActivity.class);
         i.putExtra("post_id", postID);
         i.putExtra("local_photo_path", m_localPhotoPath);
+        i.putExtra("gallery_photo_path", m_galleryPhotoPath);
+
         startActivity(i);
         getActivity().finish();
     }
@@ -214,8 +225,9 @@ public class CreatePostFragment extends Fragment {
         }
     }
 
-    public void setPhotoPath(Uri photoPathUri){
+    public void setPhotoPathForCameraImage(Uri photoPathUri){
         m_localPhotoPath = photoPathUri.getPath();
+        m_galleryPhotoPath = null;
 
         Bitmap takenImage1 = Util.rotateBitmapOrientation(photoPathUri.getPath());
         //int bytes1 = takenImage1.getByteCount();
@@ -243,6 +255,43 @@ public class CreatePostFragment extends Fragment {
 
         ivPreview.setImageBitmap(takenImage);
         ivCross.setImageResource(R.drawable.icon_cross_24);
+    }
+
+    public void setPhotoPathForGalleryImage(Uri photoPathUri){
+        m_galleryPhotoPath = photoPathUri.getPath();
+        m_localPhotoPath = null;
+
+        try{
+            Bitmap selectedImage1 = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), photoPathUri);
+
+            int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
+            // Resize a Bitmap maintaining aspect ratio based on screen width
+
+            int width = selectedImage1.getWidth();
+            int height = selectedImage1.getHeight();
+            Log.d(TAG, "selected image width: " + width + ", height: " + height);
+            if(width > height){
+                Log.d(TAG, "wide image");
+                //Following screenWidth is coming bigger than we expect
+                // that is why we use smaller than to width to scale
+                selectedImage = BitmapScaler.scaleToFitWidth(selectedImage1, screenWidth/2);
+            }else{
+                Log.d(TAG, "tall image");
+                selectedImage = BitmapScaler.scaleToFitWidth(selectedImage1, screenWidth/3);
+            }
+
+        }catch(IOException e){
+            Log.d(TAG, "IOException: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        if(selectedImage!=null){
+            ivPreview.setImageBitmap(selectedImage);
+            ivCross.setImageResource(R.drawable.icon_cross_24);
+        }
+        else{
+            Log.d(TAG, "Selected image is null");
+        }
     }
 
     public void initLocationService(){
