@@ -22,7 +22,8 @@ import com.mycompany.traveljournal.profilescreen.ProfileActivity;
 /**
  * Created by sjayaram on 6/5/2015.
  */
-public class CreatePostActivity extends PostsListActivity{
+public class CreatePostActivity extends PostsListActivity implements
+        CreatePostFragment.OnAttachedListener{
 
     CreatePostFragment createPostFragment;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
@@ -37,8 +38,9 @@ public class CreatePostActivity extends PostsListActivity{
 
     @Override
     public void setUpFragment() {
-        setUpCameraIntent();
+        //setUpCameraIntent();
         //onPickPhoto();
+
         createPostFragment =  CreatePostFragment.newInstance();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flContainer, createPostFragment, CREATE_FRAGMENT_TAG);
@@ -47,6 +49,20 @@ public class CreatePostActivity extends PostsListActivity{
 
     public void setUpFragmentFromTag(){
         createPostFragment = (CreatePostFragment)getSupportFragmentManager().findFragmentByTag(CREATE_FRAGMENT_TAG);
+    }
+
+    public void triggerFragmentFromGalleryShare(){
+        // Get intent, action and MIME type
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if (type.startsWith("image/")) {
+                Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                createPostFragment.setPhotoPathForGalleryImage(imageUri);
+            }
+        }
     }
 
     // Trigger camera
@@ -88,5 +104,10 @@ public class CreatePostActivity extends PostsListActivity{
     public void onBackPressed() {
         finish();
         overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
+
+    @Override
+    public void OnAttached() {
+        triggerFragmentFromGalleryShare();
     }
 }
