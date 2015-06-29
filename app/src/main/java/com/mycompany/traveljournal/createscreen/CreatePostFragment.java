@@ -1,11 +1,10 @@
 package com.mycompany.traveljournal.createscreen;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,17 +18,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.google.android.gms.internal.cr;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.LocationOnConnectListener;
 import com.mycompany.traveljournal.common.LocationService;
-import com.mycompany.traveljournal.common.ProgressBarListener;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 import com.mycompany.traveljournal.helpers.BitmapScaler;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
@@ -39,13 +31,9 @@ import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
-
-import java.io.File;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
 /**
  * Created by sjayaram on 6/5/2015.
@@ -82,6 +70,26 @@ public class CreatePostFragment extends Fragment {
         return createPostFragment;
     }
 
+    // Define the listener of the interface type
+    // listener is the activity itself
+    private OnAttachedListener listener;
+
+    // Define the events that the fragment will use to communicate
+    public interface OnAttachedListener {
+        public void OnAttached();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof OnAttachedListener) {
+            listener = (OnAttachedListener) activity;
+        } else {
+            throw new ClassCastException(activity.toString()
+                    + " must implement CreatePostFragment.OnAttachedListener");
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_create, container, false);
@@ -91,6 +99,7 @@ public class CreatePostFragment extends Fragment {
         setUpViews(view);
         setUpListeners();
         initLocationService();
+        listener.OnAttached();
         return view;
     }
 
@@ -242,6 +251,7 @@ public class CreatePostFragment extends Fragment {
         ivProfile = (ImageView) v.findViewById(R.id.ivProfileImageCreate);
 
         ivProfile.setImageResource(android.R.color.transparent);
+        ivCross.setImageResource(android.R.color.transparent);
 
         if(m_currentUser != null)
         {

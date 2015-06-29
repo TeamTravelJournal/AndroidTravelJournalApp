@@ -54,8 +54,12 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         setUpViews();
         startWithCurrentUser();
+        mMessages = new ArrayList();
+        mAdapter = new ChatListAdapter(ChatActivity.this, sUserId, mMessages);
+        lvChat.setAdapter(mAdapter);
         client = JournalApplication.getClient();
         loadMessages();
+        setupMessagePosting();
     }
 
     public void setUpViews() {
@@ -63,9 +67,6 @@ public class ChatActivity extends AppCompatActivity {
         etMessage = (EditText) findViewById(R.id.etMessage);
         btSend = (Button) findViewById(R.id.btSend);
         lvChat = (ListView) findViewById(R.id.lvChat);
-        mMessages = new ArrayList();
-        mAdapter = new ChatListAdapter(ChatActivity.this, sUserId, mMessages);
-        lvChat.setAdapter(mAdapter);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
@@ -91,7 +92,6 @@ public class ChatActivity extends AppCompatActivity {
     // Get the userId from the cached currentUser object
     private void startWithCurrentUser() {
         sUserId = ParseUser.getCurrentUser().getObjectId();
-        setupMessagePosting();
     }
 
     @Override

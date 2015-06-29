@@ -129,7 +129,25 @@
                 android:src="@drawable/ic_action_edit_red"
                 /-->
 
-            <android.support.design.widget.FloatingActionButton
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivCamera"
+                android:layout_alignParentLeft="true"
+                android:padding="10dp"
+                android:src="@drawable/camera_create"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivGallery"
+                android:layout_toRightOf="@id/ivCamera"
+                android:padding="10dp"
+                android:src="@drawable/gallery"
+                />
+
+            <!--android.support.design.widget.FloatingActionButton
                 android:id="@+id/ivCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,17 +155,7 @@
                 android:padding="15dp"
                 app:borderWidth="0dp"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@drawable/camera" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/ivGallery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/ivCamera"
-                android:padding="15dp"
-                app:borderWidth="0dp"
-                android:layout_margin="@dimen/fab_margin"
-                android:src="@drawable/ic_clock_grey600_18dp" />
+                android:src="@drawable/camera" /-->
 
             <Button
                 android:layout_width="wrap_content"
