@@ -3,7 +3,6 @@ package com.mycompany.traveljournal.mainscreen;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,18 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
-import com.etiennelawlor.quickreturn.library.listeners.QuickReturnListViewOnScrollListener;
-import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
-import com.etiennelawlor.quickreturn.library.utils.QuickReturnUtils;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListFragment;
-import com.mycompany.traveljournal.common.MyCustomReceiver;
 import com.mycompany.traveljournal.createscreen.CreatePostActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.mapscreen.MapActivity;
 import com.mycompany.traveljournal.models.Post;

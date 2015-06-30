@@ -289,20 +289,18 @@ public class ParseClient implements JournalService {
         });
     }
 
-    public void getUserWithId(String userId, final JournalCallBack<List<User>> journalCallBack) {
-        /*ParseQuery<User> query = ParseQuery.getQuery(User.class);
-        query.whereEqualTo("user_id", userId);
+    public ParseUser getUserWithId(String userId) {
+        ParseUser user = null;
+        ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+        query.whereEqualTo("objectId", userId);
         query.setLimit(1);
-        query.findInBackground(new FindCallback<User>() {
-            @Override
-            public void done(List<User> resultUsers, ParseException e) {
-                if (e == null) {
-                    journalCallBack.onSuccess(resultUsers);
-                } else {
-                    journalCallBack.onFailure(e);
-                }
-            }
-        });*/
+        try {
+            user = query.getFirst();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return user;
     }
 
     public void createComment(String postId, String body, final JournalCallBack<Comment> journalCallBack) {
