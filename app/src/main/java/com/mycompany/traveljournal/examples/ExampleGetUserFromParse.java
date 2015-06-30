@@ -20,7 +20,7 @@ public class ExampleGetUserFromParse {
     public static void run() {
         String userId = "1";
         JournalService client = JournalApplication.getClient();
-        client.getUserWithId(userId, new JournalCallBack<List<User>>() {
+        /*client.getUserWithId(userId, new JournalCallBack<List<User>>() {
             public void onSuccess(List<User> users) {
                 User user = users.get(0);
                 Log.wtf(TAG, user.getName());
@@ -31,6 +31,6 @@ public class ExampleGetUserFromParse {
             public void onFailure(Exception e) {
                 Log.wtf(TAG, "User not found");
             }
-        });
+        });*/
     }
 }

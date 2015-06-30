@@ -4,6 +4,7 @@ import com.mycompany.traveljournal.models.Comment;
 import com.mycompany.traveljournal.models.Message;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.models.User;
+import com.parse.ParseUser;
 
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,7 @@ public interface JournalService {
 
     public void getPostsWithinMilesOrderByDate(Date createdAt, int maxDistance, double latitude, double longitude, int limit, JournalCallBack<List<Post>> journalCallBack);
 
-    public void getUserWithId(String userId, final JournalCallBack<List<User>> journalCallBack);
+    public ParseUser getUserWithId(String userId);
 
     public void createUser(String name, String profile_image_url, String cover_image_url);
 

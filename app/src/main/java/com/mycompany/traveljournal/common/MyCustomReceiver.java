@@ -11,13 +11,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PixelFormat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.chatscreen.ChatActivity;
 import com.mycompany.traveljournal.detailsscreen.DetailActivity;
+import com.mycompany.traveljournal.helpers.Util;
+import com.mycompany.traveljournal.service.JournalApplication;
+import com.mycompany.traveljournal.service.JournalService;
+import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,11 +41,10 @@ import java.util.List;
  */
 public class MyCustomReceiver extends BroadcastReceiver {
     private static final String TAG = "MyCustomReceiver";
-
+    private WindowManager windowManager;
+    private ImageView chatHead;
     public static final String intentMessageAction = "SEND_MESSAGE_PUSH";
-
     public static final String intentAction = "SEND_PUSH";
-    //public static final String activityAction = "com.mycompany.traveljournal.detailsscreen.MainPostFragment";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -91,9 +101,6 @@ public class MyCustomReceiver extends BroadcastReceiver {
                     if (intentAction.equals(action)) {
                         triggerBroadcastToActivity(context);
                     }
-                    else if(intentMessageAction.equals(action)){
-                        triggerBroadcastToChatActivity(context, postID, userId, profileImg);
-                    }
                 }
                 else{
                     //Activity Not Running
@@ -101,10 +108,22 @@ public class MyCustomReceiver extends BroadcastReceiver {
                     if (intentAction.equals(action)) {
                         createNotification(context, title, postID);
                     }
-                    else if(intentMessageAction.equals(action)){
+                }
+
+                if(componentInfo.getPackageName().equalsIgnoreCase("com.mycompany.traveljournal.chatscreen")){
+                    //Activity Running
+                    if(intentMessageAction.equals(action)){
+                        triggerBroadcastToChatActivity(context, postID, userId, profileImg);
+                    }
+                }
+                else{
+                    //Activity Not Running
+                    //Generate Notification
+                    if(intentMessageAction.equals(action)){
                         createMessageNotification(context, title, userId);
                     }
                 }
+
 
 
             } catch (JSONException ex) {
@@ -140,9 +159,9 @@ public class MyCustomReceiver extends BroadcastReceiver {
         mNotificationManager.notify(45, noti);
     }
 
-    private void createMessageNotification(Context context, String title, String datavalue) {
+    private void createMessageNotification(final Context context, String title, String datavalue) {
 
-        Intent i = new Intent(context, ChatActivity.class);
+        /*Intent i = new Intent(context, ChatActivity.class);
         i.putExtra("post_id", datavalue);
         int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
         int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
@@ -162,7 +181,71 @@ public class MyCustomReceiver extends BroadcastReceiver {
 
         NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(45, noti);
+        mNotificationManager.notify(45, noti);*/
+
+        JournalService client = JournalApplication.getClient();
+        ParseUser user = client.getUserWithId(datavalue);
+        windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+
+        chatHead = new ImageView(context);
+
+        Picasso.with(context)
+                .load(Util.getUserFromParseUser(user).getProfileImgUrl())
+                .fit()
+                .centerCrop()
+                .placeholder(R.drawable.placeholderthumbnail)
+                .transform(Util.getTransformation(30))
+                .into(chatHead);
+
+        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                320,
+                320,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+        params.gravity = Gravity.TOP | Gravity.LEFT;
+        params.x = 150;
+        params.y = 1050;
+
+        windowManager.addView(chatHead, params);
+
+        chatHead.setOnTouchListener(new View.OnTouchListener() {
+            private int initialX;
+            private int initialY;
+            private float initialTouchX;
+            private float initialTouchY;
+
+            @Override public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        initialX = params.x;
+                        initialY = params.y;
+                        initialTouchX = event.getRawX();
+                        initialTouchY = event.getRawY();
+                        return false;
+                    case MotionEvent.ACTION_UP:
+                        return false;
+                    case MotionEvent.ACTION_MOVE:
+                        params.x = initialX + (int) (event.getRawX() - initialTouchX);
+                        params.y = initialY + (int) (event.getRawY() - initialTouchY);
+                        windowManager.updateViewLayout(chatHead, params);
+                        return false;
+                }
+                return false;
+            }
+        });
+
+        chatHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, ChatActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.getApplicationContext().startActivity(i);
+                windowManager.removeView(chatHead);
+            }
+        });
+
     }
 
     // Handle push notification by invoking activity directly
@@ -186,5 +269,6 @@ public class MyCustomReceiver extends BroadcastReceiver {
         in.putExtra("userId", userId);
         in.putExtra("profileImg", profileImg);
         LocalBroadcastManager.getInstance(context).sendBroadcast(in);
+
     }
 }
