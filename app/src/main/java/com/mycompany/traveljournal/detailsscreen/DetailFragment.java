@@ -676,13 +676,11 @@ public class DetailFragment extends TravelBaseFragment {
                     for (int i = 0; i < businesses.size(); i++) {
                         sb.append(businesses.get(i).toStringShort());
                     }
-                    tvCaption.setText(sb.toString());
-
                     addAllYelpBizToList(businesses);
 
-                    //yelpBiz.addAll(businesses);
-                    //aYelpBiz.notifyDataSetChanged();
-                    //setListViewHeightBasedOnChildren(lvYelpBiz);
+                    /*yelpBiz.addAll(businesses);
+                    aYelpBiz.notifyDataSetChanged();
+                    setListViewHeightBasedOnChildren(lvYelpBiz);*/
                 }
             }
         }.execute();
