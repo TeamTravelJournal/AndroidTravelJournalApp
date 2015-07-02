@@ -655,7 +655,7 @@ public class DetailFragment extends TravelBaseFragment {
             @Override
             protected ArrayList<YelpBusiness> doInBackground(Void... params) {
                 Yelp yelp = Yelp.getYelp(getActivity());
-                String jsonStuff = yelp.search(post.getCity());
+                String jsonStuff = yelp.searchRestaurant(post.getCity());
                 try {
                     Log.d(TAG, "json from yelp: " + jsonStuff);
                     JSONObject json = new JSONObject(jsonStuff);
