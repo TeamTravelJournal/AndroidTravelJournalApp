@@ -362,5 +362,6 @@ public class MainPostFragment extends PostsListFragment {
         i.putExtra("query", query);
         startActivity(i);
         getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        //getActivity().startService(new Intent(getActivity(), ChatHeadService.class));
     }
 }
