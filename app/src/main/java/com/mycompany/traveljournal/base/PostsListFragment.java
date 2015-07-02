@@ -45,6 +45,7 @@ import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.profilescreen.ProfileActivity;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalService;
+import com.mycompany.traveljournal.wikitude.ArchitectCamActivity;
 import com.mycompany.traveljournal.wishlistscreen.WishListActivity;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
@@ -159,6 +160,10 @@ public abstract class PostsListFragment extends Fragment {
         if(id == R.id.action_logout){
             ParseUser.logOut();
             Intent i = new Intent(getActivity(), LoginActivity.class);
+            getActivity().startActivity(i);
+        }
+        if(id == R.id.action_wikiAR){
+            Intent i = new Intent(getActivity(), ArchitectCamActivity.class);
             getActivity().startActivity(i);
         }
 

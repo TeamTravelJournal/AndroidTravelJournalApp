@@ -51,4 +51,7 @@
 
     <string name="progress_bar">This is a progress indicator</string>
 
+    <string name="location_fetching">Trying to find out where you are</string>
+    <string name="compass_accuracy_low">Please re-calibrate compass by waving your device in a figure 8 motion.</string>
+
 </resources>

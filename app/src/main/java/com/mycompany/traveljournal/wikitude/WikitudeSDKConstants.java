@@ -1,0 +1,11 @@
+package com.mycompany.traveljournal.wikitude;
+
+public class WikitudeSDKConstants {
+	
+
+	/**
+	 * note that this key is only valid for this sample app, if you need one for your own application please visit www.wikitude.com (SDK Store)
+	 */
+	protected static final String WIKITUDE_SDK_KEY = "znV4sYQKYQrsKCxYdPqCdWCt4gkWP21hT+Bt3vN2AGjFn97oYgi0o03frHph9jpjIb84xenXHdRsf8XuMyvJ2s358jYN2Zj9uHEs4+TIUFuSkJ2x9s7vI6X3mtlLqAHeQEfQifDGwY42H3xGfXqhwyfK9nBYc49icnJSDwRfKINTYWx0ZWRfXyC5fE5L096rmyz5tTzQCJoX7eAaRdNr9KHPsdKFlxE1L3fO70uMGjmqr+qTfPuj6uyQlWKQDo+BgFXCQrTk9HO9gqR9zVJBjH/LRZA0Usq/+SwLuXgK9j8PuHBc9gwsA+8+leg47C+aCWZyPMuYFd+BCEA2kOFJuSVE/jfq3Pi6LGefKFOn63SJymegX4MNFI4ry8IZp0Ilw6uR2tuBRcOmZsQoqDxMUvynhJHSob9YVpTl36CIn3oiHfDkoSyYsdn4jvGuWNG6Z8jjIXeVkooklnBiUHkgT94nBPFGH8B6OBbifWzSiGJIc2uZ80JyMqujLuJHlVScOiolZTXbeKaH4DWc6Y501np37D59ZIEMO/2TEOVKMJAGx0fOk/ECzF0/78anRI0+QTYPp3GL3nG3ywB1mur+zR4uuCI9w9qT61iaHaJL0Uf0AR4T5MTp5RAj9P4dY5dD1vnKOrG3yLzFoYeDekvwUIF4aZkan+CLfkBr/H9b3dI=";
+
+}

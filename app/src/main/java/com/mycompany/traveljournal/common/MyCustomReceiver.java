@@ -110,7 +110,7 @@ public class MyCustomReceiver extends BroadcastReceiver {
                     }
                 }
 
-                if(componentInfo.getPackageName().equalsIgnoreCase("com.mycompany.traveljournal.chatscreen")){
+                if(taskInfo.get(0).topActivity.getClassName().equalsIgnoreCase("com.mycompany.traveljournal.chatscreen.ChatActivity")){
                     //Activity Running
                     if(intentMessageAction.equals(action)){
                         triggerBroadcastToChatActivity(context, postID, userId, profileImg);
@@ -120,7 +120,7 @@ public class MyCustomReceiver extends BroadcastReceiver {
                     //Activity Not Running
                     //Generate Notification
                     if(intentMessageAction.equals(action)){
-                        createMessageNotification(context, title, userId);
+                        createMessageNotification(context, title, profileImg);
                     }
                 }
 
@@ -159,38 +159,13 @@ public class MyCustomReceiver extends BroadcastReceiver {
         mNotificationManager.notify(45, noti);
     }
 
-    private void createMessageNotification(final Context context, String title, String datavalue) {
+    private void createMessageNotification(final Context context, String title, String profileImg) {
 
-        /*Intent i = new Intent(context, ChatActivity.class);
-        i.putExtra("post_id", datavalue);
-        int requestID = (int) System.currentTimeMillis(); //unique requestID to differentiate between various notification with same NotifId
-        int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
-        PendingIntent pIntent = PendingIntent.getActivity(context, requestID, i, flags);
-
-
-        Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.ic_notif_airballoon);
-
-        Notification noti =
-                new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.ic_notif_airballoon)
-                        //.setLargeIcon(largeIcon)
-                        .setContentTitle("Travel Message")
-                        .setContentText(title).setAutoCancel(true)
-                        .setContentIntent(pIntent).build();
-
-        NotificationManager mNotificationManager = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(45, noti);*/
-
-        JournalService client = JournalApplication.getClient();
-        ParseUser user = client.getUserWithId(datavalue);
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-
         chatHead = new ImageView(context);
 
         Picasso.with(context)
-                .load(Util.getUserFromParseUser(user).getProfileImgUrl())
+                .load(profileImg)
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.placeholderthumbnail)
