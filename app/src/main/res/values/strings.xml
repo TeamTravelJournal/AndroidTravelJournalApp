@@ -54,4 +54,12 @@
     <string name="location_fetching">Trying to find out where you are</string>
     <string name="compass_accuracy_low">Please re-calibrate compass by waving your device in a figure 8 motion.</string>
 
+    <string name="yelp_consumer_key">XKB3OG57zLRtAPiA5_RbxQ</string>
+    <string name="yelp_consumer_secret">ih1Md6gArhMQxK_i-t0AocCUx1c</string>
+    <string name="yelp_token">j8UJIl4_oO8nGrD4Ku5dIJJJd-FLpZHn</string>
+    <string name="yelp_token_secret">F_sgcZg3EO3LfaB4sCC_MaQgPDw</string>
+
+
+    <string name="nearby_resta">Nearby Restaurants</string>
+
 </resources>
