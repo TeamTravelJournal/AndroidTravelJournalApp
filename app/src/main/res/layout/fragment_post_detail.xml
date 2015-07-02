@@ -320,6 +320,8 @@
 
         </RelativeLayout>
 
+        <!--Comments-->
+
         <LinearLayout
             android:id="@+id/llComments"
             android:orientation="vertical"
@@ -330,19 +332,50 @@
             >
         </LinearLayout>
 
-    <!--//Add Maps here -->
 
-    <!--FrameLayout
-        android:layout_below="@+id/tvLikes"
-        android:id="@+id/map_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" /-->
+        <!--Yelp Related-->
+
+        <RelativeLayout
+            android:id="@+id/rlYelp"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/llComments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/tvYelpLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nearby_resta"
+                />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llYelpBusinesses"
+                android:layout_below="@+id/tvYelpLabel">
+                </LinearLayout>
+
+            <!--ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lvYelpBusinesses"
+                android:layout_below="@+id/tvYelpLabel">
+            </ListView-->
+
+
+
+        </RelativeLayout>
+
+        <!--//Add Maps here -->
 
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ivStaticMap"
-            android:layout_below="@+id/llComments"
+            android:layout_below="@+id/rlYelp"
             android:padding="10dp"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
