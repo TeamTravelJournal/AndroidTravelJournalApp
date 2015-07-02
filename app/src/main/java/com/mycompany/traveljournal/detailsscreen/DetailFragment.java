@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -22,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
@@ -36,10 +39,17 @@ import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
 import com.mycompany.traveljournal.models.Comment;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.models.User;
+import com.mycompany.traveljournal.models.YelpBusiness;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
+import com.mycompany.traveljournal.yelp.Yelp;
+import com.mycompany.traveljournal.yelp.YelpBusinessAdapter;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -93,6 +103,10 @@ public class DetailFragment extends TravelBaseFragment {
     private ImageView ivSadFaceOutside;
     private TextView tvNumFollowers;
 
+    /*private YelpBusinessAdapter aYelpBiz;
+    private ArrayList<YelpBusiness> yelpBiz;
+    private ListView lvYelpBiz;*/
+
     public static DetailFragment newInstance(String postId, String localPhotoPath, String galleryPhotoPath) {
         DetailFragment detailFragment = new DetailFragment();
         Bundle args = new Bundle();
@@ -145,6 +159,11 @@ public class DetailFragment extends TravelBaseFragment {
         ivSadFaceInside = (ImageView) v.findViewById(R.id.ivSadFaceInside);
         ivSadFaceOutside = (ImageView) v.findViewById(R.id.ivSadFaceOutside);
         tvNumFollowers = (TextView) v.findViewById(R.id.tvNumFollowers);
+
+        /*lvYelpBiz = (ListView) v.findViewById(R.id.lvYelpBusinesses);
+        yelpBiz = new ArrayList<>();
+        aYelpBiz = new YelpBusinessAdapter(getActivity(), yelpBiz);
+        lvYelpBiz.setAdapter(aYelpBiz);*/
 
         super.setUpViews(v);
     }
@@ -267,6 +286,7 @@ public class DetailFragment extends TravelBaseFragment {
                 m_user = post.getParseUser();
                 populateViews(post);
                 fetchAndPopulateComments(post, false);
+                populateYelpRestaurants(post);
                 hideProgress();
             }
 
@@ -627,5 +647,111 @@ public class DetailFragment extends TravelBaseFragment {
         AnimatorSet set3 = new AnimatorSet();
         set3.playSequentially(set, animatorSet);
         set3.start();
+    }
+
+    private void populateYelpRestaurants(final Post post) {
+
+        new AsyncTask<Void, Void, ArrayList<YelpBusiness>>() {
+            @Override
+            protected ArrayList<YelpBusiness> doInBackground(Void... params) {
+                Yelp yelp = Yelp.getYelp(getActivity());
+                String jsonStuff = yelp.search(post.getCity());
+                try {
+                    Log.d(TAG, "json from yelp: " + jsonStuff);
+                    JSONObject json = new JSONObject(jsonStuff);
+                    JSONArray businesses = json.getJSONArray("businesses");
+                    return YelpBusiness.fromJsonArray(businesses);
+                } catch (JSONException e) {
+                    Log.d(TAG, "json exception: " + e.getMessage());
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<YelpBusiness> businesses) {
+
+                if(businesses!=null){
+
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < businesses.size(); i++) {
+                        sb.append(businesses.get(i).toStringShort());
+                    }
+                    tvCaption.setText(sb.toString());
+
+                    addAllYelpBizToList(businesses);
+
+                    //yelpBiz.addAll(businesses);
+                    //aYelpBiz.notifyDataSetChanged();
+                    //setListViewHeightBasedOnChildren(lvYelpBiz);
+                }
+            }
+        }.execute();
+    }
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
+
+    public void addAllYelpBizToList(List<YelpBusiness> biz) {
+        if(getActivity()!=null){
+            ViewGroup llYelpBusinesses = (ViewGroup) getActivity().findViewById(R.id.llYelpBusinesses);
+            int max = biz.size();
+            if(max>3){
+                max =3;
+            }
+            for (int i = 0 ; i < max ; i++ ){
+                addSingleBusinessToList(biz.get(i), llYelpBusinesses);
+            }
+        }
+        else{
+            Log.d(TAG, "getActivity returns null");
+        }
+    }
+
+    private void addSingleBusinessToList(YelpBusiness yelpBusiness, ViewGroup viewGroup) {
+        LayoutInflater i = (LayoutInflater) getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View yelpBusinessDetailView = i.inflate(R.layout.item_yelp_business, null);
+
+        ImageView ivBusinessImage = (ImageView) yelpBusinessDetailView.findViewById(R.id.ivBusinessImage);
+        TextView tvBusinessName = (TextView) yelpBusinessDetailView.findViewById(R.id.tvBusinessName);
+        TextView tvSnippet = (TextView) yelpBusinessDetailView.findViewById(R.id.tvSnippet);
+        TextView tvRating = (TextView) yelpBusinessDetailView.findViewById(R.id.tvRating);
+        ImageView ivRating = (ImageView) yelpBusinessDetailView.findViewById(R.id.ivRating);
+
+        tvBusinessName.setText(yelpBusiness.getName());
+        tvSnippet.setText(yelpBusiness.getSnippet_text());
+        tvRating.setText(yelpBusiness.getRating() + "");
+
+        ivBusinessImage.setImageResource(android.R.color.transparent);
+        Picasso.with(getActivity()).load(yelpBusiness.getImage_url())
+                .fit()
+                .centerCrop()
+                .placeholder(R.drawable.placeholderthumbnail)
+                .transform(Util.getTransformation(30))//give radius as half of the size of the image
+                .into(ivBusinessImage);
+
+        ivRating.setImageResource(android.R.color.transparent);
+        Picasso.with(getActivity()).load(yelpBusiness.getRating_img_url_small())
+                .fit()
+                .placeholder(R.drawable.ratings_placeholder)
+                .into(ivRating);
+
+        viewGroup.addView(yelpBusinessDetailView);
     }
 }
