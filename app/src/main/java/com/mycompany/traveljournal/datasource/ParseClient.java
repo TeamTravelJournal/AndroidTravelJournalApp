@@ -366,6 +366,7 @@ public class ParseClient implements JournalService {
 
     public void getCommentsForPost(String postId, int limit, final JournalCallBack<List<Comment>> journalCallBack) {
         ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
+        query.include("parse_user");
         query.whereEqualTo("post_id", postId);
         query.setLimit(limit);
         query.orderByAscending("createdAt");
