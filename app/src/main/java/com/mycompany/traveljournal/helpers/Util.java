@@ -275,6 +275,16 @@ public class Util {
         return transformation;
     }
 
+    public static Transformation getNoBorderTransformation(int radius){
+
+        //profile image round transformation
+        Transformation transformation = new RoundedTransformationBuilder()
+                .cornerRadiusDp(radius)
+                .oval(false)
+                .build();
+        return transformation;
+    }
+
     // preview image transformation
     public static Transformation getPreviewTransformation(){
 
