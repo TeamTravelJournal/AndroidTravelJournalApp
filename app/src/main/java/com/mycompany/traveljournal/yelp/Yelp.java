@@ -76,7 +76,7 @@ public class Yelp {
 
     public String searchRestaurant(String location) {
         OAuthRequest request = new OAuthRequest(Verb.GET, "http://api.yelp.com/v2/search");
-        request.addQuerystringParameter("term", "restaurant");
+        request.addQuerystringParameter("category_filter", "restaurants");
         request.addQuerystringParameter("location", location);
         request.addQuerystringParameter("limit", 3 + "");
         this.service.signRequest(this.accessToken, request);
