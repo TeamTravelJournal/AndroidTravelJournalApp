@@ -3,12 +3,9 @@ package com.mycompany.traveljournal.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,32 +20,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.common.EndlessRecyclerOnScrollListener;
-import com.mycompany.traveljournal.common.EndlessScrollListener;
 import com.mycompany.traveljournal.common.HidingScrollListener;
 import com.mycompany.traveljournal.common.MultiScrollListener;
 import com.mycompany.traveljournal.common.PostListenerObj;
-import com.mycompany.traveljournal.detailsscreen.DetailActivity;
 import com.mycompany.traveljournal.helpers.Util;
-import com.mycompany.traveljournal.loginscreen.LoginActivity;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.profilescreen.ProfileActivity;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalService;
-import com.mycompany.traveljournal.wikitude.ArchitectCamActivity;
-import com.mycompany.traveljournal.wishlistscreen.WishListActivity;
-import com.parse.ParseFacebookUtils;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -153,19 +140,6 @@ public abstract class PostsListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if(id == R.id.action_profile){
-            executeProfileIntent(client.getCurrentUser());
-        }
-        if(id == R.id.action_logout){
-            ParseUser.logOut();
-            Intent i = new Intent(getActivity(), LoginActivity.class);
-            getActivity().startActivity(i);
-        }
-        if(id == R.id.action_wikiAR){
-            Intent i = new Intent(getActivity(), ArchitectCamActivity.class);
-            getActivity().startActivity(i);
-        }
 
         return super.onOptionsItemSelected(item);
     }
