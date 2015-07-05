@@ -12,14 +12,19 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.chatscreen.ChatActivity;
@@ -42,7 +47,7 @@ import java.util.List;
 public class MyCustomReceiver extends BroadcastReceiver {
     private static final String TAG = "MyCustomReceiver";
     private WindowManager windowManager;
-    private ImageView chatHead;
+    private RelativeLayout item;
     public static final String intentMessageAction = "SEND_MESSAGE_PUSH";
     public static final String intentAction = "SEND_PUSH";
 
@@ -142,6 +147,8 @@ public class MyCustomReceiver extends BroadcastReceiver {
         int flags = PendingIntent.FLAG_CANCEL_CURRENT; // cancel old intent and create new one
         PendingIntent pIntent = PendingIntent.getActivity(context, requestID, i, flags);
 
+        //Define sound URI
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.ic_notif_airballoon);
@@ -152,6 +159,7 @@ public class MyCustomReceiver extends BroadcastReceiver {
                         //.setLargeIcon(largeIcon)
                         .setContentTitle("Travel notification")
                         .setContentText(title).setAutoCancel(true)
+                        .setSound(soundUri) //This sets the sound to play
                         .setContentIntent(pIntent).build();
 
         NotificationManager mNotificationManager = (NotificationManager) context
@@ -161,20 +169,31 @@ public class MyCustomReceiver extends BroadcastReceiver {
 
     private void createMessageNotification(final Context context, String title, String profileImg) {
 
+        try {
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone r = RingtoneManager.getRingtone(context, notification);
+            r.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        chatHead = new ImageView(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.chat_head, null);
+        item = (RelativeLayout) view.findViewById(R.id.rl);
+        ImageView chatHead = (ImageView) view.findViewById(R.id.family_hub_imageview);
 
         Picasso.with(context)
                 .load(profileImg)
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.placeholderthumbnail)
-                .transform(Util.getTransformation(30))
+                .transform(Util.getNoBorderTransformation(40))
                 .into(chatHead);
 
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                320,
-                320,
+                280,
+                280,
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
@@ -183,9 +202,9 @@ public class MyCustomReceiver extends BroadcastReceiver {
         params.x = 150;
         params.y = 1050;
 
-        windowManager.addView(chatHead, params);
+        windowManager.addView(item, params);
 
-        chatHead.setOnTouchListener(new View.OnTouchListener() {
+        item.setOnTouchListener(new View.OnTouchListener() {
             private int initialX;
             private int initialY;
             private float initialTouchX;
@@ -204,20 +223,20 @@ public class MyCustomReceiver extends BroadcastReceiver {
                     case MotionEvent.ACTION_MOVE:
                         params.x = initialX + (int) (event.getRawX() - initialTouchX);
                         params.y = initialY + (int) (event.getRawY() - initialTouchY);
-                        windowManager.updateViewLayout(chatHead, params);
+                        windowManager.updateViewLayout(item, params);
                         return false;
                 }
                 return false;
             }
         });
 
-        chatHead.setOnClickListener(new View.OnClickListener() {
+        item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, ChatActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.getApplicationContext().startActivity(i);
-                windowManager.removeView(chatHead);
+                windowManager.removeView(item);
             }
         });
 
