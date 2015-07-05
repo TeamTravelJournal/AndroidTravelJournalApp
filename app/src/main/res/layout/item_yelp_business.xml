@@ -1,20 +1,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    >
 
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ivBusinessImage"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvBusinessName"
+        style="?textRegular"
+        android:textColor="@color/black"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivBusinessImage"
         />
@@ -25,16 +32,22 @@
         android:id="@+id/tvSnippet"
         android:layout_below="@+id/tvBusinessName"
         android:layout_toRightOf="@+id/ivBusinessImage"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textColor="@color/secondary_text"
+        android:paddingRight="10dp"
         />
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:id="@+id/ivRating"
         android:layout_below="@+id/tvSnippet"
         android:layout_toRightOf="@+id/ivBusinessImage"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="2dp"
         />
 
     <TextView
@@ -43,6 +56,8 @@
         android:id="@+id/tvRating"
         android:layout_below="@+id/tvSnippet"
         android:layout_toRightOf="@+id/ivRating"
+        android:textColor="@color/secondary_text"
+        android:layout_alignBottom="@+id/ivRating"
         />
 
 

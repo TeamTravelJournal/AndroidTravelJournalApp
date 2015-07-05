@@ -722,7 +722,7 @@ public class DetailFragment extends TravelBaseFragment {
         }
     }
 
-    private void addSingleBusinessToList(YelpBusiness yelpBusiness, ViewGroup viewGroup) {
+    private void addSingleBusinessToList(final YelpBusiness yelpBusiness, ViewGroup viewGroup) {
         LayoutInflater i = (LayoutInflater) getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View yelpBusinessDetailView = i.inflate(R.layout.item_yelp_business, null);
 
@@ -745,11 +745,19 @@ public class DetailFragment extends TravelBaseFragment {
                 .into(ivBusinessImage);
 
         ivRating.setImageResource(android.R.color.transparent);
-        Picasso.with(getActivity()).load(yelpBusiness.getRating_img_url_small())
+        Picasso.with(getActivity()).load(yelpBusiness.getRating_img_url())
                 .fit()
-                .placeholder(R.drawable.ratings_placeholder)
+                .placeholder(R.drawable.ratings_placeholder_medium)
                 .into(ivRating);
 
+        yelpBusinessDetailView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = yelpBusiness.getMobile_url();
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(i);
+            }
+        });
         viewGroup.addView(yelpBusinessDetailView);
     }
 }

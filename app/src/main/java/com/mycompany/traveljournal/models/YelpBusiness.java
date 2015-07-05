@@ -20,6 +20,7 @@ public class YelpBusiness {
     private String image_url; //this is very small!!!
     private double rating;
     private String rating_img_url_small;
+    private String rating_img_url;
 
     private final static String TAG = "YelpBusiness";
 
@@ -49,6 +50,9 @@ public class YelpBusiness {
             }
             if(jsonObject.optString("rating_img_url_small")!=null){
                 yb.rating_img_url_small = jsonObject.getString("rating_img_url_small");
+            }
+            if(jsonObject.optString("rating_img_url")!=null){
+                yb.rating_img_url = jsonObject.getString("rating_img_url");
             }
 
         }catch (JSONException e) {
@@ -87,6 +91,7 @@ public class YelpBusiness {
                 ", image_url='" + image_url + '\'' +
                 ", rating=" + rating +
                 ", rating_img_url_small='" + rating_img_url_small + '\'' +
+                ", rating_img_url='" + rating_img_url + '\'' +
                 '}';
     }
 
@@ -103,6 +108,14 @@ public class YelpBusiness {
 
     public void setRating_img_url_small(String rating_img_url_small) {
         this.rating_img_url_small = rating_img_url_small;
+    }
+
+    public String getRating_img_url() {
+        return rating_img_url;
+    }
+
+    public void setRating_img_url(String rating_img_url) {
+        this.rating_img_url = rating_img_url;
     }
 
     public String getId() {

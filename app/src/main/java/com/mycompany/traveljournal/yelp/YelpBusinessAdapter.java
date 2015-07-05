@@ -66,9 +66,9 @@ public class YelpBusinessAdapter extends ArrayAdapter<YelpBusiness> {
                 .into(viewHolder.ivBusinessImage);
 
         viewHolder.ivRating.setImageResource(android.R.color.transparent);
-        Picasso.with(getContext()).load(yelpBusiness.getRating_img_url_small())
+        Picasso.with(getContext()).load(yelpBusiness.getRating_img_url())
                 .fit()
-                .placeholder(R.drawable.ratings_placeholder)
+                .placeholder(R.drawable.ratings_placeholder_medium)
                 .into(viewHolder.ivRating);
 
         return convertView;
