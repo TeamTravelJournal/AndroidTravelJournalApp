@@ -7,10 +7,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
 import com.mycompany.traveljournal.datasource.ParseClient;
+import com.mycompany.traveljournal.helpers.Util;
 import com.mycompany.traveljournal.loginscreen.LoginActivity;
 import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.profilescreen.ProfileActivity;
@@ -18,6 +22,7 @@ import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalService;
 import com.mycompany.traveljournal.wikitude.ArchitectCamActivity;
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 
 public class MainActivity extends PostsListActivity {
@@ -29,6 +34,7 @@ public class MainActivity extends PostsListActivity {
 
     private DrawerLayout mDrawer;
     protected JournalService client;
+    User user;
 
     @Override
     public void setUpFragment() {
@@ -64,6 +70,8 @@ public class MainActivity extends PostsListActivity {
 
         Log.wtf(TAG, "nvDrawer is "+nvDrawer);
 
+        user = Util.getUserFromParseUser(ParseUser.getCurrentUser());
+
         setupDrawerContent(nvDrawer);
 
 
@@ -96,6 +104,24 @@ public class MainActivity extends PostsListActivity {
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
+
+        View header = getLayoutInflater().inflate(R.layout.drawer_header, null);
+        ImageView ivProfile = (ImageView)header.findViewById(R.id.ivProfile);
+        TextView tvName = (TextView)header.findViewById(R.id.name);
+        TextView tvEmail = (TextView)header.findViewById(R.id.email);
+
+        Picasso.with(this).load(user.getProfileImgUrl())
+                .fit()
+                .centerCrop()
+                .placeholder(R.drawable.placeholderthumbnail)
+                .transform(Util.getTransformation(60))
+                .into(ivProfile);
+
+        tvName.setText(user.getName());
+        tvEmail.setText("Richard.Pon@gmail.com");
+
+        navigationView.addHeaderView(header);
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
 

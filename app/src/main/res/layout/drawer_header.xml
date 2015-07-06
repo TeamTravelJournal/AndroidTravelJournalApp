@@ -1,28 +1,43 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimaryDark"
-    android:padding="16dp"
-    android:theme="@style/AppTheme"
+    android:background="@color/primary_color"
     android:orientation="vertical"
-    android:gravity="bottom">
+    android:weightSum="1">
 
-    <ImageView
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_launcher_airballoon"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        />
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/ivProfile"
+            android:transitionName="profileImg"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            />
 
-    <!--
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Header"
-        android:textColor="@android:color/white"
-        android:textAppearance="@style/Text.Large"/>
-        -->
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivProfile"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"
+            />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_below="@+id/name"
+            android:layout_centerHorizontal="true"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:layout_marginBottom="10dp"
+            />
+
+</RelativeLayout>
