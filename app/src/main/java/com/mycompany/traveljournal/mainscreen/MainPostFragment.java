@@ -11,6 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
+import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
+import com.etiennelawlor.quickreturn.library.utils.QuickReturnUtils;
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListFragment;
 import com.mycompany.traveljournal.createscreen.CreatePostActivity;
@@ -120,28 +124,18 @@ public class MainPostFragment extends PostsListFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*int footerHeight = getActivity().getResources().getDimensionPixelSize(R.dimen.footer_height);
-        int headerHeight = getActivity().getResources().getDimensionPixelSize(R.dimen.footer_height);
-
+        int footerHeight = getActivity().getResources().getDimensionPixelSize(R.dimen.footer_height);
         QuickReturnRecyclerViewOnScrollListener scrollListener;
 
         scrollListener = new QuickReturnRecyclerViewOnScrollListener.Builder(QuickReturnViewType.FOOTER)
                 .footer(mQuickReturnView)
+                .isSnappable(true)
                 .minFooterTranslation(footerHeight)
                 .build();
 
         scrolls.addScrollListener(scrollListener);
 
-        int indicatorHeight =  QuickReturnUtils.dp2px(getActivity(), 4);
-        int headerTranslation = -headerHeight + indicatorHeight;
-        QuickReturnRecyclerViewOnScrollListener scrollListener1 = new QuickReturnRecyclerViewOnScrollListener.Builder(QuickReturnViewType.HEADER)
-                .header(toolbar)
-                .minHeaderTranslation(headerTranslation).isSnappable(true)
-                .build();
-
-        scrolls.addScrollListener(scrollListener1);
-
-        lvPosts.setOnScrollListener(scrolls);*/
+        lvPosts.setOnScrollListener(scrolls);
     }
 
 
