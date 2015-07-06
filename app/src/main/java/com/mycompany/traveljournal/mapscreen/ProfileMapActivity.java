@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.os.Trace;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -38,6 +40,7 @@ import com.mycompany.traveljournal.service.JournalService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ekucukog on 6/13/2015.
@@ -58,7 +61,8 @@ public class ProfileMapActivity extends ActionBarActivity implements
     private HashMap markersToPosts = new HashMap();
 
 
-    private int animationIndex =0;
+    private int animationIndex = 0;
+    private int carIndex = 0;
     private ArrayList<Marker> sortedMarkers = null;
     private ArrayList<Boolean> shown= null;
     private ArrayList<Polyline> polylines = null;
@@ -249,6 +253,7 @@ public class ProfileMapActivity extends ActionBarActivity implements
             final long start = SystemClock.uptimeMillis();
             final long durationForPic = 2000;//2 sec
             final long durationTransition = 15;//15ms
+            final long durationCar = 500; //half sec
 
             shown = new ArrayList<>();
             for(int i=0; i<sortedMarkers.size(); i++){
@@ -266,6 +271,10 @@ public class ProfileMapActivity extends ActionBarActivity implements
 
                     if(animationIndex >= sortedMarkers.size()){
                         Log.d(TAG, "end of animation");
+
+                        /*for(Polyline eachLine: polylines){
+                            eachLine.setVisible(true);
+                        }*/
 
                     }
                     else if(shown.get(animationIndex)==false){
@@ -291,10 +300,47 @@ public class ProfileMapActivity extends ActionBarActivity implements
                             LatLng currentPoint = new LatLng(current.getLatitude(), current.getLongitude());
                             LatLng nextPoint = new LatLng(next.getLatitude(), next.getLongitude());
 
+
+                            //double slope = (nextPoint.longitude - currentPoint.longitude)/(nextPoint.latitude - currentPoint.latitude);
+
+                            final ArrayList<LatLng> inBetweenExclusive = getInBetweenPoints(currentPoint, nextPoint);
+
+                            carIndex = 0;
+                            final android.os.Handler handlerCar = new android.os.Handler();
+                            handlerCar.post(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    if(carIndex < inBetweenExclusive.size()){
+
+                                        LatLng eachPoint = inBetweenExclusive.get(carIndex);
+                                        map.addGroundOverlay(new GroundOverlayOptions()
+                                                        .image(BitmapDescriptorFactory.fromResource(R.drawable.car_256))
+                                                        .position(eachPoint, 4000f, 4000f)
+                                        );
+                                        Log.d(TAG, "adding overlay");
+                                        handlerCar.postDelayed(this, durationCar);
+                                        carIndex++;
+
+                                    }else{
+                                        Log.d(TAG, "done with cars");
+                                    }
+                                }
+                            });
+
+                            /*for(LatLng eachPoint: inBetweenExclusive){
+                                map.addGroundOverlay(new GroundOverlayOptions()
+                                    .image(BitmapDescriptorFactory.fromResource(R.drawable.car_256))
+                                    .position(eachPoint, 4000f, 4000f)
+                                );
+                                Log.d(TAG, "adding overlay");
+                            }*/
+
                             Polyline polyline = map.addPolyline(new PolylineOptions()
                                     .add(currentPoint)
                                     .add(nextPoint)
                                     .color(Color.MAGENTA)
+                                    .visible(false)
                                     .width(12));
 
                             polylines.add(polyline);
@@ -325,5 +371,55 @@ public class ProfileMapActivity extends ActionBarActivity implements
     public void onBackPressed() {
         finish();
         overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
+
+    private ArrayList<LatLng> getInBetweenPoints(LatLng current, LatLng next){
+
+        float range = 4000;
+
+        ArrayList<LatLng> temp = new ArrayList<LatLng>();
+
+        float [] dist = new float[1];
+        Location.distanceBetween(current.latitude, current.longitude, next.latitude, next.longitude, dist);
+        float distance = dist[0];
+
+        Log.d(TAG, "distance between current point " + current.toString() + " next point " + next.toString() +
+            " is " + distance + " meters");
+
+        if(distance > 3*range){
+
+            temp.add(current);
+            LatLng mid = new LatLng((current.latitude + next.latitude)/2.0, (current.longitude + next.longitude)/2);
+            LatLng mid1 = new LatLng((current.latitude + mid.latitude)/2.0, (current.longitude + mid.longitude)/2);
+            LatLng mid2 = new LatLng((mid.latitude + next.latitude)/2.0, (mid.longitude + next.longitude)/2);
+            temp.add(mid1);
+            temp.add(mid);
+            temp.add(mid2);
+            temp.add(next);
+        }
+        else if( distance > 2*range){
+
+            temp.add(current);
+            LatLng mid1 = new LatLng((2*current.latitude + next.latitude)/3.0, (2*current.longitude + next.longitude)/3.0);
+            LatLng mid2 = new LatLng((current.latitude + 2*next.latitude)/3.0, (current.longitude + 2*next.longitude)/3.0);
+            temp.add(mid1);
+            temp.add(mid2);
+            temp.add(next);
+        }
+
+        else if( distance > range){
+
+            temp.add(current);
+            LatLng mid = new LatLng((current.latitude + next.latitude)/2.0, (current.longitude + next.longitude)/2);
+            temp.add(mid);
+            temp.add(next);
+        }
+
+        else{ // if( range > distance > 0 ){
+
+            temp.add(current);
+            temp.add(next);
+        }
+        return temp;
     }
 }
