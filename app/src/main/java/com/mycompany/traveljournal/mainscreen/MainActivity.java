@@ -114,7 +114,7 @@ public class MainActivity extends PostsListActivity {
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.placeholderthumbnail)
-                .transform(Util.getTransformation(60))
+                .transform(Util.getNoBorderTransformation(60))
                 .into(ivProfile);
 
         tvName.setText(user.getName());
