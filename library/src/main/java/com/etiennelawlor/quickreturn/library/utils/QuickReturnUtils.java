@@ -12,6 +12,8 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.etiennelawlor.quickreturn.library.views.CustomRecyclerView;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -124,7 +126,8 @@ public class QuickReturnUtils {
                 scrollY += sRecyclerViewItemHeights.get(i); //add all heights of the views that are gone
         }
 
-        return scrollY;
+        //return scrollY;
+        return ((CustomRecyclerView) rv).getVerticalOffset();
     }
 
 
