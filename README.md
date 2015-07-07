@@ -1,6 +1,6 @@
 # Group Project - *Travel Journal*
 
-**Travel Journal** is an Android app that empowers users to become photo journalists. Whether off to far away cities, landmarks, or the nearest coffee shop, Travel Journal is the users' companion for photo journaling their adventures. Journaling is as simple as snapping a photo. In a writing mood? Easily add captions. Want to explore? Browse other peoples' travels be specifying a location or just scroll through posts on a map. Whether you like to personally or virtually explore, Travel Journal has you covered.
+**Travel Journal** is an Android app that empowers users to become photo journalists. Whether off to far away cities, landmarks, or the nearest coffee shop, Travel Journal is the users' companion for photo journaling their adventures. Journaling is as simple as snapping a photo. In a writing mood? Easily add captions. Want to explore? Browse other peoples' travels by specifying a travel destination or scrolling through posts on a map. Whether you like to personally or virtually explore, Travel Journal has you covered.
 
 Time spent: **X** hours spent in total
 
