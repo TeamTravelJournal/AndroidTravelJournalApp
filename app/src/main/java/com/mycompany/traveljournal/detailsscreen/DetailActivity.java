@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.mycompany.traveljournal.R;
 import com.mycompany.traveljournal.base.PostsListActivity;
@@ -34,6 +35,7 @@ public class DetailActivity extends PostsListActivity implements DetailFragment.
         }
 
         super.onCreate(savedInstanceState);
+        nvDrawer.setVisibility(View.GONE);
     }
 
     @Override

@@ -182,6 +182,9 @@
         <!-- replace @drawable/push_icon with your push icon identifier -->
         <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_notif_airballoon"/>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="15999107ddda0de00ef45dcc73313d053183831c" />
     </application>
 
 </manifest>

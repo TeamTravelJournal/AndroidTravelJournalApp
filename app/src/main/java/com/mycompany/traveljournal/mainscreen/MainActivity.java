@@ -29,12 +29,8 @@ public class MainActivity extends PostsListActivity {
 
     private final static String TAG = "MainActivity";
     MainPostFragment mainPostFragment;
-    ParseClient parseClient;
     private final String MAIN_FRAGMENT_TAG = "mainPostFragment";
 
-    private DrawerLayout mDrawer;
-    protected JournalService client;
-    User user;
 
     @Override
     public void setUpFragment() {
@@ -61,20 +57,6 @@ public class MainActivity extends PostsListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        client = JournalApplication.getClient();
-
-        // Setup the drawer
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
-
-        Log.wtf(TAG, "nvDrawer is "+nvDrawer);
-
-        user = Util.getUserFromParseUser(ParseUser.getCurrentUser());
-
-        setupDrawerContent(nvDrawer);
-
-
         // Uncomment to run example of fetching record from Parse
         //ExampleGetUserFromParse.run();
 
@@ -89,9 +71,6 @@ public class MainActivity extends PostsListActivity {
         //ExampleComments exampleComments = new ExampleComments();
         //exampleComments.getCommentsForPost();
 
-
-
-
         // Richard - please keep, for my debugging
 //        Intent i = new Intent(this, DetailActivity.class);
 //        String postId = "8nxq1SkIUo";
@@ -99,69 +78,6 @@ public class MainActivity extends PostsListActivity {
 //        i.putExtra("post_id", postId);
 //        startActivity(i);
 
-
-
     }
-
-    private void setupDrawerContent(NavigationView navigationView) {
-
-        View header = getLayoutInflater().inflate(R.layout.drawer_header, null);
-        ImageView ivProfile = (ImageView)header.findViewById(R.id.ivProfile);
-        TextView tvName = (TextView)header.findViewById(R.id.name);
-        TextView tvEmail = (TextView)header.findViewById(R.id.email);
-
-        Picasso.with(this).load(user.getProfileImgUrl())
-                .fit()
-                .centerCrop()
-                .placeholder(R.drawable.placeholderthumbnail)
-                .transform(Util.getNoBorderTransformation(60))
-                .into(ivProfile);
-
-        tvName.setText(user.getName());
-        tvEmail.setText("Richard.Pon@gmail.com");
-
-        navigationView.addHeaderView(header);
-
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return false;
-                    }
-                }
-        );
-
-    }
-
-    private void selectDrawerItem(MenuItem menuItem) {
-
-        // Profile
-        switch(menuItem.getItemId()) {
-            case R.id.nav_profile:
-                executeProfileIntent(client.getCurrentUser());
-                break;
-            case R.id.nav_ar:
-                Intent i2 = new Intent(this, ArchitectCamActivity.class);
-                this.startActivity(i2);
-                break;
-            case R.id.nav_logout:
-                ParseUser.logOut();
-                Intent i3 = new Intent(this, LoginActivity.class);
-                this.startActivity(i3);
-                break;
-        }
-
-        mDrawer.closeDrawers();
-    }
-
-    protected void executeProfileIntent(User data){
-        Intent i = new Intent(this, ProfileActivity.class);
-        i.putExtra("User", data);
-        this.startActivity(i);
-        this.overridePendingTransition(R.anim.right_in, R.anim.left_out);
-    }
-
 
 }
