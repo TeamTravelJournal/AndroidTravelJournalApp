@@ -34,6 +34,7 @@ public class CreatePostActivity extends PostsListActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+        nvDrawer.setVisibility(View.GONE);
     }
 
     @Override
