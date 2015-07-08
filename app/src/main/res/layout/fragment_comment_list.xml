@@ -44,6 +44,8 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/rlAddComment"
         android:layout_below="@+id/toolbar"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
         >
     </ListView>
 
