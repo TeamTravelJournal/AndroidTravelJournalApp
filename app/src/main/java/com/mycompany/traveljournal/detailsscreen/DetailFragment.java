@@ -40,6 +40,7 @@ import com.mycompany.traveljournal.models.Comment;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.models.YelpBusiness;
+import com.mycompany.traveljournal.profilescreen.ProfileActivity;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
 import com.mycompany.traveljournal.service.JournalService;
@@ -238,6 +239,13 @@ public class DetailFragment extends TravelBaseFragment {
                     tvLikes.setText(Integer.parseInt(tvLikes.getText().toString()) + 1 + "");
                     animateHearts();
                 }
+            }
+        });
+
+        ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                executeProfileIntent(m_user);
             }
         });
     }
@@ -759,5 +767,12 @@ public class DetailFragment extends TravelBaseFragment {
             }
         });
         viewGroup.addView(yelpBusinessDetailView);
+    }
+
+    private void executeProfileIntent(User data){
+        Intent i = new Intent(getActivity(), ProfileActivity.class);
+        i.putExtra("User", data);
+        getActivity().startActivity(i);
+        getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 }
