@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
@@ -57,6 +58,15 @@ public class ChatActivity extends AppCompatActivity {
         mMessages = new ArrayList();
         mAdapter = new ChatListAdapter(ChatActivity.this, sUserId, mMessages);
         lvChat.setAdapter(mAdapter);
+
+        mAdapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                lvChat.setSelection(mAdapter.getCount() - 1);
+            }
+        });
+
         client = JournalApplication.getClient();
         loadMessages();
         setupMessagePosting();

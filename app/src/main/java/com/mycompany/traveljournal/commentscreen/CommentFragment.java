@@ -2,6 +2,7 @@ package com.mycompany.traveljournal.commentscreen;
 
 
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -106,6 +107,13 @@ public class CommentFragment extends TravelBaseFragment {
 
     private void setUpAdapters() {
         lvComments.setAdapter(aComments);
+        aComments.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                lvComments.setSelection(aComments.getCount() - 1);
+            }
+        });
     }
 
     private void populateComments() {
