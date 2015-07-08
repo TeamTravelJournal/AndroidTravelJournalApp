@@ -33,13 +33,6 @@ class CustomWindowAdapter implements GoogleMap.InfoWindowAdapter {
     // This defines the contents within the info window based on the marker
     @Override
     public View getInfoContents(Marker marker) {
-        return null;
-    }
-
-    // This changes the frame of the info window; returning null uses the default frame.
-    // This is just the border and arrow surrounding the contents specified above
-    @Override
-    public View getInfoWindow(Marker marker) {
         // Getting view from the layout file
         View v = mInflater.inflate(R.layout.custom_info_window, null);
         // Populate fields
@@ -72,4 +65,12 @@ class CustomWindowAdapter implements GoogleMap.InfoWindowAdapter {
         // Return info window contents
         return v;
     }
+
+    // This changes the frame of the info window; returning null uses the default frame.
+    // This is just the border and arrow surrounding the contents specified above
+    @Override
+    public View getInfoWindow(Marker marker) {
+        return null;
+    }
+
 }
