@@ -18,7 +18,7 @@
         android:layout_alignTop="@+id/family_hub_imageview"
         android:layout_marginLeft="-20dp"
         android:background="@drawable/red_circle"
-        android:text="2"
+        android:text="1"
         android:gravity="center"
         android:textColor="#ffffff"
         android:textSize="13sp"

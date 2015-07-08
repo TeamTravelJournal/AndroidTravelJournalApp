@@ -206,6 +206,8 @@ public class CreatePostFragment extends Fragment {
 
                 ivCross.setImageResource(android.R.color.transparent);
                 ivPreview.setImageResource(android.R.color.transparent);
+                takenImage = null;
+                selectedImage = null;
             }
         });
     }
@@ -242,7 +244,12 @@ public class CreatePostFragment extends Fragment {
         ivGallery = (ImageView) v.findViewById(R.id.ivGallery);
         btPost = (Button)v.findViewById(R.id.btPost);
         etCaption = (EditText)v.findViewById(R.id.etCaption);
-        ivPreview.setImageBitmap(takenImage);
+
+        if(takenImage != null)
+            ivPreview.setImageBitmap(takenImage);
+        else if(selectedImage != null)
+            ivPreview.setImageBitmap(selectedImage);
+
         pbLoading = (ProgressBar)v.findViewById(R.id.pbLoading);
         //ivPBGif = (ImageView) v.findViewById(R.id.ivPBGif);
         //Glide.with(this).load(R.raw.simple).asGif().into(ivPBGif);
@@ -251,7 +258,11 @@ public class CreatePostFragment extends Fragment {
         ivProfile = (ImageView) v.findViewById(R.id.ivProfileImageCreate);
 
         ivProfile.setImageResource(android.R.color.transparent);
-        ivCross.setImageResource(android.R.color.transparent);
+
+        if(takenImage != null || selectedImage != null)
+            ivCross.setImageResource(R.drawable.icon_cross_24);
+        else
+            ivCross.setImageResource(android.R.color.transparent);
 
         if(m_currentUser != null)
         {
@@ -326,15 +337,20 @@ public class CreatePostFragment extends Fragment {
 
             int width = selectedImage1.getWidth();
             int height = selectedImage1.getHeight();
+
             Log.d(TAG, "selected image width: " + width + ", height: " + height);
             if(width > height){
                 Log.d(TAG, "wide image");
                 //Following screenWidth is coming bigger than we expect
                 // that is why we use smaller than to width to scale
+                selectedImage1 = Util.rotateBitmapOrientation(m_galleryPhotoPath, screenWidth/2, height);
                 selectedImage = BitmapScaler.scaleToFitWidth(selectedImage1, screenWidth/2);
+                selectedImage1 = null;
             }else{
                 Log.d(TAG, "tall image");
+                selectedImage1 = Util.rotateBitmapOrientation(m_galleryPhotoPath, screenWidth/3, height);
                 selectedImage = BitmapScaler.scaleToFitWidth(selectedImage1, screenWidth/3);
+                selectedImage1 = null;
             }
 
         }catch(IOException e){
