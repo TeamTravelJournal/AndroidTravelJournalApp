@@ -14,10 +14,11 @@
 
 ## Time Spent
 
-Sprint 1&2: 1 week each, spent on developing the main functionalities. 
+Sprint 1&2: 1 week each, spent on developing the main functionalities.
+
 Sprint 3: 1 week, spent on polishing UI and adding additional features.
 
-After selected for Public Demo, we spent the rest of our time to add Augmented Reality and other additional features, to polish the UI and to fix bugs.
+After selected for Public Demo, we spent the rest of our time to add Augmented Reality and other additional features, also to polish UI and fix bugs.
 
 ## User Stories
 
