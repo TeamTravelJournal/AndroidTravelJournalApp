@@ -24,19 +24,10 @@
         android:textColor="@color/black"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivBusinessImage"
+        android:textStyle="bold"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvSnippet"
-        android:layout_below="@+id/tvBusinessName"
-        android:layout_toRightOf="@+id/ivBusinessImage"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:textColor="@color/secondary_text"
-        android:paddingRight="10dp"
-        />
+
 
     <ImageView
         android:layout_width="wrap_content"
@@ -44,7 +35,7 @@
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:id="@+id/ivRating"
-        android:layout_below="@+id/tvSnippet"
+        android:layout_below="@+id/tvBusinessName"
         android:layout_toRightOf="@+id/ivBusinessImage"
         android:layout_marginRight="3dp"
         android:layout_marginTop="2dp"
@@ -54,11 +45,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvRating"
-        android:layout_below="@+id/tvSnippet"
+        android:layout_below="@+id/tvBusinessName"
         android:layout_toRightOf="@+id/ivRating"
         android:textColor="@color/secondary_text"
         android:layout_alignBottom="@+id/ivRating"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvSnippet"
+        android:layout_below="@+id/ivRating"
+        android:layout_toRightOf="@+id/ivBusinessImage"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textColor="@color/secondary_text"
+        android:paddingRight="10dp"
+        />
 
 </RelativeLayout>
