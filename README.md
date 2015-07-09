@@ -7,8 +7,8 @@
 * Exploring travel content is fun with Travel Journal's Monocle View. This is the Augmented Reality feature of our app makes it easy to see nearby posts. It basically uses your camera, GPS and compass on your phone to show you real world with nearby posts pinned on the screen.
 * Nearby posts can also be explored by map view.
 * Posts can be searched by location and explored in map or list view.
-* Another user's travel route along with all the posts they published during their trip can be seen throuhg their profile on a map view. User can animate this map to see which route was taken and what was the exact order of travel stops.
-* For each post, nearby restaurant information extracted from yelp is given to guide user who are also following the same travel route.
+* Another user's travel route along with all the posts they published during their trip can be seen through their profile on a map view. User can animate this map to see which route was taken and what was the exact order of travel stops.
+* For each post, nearby restaurant information extracted from Yelp is given to guide user who are also following the same travel route.
 * User can comment on each other posts and group chat to get travel tips from each other.
 * Creating travel content is made simple, only required action is to take a picture. If you are busy during your trip, you can always create content by picking images from your gallery later.
 
