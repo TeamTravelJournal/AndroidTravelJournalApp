@@ -35,11 +35,13 @@ import com.mycompany.traveljournal.commentscreen.CommentsAdapter;
 import com.mycompany.traveljournal.helpers.BitmapScaler;
 import com.mycompany.traveljournal.helpers.DeviceDimensionsHelper;
 import com.mycompany.traveljournal.helpers.Util;
+import com.mycompany.traveljournal.mapscreen.ProfileMapActivity;
 import com.mycompany.traveljournal.mapscreen.SingleMapActivity;
 import com.mycompany.traveljournal.models.Comment;
 import com.mycompany.traveljournal.models.Post;
 import com.mycompany.traveljournal.models.User;
 import com.mycompany.traveljournal.models.YelpBusiness;
+import com.mycompany.traveljournal.openGL.PhotoCubeActivity;
 import com.mycompany.traveljournal.profilescreen.ProfileActivity;
 import com.mycompany.traveljournal.service.JournalApplication;
 import com.mycompany.traveljournal.service.JournalCallBack;
@@ -102,6 +104,7 @@ public class DetailFragment extends TravelBaseFragment {
     private ImageView ivSmileyOutside;
     private ImageView ivSadFaceInside;
     private ImageView ivSadFaceOutside;
+    private ImageView ivCube;
     private TextView tvNumFollowers;
 
     /*private YelpBusinessAdapter aYelpBiz;
@@ -160,6 +163,7 @@ public class DetailFragment extends TravelBaseFragment {
         ivSadFaceInside = (ImageView) v.findViewById(R.id.ivSadFaceInside);
         ivSadFaceOutside = (ImageView) v.findViewById(R.id.ivSadFaceOutside);
         tvNumFollowers = (TextView) v.findViewById(R.id.tvNumFollowers);
+        ivCube = (ImageView) v.findViewById(R.id.ivCube);
 
         /*lvYelpBiz = (ListView) v.findViewById(R.id.lvYelpBusinesses);
         yelpBiz = new ArrayList<>();
@@ -239,6 +243,15 @@ public class DetailFragment extends TravelBaseFragment {
                     tvLikes.setText(Integer.parseInt(tvLikes.getText().toString()) + 1 + "");
                     animateHearts();
                 }
+            }
+        });
+
+        ivCube.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), PhotoCubeActivity.class);
+                i.putExtra("postId", postId);
+                startActivity(i);
             }
         });
 
