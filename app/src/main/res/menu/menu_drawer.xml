@@ -13,7 +13,7 @@
         <item
             android:id="@+id/nav_ar"
             android:icon="@drawable/iconmonstr_glasses_21_icon_64"
-            android:title="AR View" />
+            android:title="Monocle" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/iconmonstr_gear_9_icon_64"
