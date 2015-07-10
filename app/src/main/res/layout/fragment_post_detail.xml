@@ -315,8 +315,20 @@
                 android:layout_toRightOf="@+id/ivLikes"
                 android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginRight="15dp"
                 android:gravity="center" />
 
+
+            <ImageView
+                android:layout_width="@dimen/detail_count_icon_size"
+                android:layout_height="@dimen/detail_count_icon_size"
+                android:id="@+id/ivCube"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/cube"
+                android:layout_toRightOf="@+id/tvLikes"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                />
 
         </RelativeLayout>
 
