@@ -170,7 +170,7 @@ Login Page and notifications:
 
 Sprint-2: June 17th 2015
 
-<img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_2.gif' title='Sprint 2 Walkthrough' width='' alt='Video Walkthrough' />
+Video Walkthrough from Sprint-2 can be found [here](https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_2.gif).
 
 Sprint-1: June 10th 2015
 
