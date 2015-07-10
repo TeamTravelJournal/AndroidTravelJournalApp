@@ -20,6 +20,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -66,6 +67,8 @@ public class ProfileMapActivity extends ActionBarActivity implements
     private ArrayList<Marker> sortedMarkers = null;
     private ArrayList<Boolean> shown= null;
     private ArrayList<Polyline> polylines = null;
+    private ArrayList<GroundOverlay> gos = null;
+    private int iteration =0;
 
     private Toolbar toolbarForMap;
 
@@ -82,6 +85,7 @@ public class ProfileMapActivity extends ActionBarActivity implements
         markers = new ArrayList<>();
         currentPosts = new ArrayList<>();
         polylines = new ArrayList<>();
+        gos = new ArrayList<>();
 
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         if (mapFragment != null) {
@@ -254,6 +258,7 @@ public class ProfileMapActivity extends ActionBarActivity implements
             final long durationForPic = 2000;//2 sec
             final long durationTransition = 15;//15ms
             final long durationCar = 500; //half sec
+            final long durationLine = 3000; //3 sec
 
             shown = new ArrayList<>();
             for(int i=0; i<sortedMarkers.size(); i++){
@@ -264,17 +269,57 @@ public class ProfileMapActivity extends ActionBarActivity implements
             }
             polylines = new ArrayList<>();
             animationIndex =0;
+            for(int i=0; i<gos.size(); i++){
+                gos.get(i).remove();
+            }
+            gos = new ArrayList<>();
 
+            iteration = 1;
             handler.post(new Runnable() {
                 @Override
                 public void run() {
 
-                    if(animationIndex >= sortedMarkers.size()){
+                    if(iteration==1){// intro step
+
+                        for(int i=0; i<sortedMarkers.size()-1; i++){
+
+                            Post current = (Post)markersToPosts.get(sortedMarkers.get(i));
+                            Post next = (Post)markersToPosts.get(sortedMarkers.get(i+1));
+
+                            LatLng currentPoint = new LatLng(current.getLatitude(), current.getLongitude());
+                            LatLng nextPoint = new LatLng(next.getLatitude(), next.getLongitude());
+
+                            Polyline polyline = map.addPolyline(new PolylineOptions()
+                                    .add(currentPoint)
+                                    .add(nextPoint)
+                                    .color(Color.MAGENTA)
+                                    .visible(true)
+                                    .width(12));
+
+                            polylines.add(polyline);
+                            Log.d(TAG, "drawing a line here");
+                        }
+                        iteration++;
+                        handler.postDelayed(this, durationLine);
+                    }
+                    else if(iteration==2){//intro step 2
+
+                        for(Polyline eachLine: polylines){
+                            eachLine.setVisible(false);
+                        }
+                        iteration++;
+                        handler.postDelayed(this, durationTransition);
+                    }
+                    else if(animationIndex >= sortedMarkers.size()){// end of animation
                         Log.d(TAG, "end of animation");
 
-                        /*for(Polyline eachLine: polylines){
+                        for(Polyline eachLine: polylines){
                             eachLine.setVisible(true);
-                        }*/
+                        }
+
+                        for(GroundOverlay eachGO: gos){
+                            eachGO.setVisible(false);
+                        }
 
                     }
                     else if(shown.get(animationIndex)==false){
@@ -314,11 +359,12 @@ public class ProfileMapActivity extends ActionBarActivity implements
                                     if(carIndex < inBetweenExclusive.size()){
 
                                         LatLng eachPoint = inBetweenExclusive.get(carIndex);
-                                        map.addGroundOverlay(new GroundOverlayOptions()
+                                        GroundOverlay go = map.addGroundOverlay(new GroundOverlayOptions()
                                                         .image(BitmapDescriptorFactory.fromResource(R.drawable.car_256))
                                                         .position(eachPoint, 4000f, 4000f)
                                         );
                                         Log.d(TAG, "adding overlay");
+                                        gos.add(go);
                                         handlerCar.postDelayed(this, durationCar);
                                         carIndex++;
 
@@ -336,7 +382,7 @@ public class ProfileMapActivity extends ActionBarActivity implements
                                 Log.d(TAG, "adding overlay");
                             }*/
 
-                            Polyline polyline = map.addPolyline(new PolylineOptions()
+                            /*Polyline polyline = map.addPolyline(new PolylineOptions()
                                     .add(currentPoint)
                                     .add(nextPoint)
                                     .color(Color.MAGENTA)
@@ -344,7 +390,7 @@ public class ProfileMapActivity extends ActionBarActivity implements
                                     .width(12));
 
                             polylines.add(polyline);
-                            Log.d(TAG, "drawing a line here");
+                            Log.d(TAG, "drawing a line here");*/
                         }
 
                         // Post this event again 15ms from now.
