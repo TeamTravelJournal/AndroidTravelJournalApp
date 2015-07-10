@@ -5,6 +5,7 @@
 ## Highlights
 
 * Exploring travel content is fun with Travel Journal's Monocle View. This is the Augmented Reality feature of our app makes it easy to see nearby posts. It basically uses your camera, GPS and compass on your phone to show you real world with nearby posts pinned on the screen.
+* Visually appealing browsing of multiple photos on a post with 3D like cubicle representation
 * Nearby posts can also be explored by map view.
 * Posts can be searched by location and explored in map or list view.
 * Another user's travel route along with all the posts they published during their trip can be seen through their profile on a map view. User can animate this map to see which route was taken and what was the exact order of travel stops.
@@ -87,6 +88,7 @@ Detail Page of a Post:
 * [ ] Image is clickable and can be expanded to full screen
 * [x] Shared element transitions between detail and timeline
 * [x] View pager cubicle transformation between photos of a post when you slide in between them
+* [x] 3D-like cubicle representation of the photos belongs to the same post when clicked into cube icon
 * [x] Parallax effect
 * [x] Last 3 comments can be seen on detail page
 * [x] 3 nearby restaurant can be seen on detail page.
@@ -129,6 +131,7 @@ Other:
 * [x] Log out
 * [x] Left Drawer menu on timeline
 * [x] Yelp integration for nearby restaurants
+* [x] 3D-like cubicle representation of multiple photos in a post
 * [x] Monocle View to see nearby posts. This is the Augmented Reality feature implemented with the help of Wikitude SDK.
 * [x] Use of Fabric Crash Analytics to track possible problems with the app 
 
