@@ -176,6 +176,11 @@ Sprint-1: June 10th 2015
 
 Video Walkthrough from Sprint-1 can be found [here](https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_1.gif).
 
+## Libraries used
+
+- [Picasso](http://square.github.io/picasso/) - Image loading and caching library for Android
+- All libraries used to be added here
+
 ## License
 
     Copyright [2015] [Srivats Jayaram, Esra Kucukoguz, Richard Pon]
