@@ -24,7 +24,8 @@
         android:gravity="center"
         android:text="@string/welcome_message"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         android:layout_gravity="center_horizontal" />
 
     <Button
