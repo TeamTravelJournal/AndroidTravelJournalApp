@@ -174,7 +174,7 @@ Video Walkthrough from Sprint-2 can be found [here](https://github.com/TeamTrave
 
 Sprint-1: June 10th 2015
 
-<img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_1.gif' title='Sprint 1 Walkthrough' width='' alt='Video Walkthrough' />
+Video Walkthrough from Sprint-1 can be found [here](https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_1.gif).
 
 ## License
 
