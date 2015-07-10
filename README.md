@@ -160,6 +160,10 @@ Wireframes can be found [here](https://github.com/TeamTravelJournal/AndroidTrave
 
 ## Gif Walkthrough
 
+Public Demo Day: July 13th 2015
+
+Video recorded during the public demo to be added here.
+
 Sprint-3: June 24th 2015
 
 <img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_3_01.gif' title='Sprint 3 Walkthrough' width='' alt='Video Walkthrough' />
