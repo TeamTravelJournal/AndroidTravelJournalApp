@@ -121,7 +121,7 @@ Other:
   * [x] Clicking on the notification directs user to detail page of that post
 * [x] Push notification: User gets a notification when he has a new message
   * [x] Clicking on the notification directs user to chat window
-* [x] Facebook-like "bubble" notification on screen when there is a notification 
+* [x] Facebook-like "bubble" notification on screen when there is a notification with a notification sound
 * [x] In-app notification: If a new post is added when app is open, a notification pops up to let user know there are new posts, clicking on the pop up takes user to the top where new stories are.
 * [x] Handle screen rotations
 * [x] Activity transitions
