@@ -361,6 +361,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/nearby_resta"
                 style="?textRegular"
+                android:textSize="16sp"
                 android:textColor="@color/dark_primary_color"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"

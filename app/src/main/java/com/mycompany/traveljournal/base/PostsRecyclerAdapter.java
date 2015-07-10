@@ -223,9 +223,9 @@ public class PostsRecyclerAdapter extends RecyclerView.Adapter<PostsRecyclerAdap
 
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
-                ObjectAnimator.ofFloat(viewHolderCurrent.ivHeartInside, "alpha", 0.4f)
+                ObjectAnimator.ofFloat(viewHolderCurrent.ivHeartInside, "alpha", 0.5f)
                         .setDuration(1000),
-                ObjectAnimator.ofFloat(viewHolderCurrent.ivHeartOutside, "alpha", 0.2f)
+                ObjectAnimator.ofFloat(viewHolderCurrent.ivHeartOutside, "alpha", 0.4f)
                         .setDuration(1000),
                 ObjectAnimator.ofFloat(viewHolderCurrent.ivHeartInside, "scaleX", 0.2f, 1.0f)
                         .setDuration(1000),
