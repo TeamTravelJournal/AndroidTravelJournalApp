@@ -131,7 +131,7 @@ Other:
 * [x] Log out
 * [x] Left Drawer menu on timeline
 * [x] Yelp integration for nearby restaurants
-* [x] 3D-like cubicle representation of multiple photos in a post implemented using OpenGL PhotoCube library
+* [x] 3D-like cubicle representation of multiple photos in a post implemented using OpenGL
 * [x] Monocle View to see nearby posts. This is the Augmented Reality feature implemented with the help of Wikitude SDK.
 * [x] Use of Fabric Crash Analytics to track possible problems with the app 
 
