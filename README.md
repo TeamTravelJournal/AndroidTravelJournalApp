@@ -160,11 +160,11 @@ Wireframes can be found [here](https://github.com/TeamTravelJournal/AndroidTrave
 
 ## Gif Walkthrough
 
-Public Demo Day: July 13th 2015
+**Public Demo Day**: July 13th 2015
 
 Video recorded during the public demo to be added here.
 
-Sprint-3: June 24th 2015
+**Sprint-3**: June 24th 2015
 
 <img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_3_01.gif' title='Sprint 3 Walkthrough' width='' alt='Video Walkthrough' />
 
@@ -172,11 +172,11 @@ Login Page and notifications:
 
 <img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_3_02.gif' title='Sprint 3 Walkthrough-Cont' width='' alt='Video Walkthrough' />
 
-Sprint-2: June 17th 2015
+**Sprint-2**: June 17th 2015
 
 Video Walkthrough from Sprint-2 can be found [here](https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_2.gif).
 
-Sprint-1: June 10th 2015
+**Sprint-1**: June 10th 2015
 
 Video Walkthrough from Sprint-1 can be found [here](https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_1.gif).
 
