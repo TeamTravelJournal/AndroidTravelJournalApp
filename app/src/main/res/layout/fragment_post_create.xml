@@ -57,6 +57,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_margin="5dp"
+                    android:paddingTop="5dp"
                     />
 
                 <TextView android:layout_width="wrap_content"
@@ -65,6 +66,7 @@
                     android:text="Create a new post"
                     android:id="@+id/tvCreate"
                     android:textColor="#A6A6A6"
+                    android:layout_marginTop="10dp"
                     android:textAlignment="center"/>
 
                 <View
