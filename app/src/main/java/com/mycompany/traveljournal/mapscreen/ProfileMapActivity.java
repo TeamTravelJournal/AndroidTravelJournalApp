@@ -181,9 +181,10 @@ public class ProfileMapActivity extends ActionBarActivity implements
                     handler.postDelayed(new Runnable() {
                          @Override
                          public void run() {
-                             Toast.makeText(ProfileMapActivity.this, R.string.map_long_click_hint, Toast.LENGTH_SHORT).show();
+                             //Toast.makeText(ProfileMapActivity.this, R.string.map_long_click_hint, Toast.LENGTH_SHORT).show();
+                             doAnimation();
                          }
-                    }, 3000);
+                    }, 2000);
                 }
 
                 @Override
@@ -243,7 +244,7 @@ public class ProfileMapActivity extends ActionBarActivity implements
     @Override
     public void onMapLongClick(LatLng point) {
         //Toast.makeText(this, "Long Press to " + point.toString(), Toast.LENGTH_LONG).show();
-        doAnimation();
+        //doAnimation();
     }
 
     private void doAnimation(){
