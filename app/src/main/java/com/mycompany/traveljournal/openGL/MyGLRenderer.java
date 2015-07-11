@@ -40,7 +40,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        gl.glClearColor(0.2f, 0.2f, 0.2f, 1.0f); // Set color's clear-value to
+        gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);  // Set color's clear-value to
         // black
         gl.glClearDepthf(1.0f); // Set depth's clear-value to farthest
         gl.glEnable(GL10.GL_DEPTH_TEST); // Enables depth-buffer for hidden

@@ -5,10 +5,11 @@
 ## Highlights
 
 * Exploring travel content is fun with Travel Journal's Monocle View. This is the Augmented Reality feature of our app makes it easy to see nearby posts. It basically uses your camera, GPS and compass on your phone to show you real world with nearby posts pinned on the screen.
-* Nearby posts can also be explored by map view.
-* Posts can be searched by location and explored in map or list view.
-* Another user's travel route along with all the posts they published during their trip can be seen through their profile on a map view. User can animate this map to see which route was taken and what was the exact order of travel stops.
+* Nearby posts can also be explored on the map.
+* Posts can be searched by location and searched posts can be further explored on a map or in list view.
+* Visually appealing browsing of multiple photos on a post with 3D like cubicle representation.
 * For each post, nearby restaurant information extracted from Yelp is given to guide user who are also following the same travel route.
+* Another user's travel route along with all the posts they published during their trip can be seen through their profile on a map view. User can animate this map to see which route was taken and what was the exact order of travel stops.
 * User can comment on each other posts and group chat to get travel tips from each other.
 * Creating travel content is made simple, only required action is to take a picture. If you are busy during your trip, you can always create content by picking images from your gallery later.
 
@@ -87,6 +88,7 @@ Detail Page of a Post:
 * [ ] Image is clickable and can be expanded to full screen
 * [x] Shared element transitions between detail and timeline
 * [x] View pager cubicle transformation between photos of a post when you slide in between them
+* [x] 3D-like cubicle representation of the photos belongs to the same post when clicked into photo-cube icon
 * [x] Parallax effect
 * [x] Last 3 comments can be seen on detail page
 * [x] 3 nearby restaurant can be seen on detail page.
@@ -119,7 +121,7 @@ Other:
   * [x] Clicking on the notification directs user to detail page of that post
 * [x] Push notification: User gets a notification when he has a new message
   * [x] Clicking on the notification directs user to chat window
-* [x] Facebook-like "bubble" notification on screen when there is a notification 
+* [x] Facebook-like "bubble" notification on screen when there is a notification with a notification sound
 * [x] In-app notification: If a new post is added when app is open, a notification pops up to let user know there are new posts, clicking on the pop up takes user to the top where new stories are.
 * [x] Handle screen rotations
 * [x] Activity transitions
@@ -129,6 +131,7 @@ Other:
 * [x] Log out
 * [x] Left Drawer menu on timeline
 * [x] Yelp integration for nearby restaurants
+* [x] 3D-like cubicle representation of multiple photos in a post implemented using OpenGL
 * [x] Monocle View to see nearby posts. This is the Augmented Reality feature implemented with the help of Wikitude SDK.
 * [x] Use of Fabric Crash Analytics to track possible problems with the app 
 
@@ -157,7 +160,11 @@ Wireframes can be found [here](https://github.com/TeamTravelJournal/AndroidTrave
 
 ## Gif Walkthrough
 
-Sprint-3: June 24th 2015
+**Public Demo Day**: July 13th 2015
+
+Video recorded during the public demo to be added here.
+
+**Sprint-3**: June 24th 2015
 
 <img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_3_01.gif' title='Sprint 3 Walkthrough' width='' alt='Video Walkthrough' />
 
@@ -165,13 +172,18 @@ Login Page and notifications:
 
 <img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_3_02.gif' title='Sprint 3 Walkthrough-Cont' width='' alt='Video Walkthrough' />
 
-Sprint-2: June 17th 2015
+**Sprint-2**: June 17th 2015
 
-<img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_2.gif' title='Sprint 2 Walkthrough' width='' alt='Video Walkthrough' />
+Video Walkthrough from Sprint-2 can be found [here](https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_2.gif).
 
-Sprint-1: June 10th 2015
+**Sprint-1**: June 10th 2015
 
-<img src='https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_1.gif' title='Sprint 1 Walkthrough' width='' alt='Video Walkthrough' />
+Video Walkthrough from Sprint-1 can be found [here](https://github.com/TeamTravelJournal/AndroidTravelJournalApp/blob/master/group_project_sprint_1.gif).
+
+## Libraries used
+
+- [Picasso](http://square.github.io/picasso/) - Image loading and caching library for Android
+- All libraries used to be added here
 
 ## License
 
