@@ -30,4 +30,7 @@
     <dimen name="blue_sub_action_button_size">64dp</dimen>
     <dimen name="blue_sub_action_button_content_margin">16dp</dimen>
 
+    <dimen name="facebook_login_button_margin">2dp</dimen>
+    <dimen name="facebook_login_button_margin_radius">2dp</dimen>
+
 </resources>
