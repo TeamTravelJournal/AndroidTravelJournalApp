@@ -93,7 +93,7 @@ var World = {
 
 		// update panel values
 		$("#poi-detail-title").html(marker.poiData.title);
-		$("#poi-detail-description").html(marker.poiData.description);
+		//$("#poi-detail-description").html(marker.poiData.description);
 		$("#my_image").attr("src", "dummy.jpg");
 		$("#my_image").attr("src",marker.poiData.image+"?random="+Math.floor(Math.random()*1000));
 
