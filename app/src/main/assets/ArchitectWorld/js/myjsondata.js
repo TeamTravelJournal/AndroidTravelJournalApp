@@ -1,65 +1,82 @@
 var myJsonData = [{
-	"id": "fv8vRP7k11",
+	"id": "ejl5yOi58C",
 	"longitude": "13.0833",
 	"latitude": "47.75",
 	"description": "Very Colorful La Boca, this is a must see.",
 	"altitude": "100.0",
-	"name": "Colorful La Boca",
-	"image" : "http://www.infohostels.com/immagini/news/2395.jpg"
+	"name": "Night at the Palace of Fine Arts",
+	"image" : "http://images.fineartamerica.com/images-medium-large-5/morning-glow-palace-of-fine-arts-david-yu.jpg"
 }, {
-	"id": "Ae8hRqO5uB",
+	"id": "12be5S8yv2",
 	"longitude": "13.0833",
 	"latitude": "47.75",
 	"description": "Obelisco is nice.",
 	"altitude": "100.0",
-	"name": "Obelisco",
-	"image" : "http://blog.startspanish.com/wp-content/uploads/2013/09/Obelisco.jpg"
+	"name": "Golden Gate Bridge",
+	"image" : "http://www.fullscreen360.com/images/golden-gate-bridge.jpg"
 }, {
-	"id": "ZkOeLbXSjW",
+	"id": "7yynioZrbx",
 	"longitude": "13.0833",
 	"latitude": "47.75",
 	"description": "One of the things to do, Botanical Garden.",
 	"altitude": "100.0",
-	"name": "Botanical Garden",
-	"image" : "http://discoverseasons.com/wp-content/uploads/2015/02/palermo-buenos-aires.jpg"
+	"name": "Golden Gate Park",
+	"image" : "http://www.extranomical.com/sites/default/files/images/resource_page/resource_image/army-city-tour-090702-023-8410.jpg"
 }, {
-	"id": "Qh2Fblsocz",
+	"id": "gWdZ4JF8PD",
 	"longitude": "13.0833",
 	"latitude": "47.75",
 	"description": "Let's do some dancing.",
 	"altitude": "100.0",
-	"name": "Enjoying Tango",
-	"image" : "http://travelandstories.com/wp-content/uploads/2014/03/Buenos-Aires-3.jpg"
+	"name": "Alamo Square",
+	"image" : "http://40.media.tumblr.com/f06e4c6dba428b58f61d4e18c47ea037/tumblr_n0x7uiKXUq1sylllfo1_1280.jpg"
 }, {
-	"id": "1aIQux3iXr",
+	"id": "GZBfMC5Qks",
 	"longitude": "13.0833",
 	"latitude": "47.75",
 	"description": "Yummy Dinner.",
 	"altitude": "100.0",
-	"name": "Casa Rosada and Dinner",
-	"image" : "http://static.panoramio.com/photos/large/65035501.jpg"
+	"name": "Union Square",
+	"image" : "http://www.sirfrancisdrake.com/design/images/930-481/starlight-vistas-19369195.jpg"
 }, {
-	"id": "mrIbrgdKzR",
+	"id": "4htywlIGEu",
 	"longitude": "13.0833",
 	"latitude": "47.75",
 	"description": "Nice.",
 	"altitude": "100.0",
-	"name": "Palermo Murals",
-	"image" : "http://worldoutthere.net/wp-content/uploads/2012/01/Carlos-Gardel-Abasto-mural-by-Marino-Santa-Maria-buenos-aires-graffiti-tour-buenosairesstreetart.com-%C2%AE-BA-Street-Art.jpg"
+	"name": "Ocean Beach",
+	"image" : "https://www.mymodernshop.com/sites/default/files/product-image-cache/navid_baraty-ocean_beach_san_francisco-web.jpeg"
 }, {
-	"id": "ZwF0sR2DnJ",
+	"id": "o9XfwaaibU",
 	"longitude": "13.0833",
 	"latitude": "47.75",
 	"description": "Relaxing.",
 	"altitude": "100.0",
-	"name": "Drinking Yerba Mate",
-	"image" : "http://thingstodoinbuenosaires.net/wp-content/uploads/2014/04/4780479212_39cbc4da6e_b-672x372.jpg"
+	"name": "Lombard Street, wow...",
+	"image" : "http://denizennavigator.com/wp-content/uploads/2013/06/lombard.jpg"
 }, {
-	"id": "jIVVMx4X6l",
+	"id": "QQ7g1qtKhz",
 	"longitude": "13.0833",
 	"latitude": "47.75",
 	"description": "Going around the Market.",
 	"altitude": "100.0",
-	"name": "San Telmo Market",
-	"image" : "http://www.buenostours.com/images/feria-de-san-telmo-siphons.jpg"
+	"name": "Pier 39",
+	"image" : "http://cf.ltkcdn.net/sanfrancisco/images/slide/10248-850x563-tourist2.jpg"
+}, {
+    "id": "CNqfsg99Ak",
+    "longitude": "13.0833",
+    "latitude": "47.75",
+    "description": "good trip",
+    "altitude": "100.0",
+    "name": "Alcatraz from the ferry",
+    "image" : "http://www.destination360.com/north-america/us/california/san-francisco/images/s/alcatraz.jpg"
+}, {
+	"id": "QWbe0GueB1",
+	"longitude": "13.0833",
+	"latitude": "47.75",
+	"description": "good trip",
+	"altitude": "100.0",
+	"name": "Such a nice day to tour San Francisco",
+	"image" : "http://everythinghapa.com/wp-content/uploads/2012/02/ferry3.jpg"
+
 }];
