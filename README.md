@@ -162,7 +162,9 @@ Wireframes can be found [here](https://github.com/TeamTravelJournal/AndroidTrave
 
 **Public Demo Day**: July 13th 2015
 
-Video recorded during the public demo to be added here.
+Video recorded during the public demo can be downloaded [here](https://app.box.com/s/537ipvgsc7g0z9dk7jcmotnvwymly018).
+We will update the video link soon.
+
 
 **Sprint-3**: June 24th 2015
 
